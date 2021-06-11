@@ -1,6 +1,6 @@
 using System;
 
-namespace Parstat.StructuralMetadata.WebAPI
+namespace Presentation.WebApi
 {
     public class WeatherForecast
     {

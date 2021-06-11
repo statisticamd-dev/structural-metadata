@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Parstat.StructuralMetadata.WebAPI.Controllers
+namespace Presentation.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
