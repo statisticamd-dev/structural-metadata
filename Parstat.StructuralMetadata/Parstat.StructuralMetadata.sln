@@ -4,17 +4,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{D07C6CB9-5B5B-4FF0-9676-85B73B5FB78B}"
-	ProjectSection(SolutionItems) = preProject
-		Readme.txt = Readme.txt
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.WebApi", "Presentation\Presentation.WebApi\Presentation.WebApi.csproj", "{88B139CB-1472-41BE-8EE6-C7A37996ADEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Application", "Presentation\Presentation.Application\Presentation.Application.csproj", "{BDC523D8-3EA6-44B2-A4A9-1E141C57E4DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.Application", "Presentation\Presentation.Application\Presentation.Application.csproj", "{BDC523D8-3EA6-44B2-A4A9-1E141C57E4DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Domain", "Presentation\Presentation.Domain\Presentation.Domain.csproj", "{35A59B29-0A76-4B1B-99A9-63C9203410EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.Domain", "Presentation\Presentation.Domain\Presentation.Domain.csproj", "{35A59B29-0A76-4B1B-99A9-63C9203410EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation.Infrastructure", "Presentation\Presentation.Infrastructure\Presentation.Infrastructure.csproj", "{4DFF1B99-4392-415A-A648-262F8AEBEF9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Presentation.Infrastructure", "Presentation\Presentation.Infrastructure\Presentation.Infrastructure.csproj", "{4DFF1B99-4392-415A-A648-262F8AEBEF9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
