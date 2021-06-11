@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31112.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parstat.StructuralMetadata.Presentation.WebAPI", "Parstat.StructuralMetadata.Presentation.WebAPI\Parstat.StructuralMetadata.Presentation.WebAPI.csproj", "{7CD910BD-8301-45E5-A67C-BEBBE358E2DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CD910BD-8301-45E5-A67C-BEBBE358E2DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD910BD-8301-45E5-A67C-BEBBE358E2DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD910BD-8301-45E5-A67C-BEBBE358E2DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD910BD-8301-45E5-A67C-BEBBE358E2DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A311D0D8-AB4B-4D99-98B5-8163790EDF10}
+	EndGlobalSection
+EndGlobal

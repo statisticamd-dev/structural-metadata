@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "DErJpKO7lLhZX7hjJTslf2iB6YxQEJhUtGudAeB1TU4gOe2fUiI/XXaglbjQJFEBO2GwewosQnSex+inyYXznA==",
+  "success": true,
+  "projectFilePath": "c:\\Users\\vchir\\source\\repos\\Parstat\\structural-metadata\\Parstat.StructuralMetadata\\Parstat.StructuralMetadata.Presentation.WebAPI\\Parstat.StructuralMetadata.Presentation.WebAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\vchir\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.13\\microsoft.visualstudio.azure.containers.tools.targets.1.10.13.nupkg.sha512"
+  ],
+  "logs": []
+}
