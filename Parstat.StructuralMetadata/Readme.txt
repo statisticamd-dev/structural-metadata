@@ -1,3 +1,0 @@
-This file contains description of the presentation layer.
-
-TO DO...
