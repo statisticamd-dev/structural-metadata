@@ -9,16 +9,16 @@ namespace Presentation.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TestController : ControllerBase
+    public class MetadataController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<TestController> _logger;
+        private readonly ILogger<MetadataController> _logger;
 
-        public TestController(ILogger<TestController> logger)
+        public MetadataController(ILogger<MetadataController> logger)
         {
             _logger = logger;
         }
