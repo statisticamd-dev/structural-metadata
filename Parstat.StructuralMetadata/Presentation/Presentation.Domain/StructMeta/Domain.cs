@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Presentation.Domain.StructMeta
 {
-    public abstract class Domain
+    public interface Domain
     {
         public string Id { get; set; }
         public string LocalID { get; set; }
