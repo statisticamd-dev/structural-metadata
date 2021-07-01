@@ -1,8 +1,9 @@
+﻿using Presentation.Common.Domain.StructuralMetadata.Interfaces.Gsim;
 using System;
-using Presentation.Domain.StructMeta.Abstracts;
-using Presentation.Domain.StructMeta.Interfaces.Gsim;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Presentation.Domain.StructMeta.Abstracts.Gsim
+namespace Presentation.Common.Domain.StructuralMetadata.Abstracts.Gsim
 {
     public abstract class AbstractIdentifiableArtefact : AbstractDomain, IIdentifiableArtefact
     {

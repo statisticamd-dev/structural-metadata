@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Presentation.Domain.StructMeta
+namespace Presentation.Common.Domain.StructuralMetadata
 {
     public abstract class Domain
     {
