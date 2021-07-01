@@ -1,5 +1,5 @@
 
-namespace Presentation.Domain.StructMeta.interfaces.gsim
+namespace Presentation.Domain.StructMeta.Interfaces.Gsim
 {
     public interface IIdentifiableArtefact : IDomain
     {

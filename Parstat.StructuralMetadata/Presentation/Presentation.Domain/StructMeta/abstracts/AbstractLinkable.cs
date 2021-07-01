@@ -1,6 +1,6 @@
-using Presentation.Domain.StructMeta.interfaces;
+using Presentation.Domain.StructMeta.Interfaces;
 
-namespace Presentation.Domain.StructMeta.abstracts
+namespace Presentation.Domain.StructMeta.Abstracts
 {
     public abstract class AbstractLinkable : AbstractDomain, ILinkable
     {

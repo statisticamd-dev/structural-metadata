@@ -1,5 +1,6 @@
-using Presentation.Domain.StructMeta.interfaces;
-namespace Presentation.Domain.StructMeta.abstracts
+using Presentation.Domain.StructMeta.Interfaces;
+
+namespace Presentation.Domain.StructMeta.Abstracts
 {
     public abstract class AbstractDomain : IDomain
     {

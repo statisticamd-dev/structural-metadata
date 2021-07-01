@@ -1,4 +1,4 @@
-namespace Presentation.Domain.StructMeta.interfaces
+namespace Presentation.Domain.StructMeta.Interfaces
 {
     public interface ILinkable : IDomain
     {
