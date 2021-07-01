@@ -1,4 +1,5 @@
-using Presentation.Domain.StructMeta.Interfaces;
+
+using Presentation.Domain.StructMeta.Interfaces.Gsim;
 
 namespace Presentation.Domain.StructMeta.Abstracts
 {

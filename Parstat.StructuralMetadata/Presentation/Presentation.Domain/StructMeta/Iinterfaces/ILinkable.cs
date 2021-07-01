@@ -1,4 +1,4 @@
-namespace Presentation.Domain.StructMeta.Interfaces
+namespace Presentation.Domain.StructMeta.Interfaces.Gsim
 {
     public interface ILinkable : IDomain
     {
