@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Presentation.Common.Domain.StructuralMetadata.Interfaces.Gsim
+namespace Presentation.Common.Domain.StructuralMetadata.Interfaces.Gsim.Concept
 {
     public interface IUnitType: IConcept
     {
