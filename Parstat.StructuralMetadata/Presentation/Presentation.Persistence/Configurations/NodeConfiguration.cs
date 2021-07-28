@@ -8,7 +8,14 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Node> builder)
         {
-            throw new System.NotImplementedException();
+            builder.Property(n => n.AggregationType)
+                .IsRequired();
+            builder.Property(n => n.Code)
+                .IsRequired();
+            builder.HasIndex(n => new {n.Code, n.NodeSetId})
+                .IsUnique();
+            builder.Property(n => n.LabelId)
+                .IsRequired();
         }
     }
 }
