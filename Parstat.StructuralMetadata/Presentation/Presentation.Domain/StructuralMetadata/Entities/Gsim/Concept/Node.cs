@@ -15,6 +15,8 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public Node Parent { get; set; }
         public Category Category { get; set; }
         public AggregationType AggregationType { get; set; }
+        public long LabelId { get; set; }
+        public Label Label { get; set; }
 
     }
 }

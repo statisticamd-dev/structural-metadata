@@ -8,7 +8,14 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Correspondence> builder)
         {
-            throw new System.NotImplementedException();
+            builder.Property(c => c.Relationship)
+                .IsRequired();
+            builder.Property(c => c.SourceId)
+                .IsRequired();
+            builder.Property(c => c.TargetId)
+                .IsRequired();
+            builder.HasIndex(c => new {c.SourceId, c.TargetId})
+                .IsUnique();
         }
     }
 }
