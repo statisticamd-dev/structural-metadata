@@ -1,7 +1,5 @@
 ﻿using Presentation.Common.Domain.StructuralMetadata.Interfaces.Gsim;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Presentation.Common.Domain.StructuralMetadata.Abstracts.Gsim
 {
