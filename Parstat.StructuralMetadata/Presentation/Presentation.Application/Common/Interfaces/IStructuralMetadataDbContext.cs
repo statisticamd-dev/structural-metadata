@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
-namespace Presentation.Application.Common
+namespace Presentation.Application.Common.Interfaces
 {
-    public interface IStructuralMetdataDBContext
+    public interface IStructuralMetadataDbContext
     {
          DbSet<Category> Categories {get; set;}
          DbSet<Correspondence> Correspondences {get; set;}
