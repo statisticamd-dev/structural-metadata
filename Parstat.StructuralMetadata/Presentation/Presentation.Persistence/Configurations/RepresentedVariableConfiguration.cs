@@ -27,7 +27,13 @@ namespace Presentation.Infrastructure.Configurations
             builder.Property(v => v.VersionRationale)
                 .IsRequired()
                 .HasMaxLength(255);
-            
+                /*
+            builder.HasOne(r => r.SentinelValueDomain)
+                .WithMany(s => s.RepresentedVariables)
+                .HasForeignKey(r => r.SentinelValueDomainId);
+            builder.HasOne(r => r.SubstantiveValueDomain)
+                    .WithMany(s => s.RepresentedVariables)
+                    .HasForeignKey(r => r.SubstantiveValueDomainId);*/
         }
     }
 }

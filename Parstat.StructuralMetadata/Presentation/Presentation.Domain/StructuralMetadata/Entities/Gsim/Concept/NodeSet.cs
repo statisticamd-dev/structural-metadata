@@ -7,12 +7,12 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     public class NodeSet : AbstractConcept
     {
         public NodeSet() {
-            SentinelValueDomains = new HashSet<ValueDomain>();
-            SubstantiveValueDomains = new HashSet<ValueDomain>();
+            //SentinelValueDomains = new HashSet<ValueDomain>();
+            //SubstantiveValueDomains = new HashSet<ValueDomain>();
         }
-        public IEnumerable<ValueDomain> SentinelValueDomains { get; set; }
+       // public IEnumerable<ValueDomain> SentinelValueDomains { get; set; }
 
-        public IEnumerable<ValueDomain>  SubstantiveValueDomains { get; set; }
+        //public IEnumerable<ValueDomain>  SubstantiveValueDomains { get; set; }
 
         public NodeSetType NodeSetType { get; set; }
 

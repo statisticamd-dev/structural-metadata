@@ -7,7 +7,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     public class ValueDomain : AbstractIdentifiableArtefact
     {
         public ValueDomain() {
-            RepresentedVariables = new HashSet<RepresentedVariable>();
+            //RepresentedVariables = new HashSet<RepresentedVariable>();
         }
 
       
@@ -17,7 +17,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public long NodeSetId { get; set; }
         public NodeSet NodeSet { get; set; }
         public int LevelNumber { get; set; }
-        public IEnumerable<RepresentedVariable> RepresentedVariables { get; set; }
+        //public IEnumerable<RepresentedVariable> RepresentedVariables { get; set; }
 
 
     }

@@ -27,19 +27,19 @@ namespace Presentation.Persistence
             _dateTime = dateTime;
         }
 
-        public DbSet<Category> Categories { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<Correspondence> Correspondences { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<Label> Labels { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<Level> Levels { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<Mapping> Mappings { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<MeasurementType> MeasurementTypes { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<MeasurementUnit> MeasurementUnits { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<Node> Nodes { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<NodeSet> NodeSets { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<RepresentedVariable> RepresentedVariables { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<UnitType> UnitTypes { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<ValueDomain> ValueDomains { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public DbSet<Variable> Variables { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Correspondence> Correspondences { get; set; }
+        public DbSet<Label> Labels { get; set; }
+        public DbSet<Level> Levels { get; set; }
+        public DbSet<Mapping> Mappings { get; set; }
+        public DbSet<MeasurementType> MeasurementTypes { get; set; }
+        public DbSet<MeasurementUnit> MeasurementUnits { get; set; }
+        public DbSet<Node> Nodes { get; set; }
+        public DbSet<NodeSet> NodeSets { get; set; }
+        public DbSet<RepresentedVariable> RepresentedVariables { get; set; }
+        public DbSet<UnitType> UnitTypes { get; set; }
+        public DbSet<ValueDomain> ValueDomains { get; set; }
+        public DbSet<Variable> Variables { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
