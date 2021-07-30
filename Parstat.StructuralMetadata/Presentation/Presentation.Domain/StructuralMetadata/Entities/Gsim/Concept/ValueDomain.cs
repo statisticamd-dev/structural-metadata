@@ -16,6 +16,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public NodeSet NodeSet { get; set; }
         public int LevelNumber { get; set; }
         //public IEnumerable<RepresentedVariable> RepresentedVariables { get; set; }
+        public IEnumerable<RepresentedVariableValueDomain> representations { get; set; }
 
 
     }

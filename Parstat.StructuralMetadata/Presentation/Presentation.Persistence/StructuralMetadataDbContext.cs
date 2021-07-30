@@ -37,6 +37,7 @@ namespace Presentation.Persistence
         public DbSet<Node> Nodes { get; set; }
         public DbSet<NodeSet> NodeSets { get; set; }
         public DbSet<RepresentedVariable> RepresentedVariables { get; set; }
+        public DbSet<RepresentedVariableValueDomain> RepresentedVariableValueDomains { get; set; }
         public DbSet<UnitType> UnitTypes { get; set; }
         public DbSet<ValueDomain> ValueDomains { get; set; }
         public DbSet<Variable> Variables { get; set; }
@@ -63,7 +64,32 @@ namespace Presentation.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StructuralMetadataDbContext).Assembly);
+            modelBuilder
+                .Entity<ValueDomain>()
+                .Property(v => v.Type)
+                .HasConversion<string>();
+             modelBuilder
+                .Entity<ValueDomain>()
+                .Property(v => v.Scope)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<RepresentedVariableValueDomain>()
+                .Property(v => v.Scope)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<NodeSet>()
+                .Property(n => n.NodeSetType)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<Node>()
+                .Property(n => n.AggregationType)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<Correspondence>() 
+                .Property(c => c.Relationship)
+                .HasConversion<string>();
+            modelBuilder
+                .ApplyConfigurationsFromAssembly(typeof(StructuralMetadataDbContext).Assembly);
         }
     }
 }

@@ -84,7 +84,7 @@ namespace Presentation.Persistence.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    NodeSetType = table.Column<int>(type: "integer", nullable: false),
+                    NodeSetType = table.Column<string>(type: "text", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
@@ -128,6 +128,38 @@ namespace Presentation.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MeasurementUnits",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Abbreviation = table.Column<string>(type: "text", nullable: true),
+                    ConvertionRule = table.Column<string>(type: "text", nullable: true),
+                    MeasurementTypeId = table.Column<long>(type: "bigint", nullable: false),
+                    IsStandard = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
+                    LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MeasurementUnits", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MeasurementUnits_MeasurementTypes_MeasurementTypeId",
+                        column: x => x.MeasurementTypeId,
+                        principalTable: "MeasurementTypes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Correspondences",
                 columns: table => new
                 {
@@ -135,7 +167,7 @@ namespace Presentation.Persistence.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     SourceId = table.Column<long>(type: "bigint", nullable: false),
                     TargetId = table.Column<long>(type: "bigint", nullable: false),
-                    Relationship = table.Column<int>(type: "integer", nullable: false),
+                    Relationship = table.Column<string>(type: "text", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
@@ -220,17 +252,57 @@ namespace Presentation.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ValueDomains",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Type = table.Column<string>(type: "text", nullable: false),
+                    Scope = table.Column<string>(type: "text", nullable: false),
+                    Expression = table.Column<string>(type: "text", nullable: true),
+                    NodeSetId = table.Column<long>(type: "bigint", nullable: true),
+                    LevelNumber = table.Column<int>(type: "integer", nullable: false),
+                    MeasurementUnitId = table.Column<long>(type: "bigint", nullable: true),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
+                    LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ValueDomains", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ValueDomains_MeasurementUnits_MeasurementUnitId",
+                        column: x => x.MeasurementUnitId,
+                        principalTable: "MeasurementUnits",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ValueDomains_NodeSets_NodeSetId",
+                        column: x => x.NodeSetId,
+                        principalTable: "NodeSets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Nodes",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     NodeSetId = table.Column<long>(type: "bigint", nullable: false),
-                    LevelId = table.Column<long>(type: "bigint", nullable: false),
-                    ParentId = table.Column<long>(type: "bigint", nullable: false),
-                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
+                    LevelId = table.Column<long>(type: "bigint", nullable: true),
+                    ParentId = table.Column<long>(type: "bigint", nullable: true),
+                    CategoryId = table.Column<long>(type: "bigint", nullable: true),
                     Code = table.Column<string>(type: "text", nullable: false),
-                    AggregationType = table.Column<int>(type: "integer", nullable: false),
+                    AggregationType = table.Column<string>(type: "text", nullable: false),
                     LabelId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
@@ -245,7 +317,7 @@ namespace Presentation.Persistence.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Nodes_Labels_LabelId",
                         column: x => x.LabelId,
@@ -257,17 +329,56 @@ namespace Presentation.Persistence.Migrations
                         column: x => x.LevelId,
                         principalTable: "Levels",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Nodes_Nodes_ParentId",
                         column: x => x.ParentId,
                         principalTable: "Nodes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Nodes_NodeSets_NodeSetId",
                         column: x => x.NodeSetId,
                         principalTable: "NodeSets",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RepresentedVariables",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    VariableId = table.Column<long>(type: "bigint", nullable: false),
+                    SubstantiveValueDomainId = table.Column<long>(type: "bigint", nullable: false),
+                    SentinelValueDomainId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
+                    LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Definition = table.Column<string>(type: "text", nullable: true),
+                    Link = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RepresentedVariables", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RepresentedVariables_ValueDomains_SentinelValueDomainId",
+                        column: x => x.SentinelValueDomainId,
+                        principalTable: "ValueDomains",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RepresentedVariables_Variables_VariableId",
+                        column: x => x.VariableId,
+                        principalTable: "Variables",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -310,111 +421,32 @@ namespace Presentation.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ValueDomains",
+                name: "RepresentedVariableValueDomains",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Type = table.Column<int>(type: "integer", nullable: false),
-                    Scope = table.Column<int>(type: "integer", nullable: false),
-                    Expression = table.Column<string>(type: "text", nullable: true),
-                    NodeSetId = table.Column<long>(type: "bigint", nullable: false),
-                    LevelNumber = table.Column<int>(type: "integer", nullable: false),
-                    MeasurementUnitId = table.Column<long>(type: "bigint", nullable: true),
+                    Scope = table.Column<string>(type: "text", nullable: false),
+                    RepresentedVariableId = table.Column<long>(type: "bigint", nullable: false),
+                    ValueDomainId = table.Column<long>(type: "bigint", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ValueDomains", x => x.Id);
+                    table.PrimaryKey("PK_RepresentedVariableValueDomains", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ValueDomains_NodeSets_NodeSetId",
-                        column: x => x.NodeSetId,
-                        principalTable: "NodeSets",
+                        name: "FK_RepresentedVariableValueDomains_RepresentedVariables_Repres~",
+                        column: x => x.RepresentedVariableId,
+                        principalTable: "RepresentedVariables",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "MeasurementUnits",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Abbreviation = table.Column<string>(type: "text", nullable: true),
-                    ConvertionRule = table.Column<string>(type: "text", nullable: true),
-                    StandardId = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MeasurementUnits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MeasurementUnits_ValueDomains_StandardId",
-                        column: x => x.StandardId,
+                        name: "FK_RepresentedVariableValueDomains_ValueDomains_ValueDomainId",
+                        column: x => x.ValueDomainId,
                         principalTable: "ValueDomains",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RepresentedVariables",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    VariableId = table.Column<long>(type: "bigint", nullable: false),
-                    SubstantiveValueDomainId = table.Column<long>(type: "bigint", nullable: false),
-                    SentinelValueDomainId = table.Column<long>(type: "bigint", nullable: false),
-                    CreatedBy = table.Column<string>(type: "text", nullable: true),
-                    Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Definition = table.Column<string>(type: "text", nullable: true),
-                    Link = table.Column<string>(type: "text", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RepresentedVariables", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RepresentedVariables_ValueDomains_SentinelValueDomainId",
-                        column: x => x.SentinelValueDomainId,
-                        principalTable: "ValueDomains",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RepresentedVariables_ValueDomains_SubstantiveValueDomainId",
-                        column: x => x.SubstantiveValueDomainId,
-                        principalTable: "ValueDomains",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RepresentedVariables_Variables_VariableId",
-                        column: x => x.VariableId,
-                        principalTable: "Variables",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -482,9 +514,9 @@ namespace Presentation.Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_MeasurementUnits_StandardId",
+                name: "IX_MeasurementUnits_MeasurementTypeId",
                 table: "MeasurementUnits",
-                column: "StandardId");
+                column: "MeasurementTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Nodes_CategoryId",
@@ -535,14 +567,20 @@ namespace Presentation.Persistence.Migrations
                 column: "SentinelValueDomainId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RepresentedVariables_SubstantiveValueDomainId",
-                table: "RepresentedVariables",
-                column: "SubstantiveValueDomainId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_RepresentedVariables_VariableId",
                 table: "RepresentedVariables",
                 column: "VariableId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RepresentedVariableValueDomains_RepresentedVariableId_Value~",
+                table: "RepresentedVariableValueDomains",
+                columns: new[] { "RepresentedVariableId", "ValueDomainId", "Scope" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RepresentedVariableValueDomains_ValueDomainId",
+                table: "RepresentedVariableValueDomains",
+                column: "ValueDomainId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UnitTypes_LocalId_Version",
@@ -576,34 +614,15 @@ namespace Presentation.Persistence.Migrations
                 name: "IX_Variables_MeasuresId",
                 table: "Variables",
                 column: "MeasuresId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ValueDomains_MeasurementUnits_MeasurementUnitId",
-                table: "ValueDomains",
-                column: "MeasurementUnitId",
-                principalTable: "MeasurementUnits",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_ValueDomains_NodeSets_NodeSetId",
-                table: "ValueDomains");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_MeasurementUnits_ValueDomains_StandardId",
-                table: "MeasurementUnits");
-
             migrationBuilder.DropTable(
                 name: "Mappings");
 
             migrationBuilder.DropTable(
-                name: "MeasurementTypes");
-
-            migrationBuilder.DropTable(
-                name: "RepresentedVariables");
+                name: "RepresentedVariableValueDomains");
 
             migrationBuilder.DropTable(
                 name: "Correspondences");
@@ -612,7 +631,7 @@ namespace Presentation.Persistence.Migrations
                 name: "Nodes");
 
             migrationBuilder.DropTable(
-                name: "Variables");
+                name: "RepresentedVariables");
 
             migrationBuilder.DropTable(
                 name: "Categories");
@@ -624,16 +643,22 @@ namespace Presentation.Persistence.Migrations
                 name: "Levels");
 
             migrationBuilder.DropTable(
-                name: "UnitTypes");
+                name: "ValueDomains");
+
+            migrationBuilder.DropTable(
+                name: "Variables");
+
+            migrationBuilder.DropTable(
+                name: "MeasurementUnits");
 
             migrationBuilder.DropTable(
                 name: "NodeSets");
 
             migrationBuilder.DropTable(
-                name: "ValueDomains");
+                name: "UnitTypes");
 
             migrationBuilder.DropTable(
-                name: "MeasurementUnits");
+                name: "MeasurementTypes");
         }
     }
 }

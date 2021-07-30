@@ -10,8 +10,8 @@ using Presentation.Persistence;
 namespace Presentation.Persistence.Migrations
 {
     [DbContext(typeof(StructuralMetadataDbContext))]
-    [Migration("20210729131454_ModelChangeMU")]
-    partial class ModelChangeMU
+    [Migration("20210730133222_v1.1")]
+    partial class v11
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,8 +100,9 @@ namespace Presentation.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<int>("Relationship")
-                        .HasColumnType("integer");
+                    b.Property<string>("Relationship")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<long>("SourceId")
                         .HasColumnType("bigint");
@@ -410,10 +411,11 @@ namespace Presentation.Persistence.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AggregationType")
-                        .HasColumnType("integer");
+                    b.Property<string>("AggregationType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<long>("CategoryId")
+                    b.Property<long?>("CategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Code")
@@ -435,13 +437,13 @@ namespace Presentation.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<long>("LevelId")
+                    b.Property<long?>("LevelId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("NodeSetId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("ParentId")
+                    b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -501,8 +503,9 @@ namespace Presentation.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<int>("NodeSetType")
-                        .HasColumnType("integer");
+                    b.Property<string>("NodeSetType")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Version")
                         .IsRequired()
@@ -564,12 +567,6 @@ namespace Presentation.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<long>("SentinelValueDomainId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("SubstantiveValueDomainId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("VariableId")
                         .HasColumnType("bigint");
 
@@ -588,16 +585,51 @@ namespace Presentation.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SentinelValueDomainId");
-
-                    b.HasIndex("SubstantiveValueDomainId");
-
                     b.HasIndex("VariableId");
 
                     b.HasIndex("LocalId", "Version")
                         .IsUnique();
 
                     b.ToTable("RepresentedVariables");
+                });
+
+            modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.RepresentedVariableValueDomain", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<long>("RepresentedVariableId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Scope")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("ValueDomainId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ValueDomainId");
+
+                    b.HasIndex("RepresentedVariableId", "Scope")
+                        .IsUnique();
+
+                    b.ToTable("RepresentedVariableValueDomains");
                 });
 
             modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.UnitType", b =>
@@ -702,14 +734,16 @@ namespace Presentation.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<long>("NodeSetId")
+                    b.Property<long?>("NodeSetId")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("Scope")
-                        .HasColumnType("integer");
+                    b.Property<string>("Scope")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Version")
                         .IsRequired()
@@ -873,9 +907,7 @@ namespace Presentation.Persistence.Migrations
                 {
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Category", "Category")
                         .WithMany("Nodes")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId");
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Label", "Label")
                         .WithMany("Nodes")
@@ -885,9 +917,7 @@ namespace Presentation.Persistence.Migrations
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Level", "Level")
                         .WithMany("Nodes")
-                        .HasForeignKey("LevelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LevelId");
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.NodeSet", "NodeSet")
                         .WithMany()
@@ -897,9 +927,7 @@ namespace Presentation.Persistence.Migrations
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Node", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ParentId");
 
                     b.Navigation("Category");
 
@@ -914,29 +942,32 @@ namespace Presentation.Persistence.Migrations
 
             modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.RepresentedVariable", b =>
                 {
-                    b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.ValueDomain", "SentinelValueDomain")
-                        .WithMany()
-                        .HasForeignKey("SentinelValueDomainId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.ValueDomain", "SubstantiveValueDomain")
-                        .WithMany()
-                        .HasForeignKey("SubstantiveValueDomainId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Variable", "Variable")
                         .WithMany("Representations")
                         .HasForeignKey("VariableId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SentinelValueDomain");
-
-                    b.Navigation("SubstantiveValueDomain");
-
                     b.Navigation("Variable");
+                });
+
+            modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.RepresentedVariableValueDomain", b =>
+                {
+                    b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.RepresentedVariable", "RepresentedVariable")
+                        .WithMany("valueDomains")
+                        .HasForeignKey("RepresentedVariableId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.ValueDomain", "ValueDomain")
+                        .WithMany("representations")
+                        .HasForeignKey("ValueDomainId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("RepresentedVariable");
+
+                    b.Navigation("ValueDomain");
                 });
 
             modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.ValueDomain", b =>
@@ -947,9 +978,7 @@ namespace Presentation.Persistence.Migrations
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.NodeSet", "NodeSet")
                         .WithMany()
-                        .HasForeignKey("NodeSetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NodeSetId");
 
                     b.Navigation("NodeSet");
                 });
@@ -990,9 +1019,19 @@ namespace Presentation.Persistence.Migrations
                     b.Navigation("ValueDomains");
                 });
 
+            modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.RepresentedVariable", b =>
+                {
+                    b.Navigation("valueDomains");
+                });
+
             modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.UnitType", b =>
                 {
                     b.Navigation("Variables");
+                });
+
+            modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.ValueDomain", b =>
+                {
+                    b.Navigation("representations");
                 });
 
             modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Variable", b =>
