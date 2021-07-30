@@ -7,10 +7,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Presentation.Persistence;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace Presentation.WebApi
 {
@@ -31,9 +30,9 @@ namespace Presentation.WebApi
 /* 
                     var identityContext = services.GetRequiredService<ApplicationDbContext>();
                     identityContext.Database.Migrate();
-
+*/
                     var mediator = services.GetRequiredService<IMediator>();
-                    await mediator.Send(new SeedSampleDataCommand(), CancellationToken.None); */
+                    //await mediator.Send(new SeedSampleDataCommand(), CancellationToken.None); 
                 }
                 catch (Exception ex)
                 {

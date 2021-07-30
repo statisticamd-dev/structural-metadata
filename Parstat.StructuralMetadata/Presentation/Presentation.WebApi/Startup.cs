@@ -7,8 +7,11 @@ using Microsoft.OpenApi.Models;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Infrastructure;
 using Presentation.Persistence;
+using Presentation.Application;
 using Presentation.WebApi.Services;
 using System;
+using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace Presentation.WebApi
 {
@@ -31,6 +34,7 @@ namespace Presentation.WebApi
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IDateTime, MachineDateTime>();
             services.AddPersistence(Configuration);
+            services.AddApplication();
             services.AddControllers();
             services.AddHealthChecks()
                 .AddDbContextCheck<StructuralMetadataDbContext>();
@@ -62,8 +66,14 @@ namespace Presentation.WebApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                RegisteredServicesPage(app);
             }
-
+            else
+            {
+                 app.UseExceptionHandler("/Error");
+                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
             //Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
@@ -73,8 +83,8 @@ namespace Presentation.WebApi
                 c.RoutePrefix = string.Empty;
                 
             });
-
-            app.UseHttpsRedirection();
+            //TODO turned off for swagger to work
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -84,6 +94,28 @@ namespace Presentation.WebApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+         private void RegisteredServicesPage(IApplicationBuilder app)
+        {
+            app.Map("/services", builder => builder.Run(async context =>
+            {
+                var sb = new StringBuilder();
+                sb.Append("<h1>Registered Services</h1>");
+                sb.Append("<table><thead>");
+                sb.Append("<tr><th>Type</th><th>Lifetime</th><th>Instance</th></tr>");
+                sb.Append("</thead><tbody>");
+                foreach (var svc in _services)
+                {
+                    sb.Append("<tr>");
+                    sb.Append($"<td>{svc.ServiceType.FullName}</td>");
+                    sb.Append($"<td>{svc.Lifetime}</td>");
+                    sb.Append($"<td>{svc.ImplementationType?.FullName}</td>");
+                    sb.Append("</tr>");
+                }
+                sb.Append("</tbody></table>");
+                await context.Response.WriteAsync(sb.ToString());
+            }));
         }
     }
 }

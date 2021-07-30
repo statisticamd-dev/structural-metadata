@@ -9,12 +9,10 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public ValueDomain() {
             //RepresentedVariables = new HashSet<RepresentedVariable>();
         }
-
-      
         public ValueDomainType Type { get; set; }
         public ValueDomainScope Scope { get; set; }
         public string Expression { get; set; }
-        public long NodeSetId { get; set; }
+        public long? NodeSetId { get; set; }
         public NodeSet NodeSet { get; set; }
         public int LevelNumber { get; set; }
         //public IEnumerable<RepresentedVariable> RepresentedVariables { get; set; }

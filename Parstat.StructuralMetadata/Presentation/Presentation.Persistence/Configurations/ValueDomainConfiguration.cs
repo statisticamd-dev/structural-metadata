@@ -27,7 +27,8 @@ namespace Presentation.Infrastructure.Configurations
             builder.Property(v => v.VersionRationale)
                 .IsRequired()
                 .HasMaxLength(255);
-            
+            builder.Property(v => v.NodeSetId)
+                .IsRequired(false);
         }
     }
 }

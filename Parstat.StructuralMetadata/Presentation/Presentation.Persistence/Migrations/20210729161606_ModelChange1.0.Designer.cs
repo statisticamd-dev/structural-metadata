@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Presentation.Persistence;
@@ -9,9 +10,10 @@ using Presentation.Persistence;
 namespace Presentation.Persistence.Migrations
 {
     [DbContext(typeof(StructuralMetadataDbContext))]
-    partial class StructuralMetadataDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210729161606_ModelChange1.0")]
+    partial class ModelChange10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -411,7 +413,7 @@ namespace Presentation.Persistence.Migrations
                     b.Property<int>("AggregationType")
                         .HasColumnType("integer");
 
-                    b.Property<long?>("CategoryId")
+                    b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Code")
@@ -433,13 +435,13 @@ namespace Presentation.Persistence.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("text");
 
-                    b.Property<long?>("LevelId")
+                    b.Property<long>("LevelId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("NodeSetId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("ParentId")
+                    b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
@@ -871,7 +873,9 @@ namespace Presentation.Persistence.Migrations
                 {
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Category", "Category")
                         .WithMany("Nodes")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Label", "Label")
                         .WithMany("Nodes")
@@ -881,7 +885,9 @@ namespace Presentation.Persistence.Migrations
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Level", "Level")
                         .WithMany("Nodes")
-                        .HasForeignKey("LevelId");
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.NodeSet", "NodeSet")
                         .WithMany()
@@ -891,7 +897,9 @@ namespace Presentation.Persistence.Migrations
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Node", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 

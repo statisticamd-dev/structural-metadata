@@ -16,6 +16,12 @@ namespace Presentation.Infrastructure.Configurations
                 .IsUnique();
             builder.Property(n => n.LabelId)
                 .IsRequired();
+            builder.Property(n => n.LevelId)
+                .IsRequired(false);
+            builder.Property(n => n.ParentId)
+                .IsRequired(false);
+            builder.Property(n => n.CategoryId)
+                .IsRequired(false);
         }
     }
 }
