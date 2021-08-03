@@ -12,6 +12,7 @@ using Presentation.WebApi.Services;
 using System;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json.Serialization;
 
 namespace Presentation.WebApi
 {
@@ -35,7 +36,10 @@ namespace Presentation.WebApi
             services.AddTransient<IDateTime, MachineDateTime>();
             services.AddPersistence(Configuration);
             services.AddApplication();
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(options => {
+                options.JsonSerializerOptions.IgnoreNullValues = true;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
             services.AddHealthChecks()
                 .AddDbContextCheck<StructuralMetadataDbContext>();
 

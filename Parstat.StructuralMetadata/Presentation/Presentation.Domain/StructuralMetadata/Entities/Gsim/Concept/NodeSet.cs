@@ -15,6 +15,8 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         //public IEnumerable<ValueDomain>  SubstantiveValueDomains { get; set; }
 
         public NodeSetType NodeSetType { get; set; }
+        public IEnumerable<Node> Nodes { get; set; }
+        public IEnumerable<Level> Levels { get; set; }
 
     }
 }

@@ -1,0 +1,43 @@
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Presentation.Application.Common.Interfaces;
+
+namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentationDetails
+{
+    public class GetRepresentedVariableQuery : IRequest<RepresentedVariableVm>
+    {
+        public long Id { get; set; }
+
+        public class GetRepresentedVariableQueryHandler : IRequestHandler<GetRepresentedVariableQuery, RepresentedVariableVm>
+        {
+            private readonly IStructuralMetadataDbContext _context;
+            private readonly IMapper _mapper;
+
+            public GetRepresentedVariableQueryHandler(IStructuralMetadataDbContext context, IMapper mapper) 
+            {
+                _context = context;
+                _mapper = mapper;
+            }
+
+            public async Task<RepresentedVariableVm> Handle(GetRepresentedVariableQuery request, CancellationToken cancellationToken)
+            {
+                var representedVariable = await _context.RepresentedVariables
+                    .Where(v => v.Id == request.Id)
+                    .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider)
+                    .SingleOrDefaultAsync(cancellationToken);
+
+                var vm = new RepresentedVariableVm
+                {
+                    RepresentedVariable = representedVariable
+                };
+
+                return vm;
+            }
+        }
+    }
+}
