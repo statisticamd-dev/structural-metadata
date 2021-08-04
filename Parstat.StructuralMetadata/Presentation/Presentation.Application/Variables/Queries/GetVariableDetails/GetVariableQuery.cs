@@ -28,7 +28,6 @@ namespace Presentation.Application.Variables.Queries.GetVariableDetails
                 var variable = await _context.Variables
                     .Where(v => v.Id == request.Id)
                     .ProjectTo<VariableDetailsDto>(_mapper.ConfigurationProvider)
-                    .OrderBy(v => v.Name)
                     .SingleOrDefaultAsync(cancellationToken);
 
                 var vm = new VariableVm
