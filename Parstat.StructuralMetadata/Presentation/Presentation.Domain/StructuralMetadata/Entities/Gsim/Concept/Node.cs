@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Presentation.Common.Domain.StructuralMetadata.Abstracts;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 
@@ -17,6 +18,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public AggregationType AggregationType { get; set; }
         public long LabelId { get; set; }
         public Label Label { get; set; }
+        public IEnumerable<Node> Children { get; set; }
 
     }
 }
