@@ -8,25 +8,21 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<RepresentedVariable> builder)
         {
-            builder.Property(v => v.Name)
-                .IsRequired(true)
-                .HasMaxLength(100);
-            builder.Property(v => v.Description)
-                .IsRequired(false)
-                .HasMaxLength(255);
-            builder.Property(v => v.Version)
+            builder.Property(r => r.Version)
                 .IsRequired(true)
                 .HasMaxLength(50);
-            builder.Property(v => v.LocalId)
+            builder.Property(r => r.LocalId)
                 .IsRequired()
                 .HasMaxLength(50);
-            builder.HasIndex(v => new {v.LocalId, v.Version})
+            builder.HasIndex(r => new {r.LocalId, r.Version})
                 .IsUnique();
-            builder.Property(v => v.VersionDate)
+            builder.Property(r => r.VersionDate)
                 .IsRequired();
-            builder.Property(v => v.VersionRationale)
-                .IsRequired()
-                .HasMaxLength(255);
+            builder.OwnsOne(r => r.Name);
+            builder.OwnsOne(r => r.Description);
+            builder.OwnsOne(r => r.VersionRationale);
+            builder.OwnsOne(r => r.Definition);
+            builder.OwnsOne(r => r.Link);
                 /*
             builder.HasOne(r => r.SentinelValueDomain)
                 .WithMany(s => s.RepresentedVariables)

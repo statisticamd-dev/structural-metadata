@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Presentation.Persistence.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class FirstCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,13 +19,23 @@ namespace Presentation.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Name_En = table.Column<string>(type: "text", nullable: true),
+                    Name_Ro = table.Column<string>(type: "text", nullable: true),
+                    Name_Ru = table.Column<string>(type: "text", nullable: true),
+                    Description_En = table.Column<string>(type: "text", nullable: true),
+                    Description_Ro = table.Column<string>(type: "text", nullable: true),
+                    Description_Ru = table.Column<string>(type: "text", nullable: true),
                     Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Definition = table.Column<string>(type: "text", nullable: true),
-                    Link = table.Column<string>(type: "text", nullable: true)
+                    VersionRationale_En = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ro = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ru = table.Column<string>(type: "text", nullable: true),
+                    Definition_En = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ro = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ru = table.Column<string>(type: "text", nullable: true),
+                    Link_En = table.Column<string>(type: "text", nullable: true),
+                    Link_Ro = table.Column<string>(type: "text", nullable: true),
+                    Link_Ru = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -38,18 +48,13 @@ namespace Presentation.Persistence.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Value_En = table.Column<string>(type: "text", nullable: true),
+                    Value_Ro = table.Column<string>(type: "text", nullable: true),
+                    Value_Ru = table.Column<string>(type: "text", nullable: true),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     Created = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
-                    LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
-                    LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Definition = table.Column<string>(type: "text", nullable: true),
-                    Link = table.Column<string>(type: "text", nullable: true)
+                    LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -67,11 +72,17 @@ namespace Presentation.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Name_En = table.Column<string>(type: "text", nullable: true),
+                    Name_Ro = table.Column<string>(type: "text", nullable: true),
+                    Name_Ru = table.Column<string>(type: "text", nullable: true),
+                    Description_En = table.Column<string>(type: "text", nullable: true),
+                    Description_Ro = table.Column<string>(type: "text", nullable: true),
+                    Description_Ru = table.Column<string>(type: "text", nullable: true),
                     Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    VersionRationale_En = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ro = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ru = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,13 +101,23 @@ namespace Presentation.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Name_En = table.Column<string>(type: "text", nullable: true),
+                    Name_Ro = table.Column<string>(type: "text", nullable: true),
+                    Name_Ru = table.Column<string>(type: "text", nullable: true),
+                    Description_En = table.Column<string>(type: "text", nullable: true),
+                    Description_Ro = table.Column<string>(type: "text", nullable: true),
+                    Description_Ru = table.Column<string>(type: "text", nullable: true),
                     Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Definition = table.Column<string>(type: "text", nullable: true),
-                    Link = table.Column<string>(type: "text", nullable: true)
+                    VersionRationale_En = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ro = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ru = table.Column<string>(type: "text", nullable: true),
+                    Definition_En = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ro = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ru = table.Column<string>(type: "text", nullable: true),
+                    Link_En = table.Column<string>(type: "text", nullable: true),
+                    Link_Ro = table.Column<string>(type: "text", nullable: true),
+                    Link_Ru = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -114,13 +135,23 @@ namespace Presentation.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Name_En = table.Column<string>(type: "text", nullable: true),
+                    Name_Ro = table.Column<string>(type: "text", nullable: true),
+                    Name_Ru = table.Column<string>(type: "text", nullable: true),
+                    Description_En = table.Column<string>(type: "text", nullable: true),
+                    Description_Ro = table.Column<string>(type: "text", nullable: true),
+                    Description_Ru = table.Column<string>(type: "text", nullable: true),
                     Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Definition = table.Column<string>(type: "text", nullable: true),
-                    Link = table.Column<string>(type: "text", nullable: true)
+                    VersionRationale_En = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ro = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ru = table.Column<string>(type: "text", nullable: true),
+                    Definition_En = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ro = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ru = table.Column<string>(type: "text", nullable: true),
+                    Link_En = table.Column<string>(type: "text", nullable: true),
+                    Link_Ro = table.Column<string>(type: "text", nullable: true),
+                    Link_Ru = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,11 +173,17 @@ namespace Presentation.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Name_En = table.Column<string>(type: "text", nullable: true),
+                    Name_Ro = table.Column<string>(type: "text", nullable: true),
+                    Name_Ru = table.Column<string>(type: "text", nullable: true),
+                    Description_En = table.Column<string>(type: "text", nullable: true),
+                    Description_Ro = table.Column<string>(type: "text", nullable: true),
+                    Description_Ru = table.Column<string>(type: "text", nullable: true),
                     Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    VersionRationale_En = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ro = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ru = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -203,11 +240,17 @@ namespace Presentation.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Name_En = table.Column<string>(type: "text", nullable: true),
+                    Name_Ro = table.Column<string>(type: "text", nullable: true),
+                    Name_Ru = table.Column<string>(type: "text", nullable: true),
+                    Description_En = table.Column<string>(type: "text", nullable: true),
+                    Description_Ro = table.Column<string>(type: "text", nullable: true),
+                    Description_Ru = table.Column<string>(type: "text", nullable: true),
                     Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    VersionRationale_En = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ro = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ru = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -232,13 +275,23 @@ namespace Presentation.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Name_En = table.Column<string>(type: "text", nullable: true),
+                    Name_Ro = table.Column<string>(type: "text", nullable: true),
+                    Name_Ru = table.Column<string>(type: "text", nullable: true),
+                    Description_En = table.Column<string>(type: "text", nullable: true),
+                    Description_Ro = table.Column<string>(type: "text", nullable: true),
+                    Description_Ru = table.Column<string>(type: "text", nullable: true),
                     Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Definition = table.Column<string>(type: "text", nullable: true),
-                    Link = table.Column<string>(type: "text", nullable: true)
+                    VersionRationale_En = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ro = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ru = table.Column<string>(type: "text", nullable: true),
+                    Definition_En = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ro = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ru = table.Column<string>(type: "text", nullable: true),
+                    Link_En = table.Column<string>(type: "text", nullable: true),
+                    Link_Ro = table.Column<string>(type: "text", nullable: true),
+                    Link_Ru = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -322,11 +375,17 @@ namespace Presentation.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Name_En = table.Column<string>(type: "text", nullable: true),
+                    Name_Ro = table.Column<string>(type: "text", nullable: true),
+                    Name_Ru = table.Column<string>(type: "text", nullable: true),
+                    Description_En = table.Column<string>(type: "text", nullable: true),
+                    Description_Ro = table.Column<string>(type: "text", nullable: true),
+                    Description_Ru = table.Column<string>(type: "text", nullable: true),
                     Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    VersionRationale_En = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ro = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ru = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -363,13 +422,23 @@ namespace Presentation.Persistence.Migrations
                     LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     LocalId = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Name_En = table.Column<string>(type: "text", nullable: true),
+                    Name_Ro = table.Column<string>(type: "text", nullable: true),
+                    Name_Ru = table.Column<string>(type: "text", nullable: true),
+                    Description_En = table.Column<string>(type: "text", nullable: true),
+                    Description_Ro = table.Column<string>(type: "text", nullable: true),
+                    Description_Ru = table.Column<string>(type: "text", nullable: true),
                     Version = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     VersionDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    VersionRationale = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    Definition = table.Column<string>(type: "text", nullable: true),
-                    Link = table.Column<string>(type: "text", nullable: true)
+                    VersionRationale_En = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ro = table.Column<string>(type: "text", nullable: true),
+                    VersionRationale_Ru = table.Column<string>(type: "text", nullable: true),
+                    Definition_En = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ro = table.Column<string>(type: "text", nullable: true),
+                    Definition_Ru = table.Column<string>(type: "text", nullable: true),
+                    Link_En = table.Column<string>(type: "text", nullable: true),
+                    Link_Ro = table.Column<string>(type: "text", nullable: true),
+                    Link_Ru = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -466,12 +535,6 @@ namespace Presentation.Persistence.Migrations
                 name: "IX_Correspondences_TargetId",
                 table: "Correspondences",
                 column: "TargetId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Labels_LocalId_Version",
-                table: "Labels",
-                columns: new[] { "LocalId", "Version" },
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Levels_LocalId_Version",

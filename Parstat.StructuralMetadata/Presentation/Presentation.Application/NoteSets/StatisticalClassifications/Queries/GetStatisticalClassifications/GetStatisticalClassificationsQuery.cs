@@ -28,7 +28,7 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
                 var statisticalClassifications = await _context.NodeSets
                     .Where(ns => ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION)
                     .ProjectTo<StatisticalClassificationDto>(_mapper.ConfigurationProvider)
-                    .OrderBy(cl => cl.Name)
+                    .OrderBy(cl => cl.LocalId)
                     .ToListAsync(cancellationToken);
 
                 var vm = new StatisticalClassificationsVm

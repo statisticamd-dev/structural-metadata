@@ -8,12 +8,6 @@ namespace Presentation.Infrastructure.Configurations
     {
         void IEntityTypeConfiguration<Variable>.Configure(EntityTypeBuilder<Variable> builder)
         {
-            builder.Property(v => v.Name)
-                .IsRequired(true)
-                .HasMaxLength(100);
-            builder.Property(v => v.Description)
-                .IsRequired(false)
-                .HasMaxLength(255);
             builder.Property(v => v.Version)
                 .IsRequired(true)
                 .HasMaxLength(50);
@@ -24,9 +18,11 @@ namespace Presentation.Infrastructure.Configurations
                 .IsUnique();
             builder.Property(v => v.VersionDate)
                 .IsRequired();
-            builder.Property(v => v.VersionRationale)
-                .IsRequired()
-                .HasMaxLength(255);
+            builder.OwnsOne(v => v.Name);
+            builder.OwnsOne(v => v.Description);
+            builder.OwnsOne(v => v.VersionRationale);
+            builder.OwnsOne(v => v.Definition);
+            builder.OwnsOne(v => v.Link);
             
         }
     }

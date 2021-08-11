@@ -1,5 +1,6 @@
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
+using Presentation.Application.Common.Models;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentationDetails
@@ -8,14 +9,14 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
     {
         public long Id { get; set; }
         public string Code { get; set; }
-        public string Label { get; set; }
+        public MultilanguageStringDto Value { get; set; }
 
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Node, NodeDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Code, opt => opt.MapFrom(s => s.Code))
-                .ForMember(d => d.Label, opt => opt.MapFrom(s => s.Label.Name));
+                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label.Value));
         } 
     }
 }

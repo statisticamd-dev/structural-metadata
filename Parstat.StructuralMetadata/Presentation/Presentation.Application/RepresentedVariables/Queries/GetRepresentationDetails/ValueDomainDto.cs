@@ -1,5 +1,6 @@
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
+using Presentation.Application.Common.Models;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
@@ -8,8 +9,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
     public class ValueDomainDto : IMapFrom<ValueDomain>
     {
         public long Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public MultilanguageStringDto Name { get; set; }
+        public MultilanguageStringDto Description { get; set; }
         public ValueDomainType Type { get; set; }
         public string Expression { get; set; }
         public DataType DataType { get; set; }

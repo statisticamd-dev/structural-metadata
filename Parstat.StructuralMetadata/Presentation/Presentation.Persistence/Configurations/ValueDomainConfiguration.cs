@@ -8,12 +8,6 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<ValueDomain> builder)
         {
-           builder.Property(v => v.Name)
-                .IsRequired(true)
-                .HasMaxLength(100);
-            builder.Property(v => v.Description)
-                .IsRequired(false)
-                .HasMaxLength(255);
             builder.Property(v => v.Version)
                 .IsRequired(true)
                 .HasMaxLength(50);
@@ -24,13 +18,13 @@ namespace Presentation.Infrastructure.Configurations
                 .IsUnique();
             builder.Property(v => v.VersionDate)
                 .IsRequired();
-            builder.Property(v => v.VersionRationale)
-                .IsRequired()
-                .HasMaxLength(255);
             builder.Property(v => v.LevelId)
                 .IsRequired(false);
             builder.Property(v => v.NodeSetId)
                 .IsRequired(false);
+            builder.OwnsOne(v => v.Name);
+            builder.OwnsOne(v => v.Description);
+            builder.OwnsOne(v => v.VersionRationale);
         }
     }
 }

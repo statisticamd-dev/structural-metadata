@@ -26,7 +26,7 @@ namespace Presentation.Application.Variables.Queries.GetVariableList
             {
                 var variables = await _context.Variables
                     .ProjectTo<VariableDto>(_mapper.ConfigurationProvider)
-                    .OrderBy(v => v.Name)
+                    .OrderBy(v => v.LocalId)
                     .ToListAsync(cancellationToken);
 
                 var vm = new VariableListVm

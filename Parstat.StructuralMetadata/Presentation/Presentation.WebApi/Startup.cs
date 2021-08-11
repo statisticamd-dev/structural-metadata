@@ -44,6 +44,7 @@ namespace Presentation.WebApi
                 .AddDbContextCheck<StructuralMetadataDbContext>();
 
             services.AddScoped<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<ICurrentLanguageService, CurrentLanguageService>();
 
             services.AddHttpContextAccessor();
 

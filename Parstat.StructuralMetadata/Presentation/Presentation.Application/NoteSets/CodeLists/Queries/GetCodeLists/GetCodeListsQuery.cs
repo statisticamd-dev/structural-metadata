@@ -28,7 +28,7 @@ namespace Presentation.Application.NoteSets.CodeLists.Queries.GetCodeLists
                 var codeLists = await _context.NodeSets
                     .Where(ns => ns.NodeSetType == NodeSetType.CODE_LIST)
                     .ProjectTo<CodeListDto>(_mapper.ConfigurationProvider)
-                    .OrderBy(cl => cl.Name)
+                    .OrderBy(cl => cl.LocalId)
                     .ToListAsync(cancellationToken);
 
                 var vm = new CodeListsVm

@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Presentation.Domain;
 
 namespace Presentation.Common.Domain.StructuralMetadata.Interfaces
 {
     public interface ILinkable : IDomain
     {
-        string Link { get; set; }
+        MultilanguageString Link { get; set; }
     }
 }

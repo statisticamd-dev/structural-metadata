@@ -8,25 +8,21 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.Property(v => v.Name)
-                .IsRequired(true)
-                .HasMaxLength(100);
-            builder.Property(v => v.Description)
-                .IsRequired(false)
-                .HasMaxLength(255);
-            builder.Property(v => v.Version)
+            builder.Property(c => c.Version)
                 .IsRequired(true)
                 .HasMaxLength(50);
-            builder.Property(v => v.LocalId)
+            builder.Property(c => c.LocalId)
                 .IsRequired()
                 .HasMaxLength(50);
-            builder.HasIndex(v => new {v.LocalId, v.Version})
+            builder.HasIndex(c => new {c.LocalId, c.Version})
                 .IsUnique();
-            builder.Property(v => v.VersionDate)
+            builder.Property(c => c.VersionDate)
                 .IsRequired();
-            builder.Property(v => v.VersionRationale)
-                .IsRequired()
-                .HasMaxLength(255);
+            builder.OwnsOne(c => c.Name);
+            builder.OwnsOne(c => c.Description);
+            builder.OwnsOne(c => c.VersionRationale);
+            builder.OwnsOne(c => c.Definition);
+            builder.OwnsOne(c => c.Link);
         }
     }
 }

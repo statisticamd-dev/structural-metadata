@@ -7,25 +7,19 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<MeasurementType> builder)
         {
-            builder.Property(v => v.Name)
-                .IsRequired(true)
-                .HasMaxLength(100);
-            builder.Property(v => v.Description)
-                .IsRequired(false)
-                .HasMaxLength(255);
-            builder.Property(v => v.Version)
+            builder.Property(m => m.Version)
                 .IsRequired(true)
                 .HasMaxLength(50);
-            builder.Property(v => v.LocalId)
+            builder.Property(m => m.LocalId)
                 .IsRequired()
                 .HasMaxLength(50);
-            builder.HasIndex(v => new {v.LocalId, v.Version})
+            builder.HasIndex(m => new {m.LocalId, m.Version})
                 .IsUnique();
-            builder.Property(v => v.VersionDate)
+            builder.Property(m => m.VersionDate)
                 .IsRequired();
-            builder.Property(v => v.VersionRationale)
-                .IsRequired()
-                .HasMaxLength(255);
+            builder.OwnsOne(m => m.Name);
+            builder.OwnsOne(m => m.Description);
+            builder.OwnsOne(m => m.VersionRationale);
         }
     }
 }
