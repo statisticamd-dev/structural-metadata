@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,11 +7,12 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
+using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 
 namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.GetStatisticalClassificationDetails
 {
-    public class GetStatisticalClassificationQuery : IRequest<StatisticalClassificationVm>
+    public class GetStatisticalClassificationQuery : AbstractRequest, IRequest<StatisticalClassificationVm>
     {
         public long Id { get; set; }
 
@@ -29,7 +31,8 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
             {
                 var statisticalClassification = await _context.NodeSets
                     .Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION)
-                    .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider)
+                    .AsNoTracking()
+                    .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .SingleOrDefaultAsync(cancellationToken);
 
                 var vm = new StatisticalClassificationVm

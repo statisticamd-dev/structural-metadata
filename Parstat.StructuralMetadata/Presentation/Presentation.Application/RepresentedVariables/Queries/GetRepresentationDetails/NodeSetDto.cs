@@ -13,22 +13,25 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
         
         public long Id { get; set; }
         public string LocalId { get; set; }
-        public MultilanguageStringDto Name { get; set; }
-        public MultilanguageStringDto Description { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public string Version { get; set; }
-        public MultilanguageStringDto Definition { get; set; }
+        public string Definition { get; set; }
         public NodeSetType NodeSetType { get; set; }
         public List<NodeDto> Nodes { get; set; }
 
         public void Mapping(Profile profile)
         {
+            //language parameter from request
+            //default english
+            string language = "en";
             profile.CreateMap<NodeSet, NodeSetDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name.Text(language)))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description.Text(language)))
                 .ForMember(d => d.Version, opt => opt.MapFrom(s => s.Version))
-                .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition))
+                .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition.Text(language)))
                 .ForMember(d => d.NodeSetType, opt => opt.MapFrom(s => s.NodeSetType))
                 .ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.Nodes));
         } 

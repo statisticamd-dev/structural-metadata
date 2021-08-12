@@ -10,7 +10,7 @@ namespace Presentation.WebApi.Controllers
     {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<VariableListVm>> GetAll() => Ok(await Mediator.Send(new GetVariableListQuery()));
+        public async Task<ActionResult<VariableListVm>> GetAll(string language) => Ok(await Mediator.Send(new GetVariableListQuery {Language = language}));
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -9,19 +9,22 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
     {
         public long Id { get; set; }
         public string LocalId { get; set; }
-        public MultilanguageStringDto Name { get; set; }
-        public MultilanguageStringDto Description { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public string Version { get; set; }
-        public MultilanguageStringDto Measuers {get; set;}
+        public string Measuers {get; set;}
 
         public void Mapping(Profile profile)
         {
+            //language parameter from request
+            //default english
+            string language = "en";
             profile.CreateMap<Variable, VariableMiniDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description))
-                .ForMember(d => d.Measuers, opt => opt.MapFrom(s => s.Measures.Name));
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name.Text(language)))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description.Text(language)))
+                .ForMember(d => d.Measuers, opt => opt.MapFrom(s => s.Measures.Name.Text(language)));
         } 
     }
 }

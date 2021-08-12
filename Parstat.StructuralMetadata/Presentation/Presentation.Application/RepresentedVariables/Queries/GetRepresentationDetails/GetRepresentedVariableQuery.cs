@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,10 +7,11 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
+using Presentation.Application.Common.Requests;
 
 namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentationDetails
 {
-    public class GetRepresentedVariableQuery : IRequest<RepresentedVariableVm>
+    public class GetRepresentedVariableQuery : AbstractRequest, IRequest<RepresentedVariableVm>
     {
         public long Id { get; set; }
 
@@ -28,7 +30,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             {
                 var representedVariable = await _context.RepresentedVariables
                     .Where(v => v.Id == request.Id)
-                    .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider)
+                    .AsNoTracking()
+                    .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .SingleOrDefaultAsync(cancellationToken);
 
                 var vm = new RepresentedVariableVm

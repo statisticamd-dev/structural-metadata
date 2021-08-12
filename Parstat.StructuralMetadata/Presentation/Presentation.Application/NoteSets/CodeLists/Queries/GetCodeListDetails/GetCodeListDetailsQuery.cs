@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,10 +7,11 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
+using Presentation.Application.Common.Requests;
 
 namespace Presentation.Application.NoteSets.CodeLists.Queries.GetCodeListDetails
 {
-    public class GetCodeListDetailsQuery: IRequest<CodeListVm>
+    public class GetCodeListDetailsQuery: AbstractRequest, IRequest<CodeListVm>
     {
         public long Id { get; set; }
         public class GetCodeListDetailsHandler : IRequestHandler<GetCodeListDetailsQuery, CodeListVm>
@@ -27,7 +29,8 @@ namespace Presentation.Application.NoteSets.CodeLists.Queries.GetCodeListDetails
             {
                 var codeList = await _context.NodeSets
                     .Where(ns => ns.Id == request.Id)
-                    .ProjectTo<CodeListDetailsDto>(_mapper.ConfigurationProvider)
+                    .AsNoTracking()
+                    .ProjectTo<CodeListDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> { ["language"] = request.Language })
                     .SingleOrDefaultAsync(cancellationToken);
 
                 var vm = new CodeListVm

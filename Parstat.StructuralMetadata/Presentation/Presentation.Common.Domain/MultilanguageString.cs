@@ -1,5 +1,6 @@
 
 using Presentation.Common.Domain.StructuralMetadata.Enums;
+using System;
 
 namespace Presentation.Domain
 {
@@ -18,6 +19,16 @@ namespace Presentation.Domain
             if(language == Language.RU)
                 return this.Ru;
             return this.En;
+        }
+
+        public string Text(string language) 
+        {
+            Language lng;
+            if(Enum.TryParse<Language>(language, true, out lng)) 
+            {
+                return Text(lng);
+            }
+            return Text(Language.EN); //default
         }
     }
 }
