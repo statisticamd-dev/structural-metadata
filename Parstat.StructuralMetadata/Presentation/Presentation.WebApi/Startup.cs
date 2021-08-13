@@ -13,6 +13,7 @@ using System;
 using System.Text;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
 
 namespace Presentation.WebApi
 {
@@ -46,6 +47,7 @@ namespace Presentation.WebApi
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
             services.AddHttpContextAccessor();
+            services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<IStructuralMetadataDbContext>());
 
             //Register swagger generator
             services.AddSwaggerGen(c =>
