@@ -8,6 +8,8 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<MeasurementUnit> builder)
         {
+            builder.Property(m => m.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(m => m.Version)
                 .IsRequired(true)
                 .HasMaxLength(50);

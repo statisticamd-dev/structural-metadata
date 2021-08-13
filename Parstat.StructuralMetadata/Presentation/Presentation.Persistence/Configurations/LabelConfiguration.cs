@@ -8,6 +8,8 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Label> builder)
         {
+             builder.Property(l => l.Id)
+                .ValueGeneratedOnAdd();
             builder.OwnsOne(l => l.Value);
         }
     }

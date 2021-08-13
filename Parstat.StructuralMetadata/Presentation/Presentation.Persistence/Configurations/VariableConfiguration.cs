@@ -8,6 +8,8 @@ namespace Presentation.Infrastructure.Configurations
     {
         void IEntityTypeConfiguration<Variable>.Configure(EntityTypeBuilder<Variable> builder)
         {
+            builder.Property(v => v.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(v => v.Version)
                 .IsRequired(true)
                 .HasMaxLength(50);

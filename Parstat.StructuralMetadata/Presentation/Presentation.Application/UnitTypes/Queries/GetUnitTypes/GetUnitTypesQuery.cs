@@ -9,32 +9,32 @@ using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 
-namespace Presentation.Application.Variables.Queries.GetVariableList
+namespace Presentation.Application.UnitTypes.Queries.GetUnitTypes
 {
-    public class GetVariableListQuery : AbstractRequest, IRequest<VariableListVm>
+    public class GetUnitTypesQuery : AbstractRequest, IRequest<UnitTypeListVm>
     {
-        public class GetVariableListQueryHandler : IRequestHandler<GetVariableListQuery, VariableListVm>
+        public class GetUnitTypesQueryHandler : IRequestHandler<GetUnitTypesQuery, UnitTypeListVm>
         {
             private readonly IStructuralMetadataDbContext _context;
             private readonly IMapper _mapper;
 
-            public GetVariableListQueryHandler(IStructuralMetadataDbContext context, IMapper mapper) 
+            public GetUnitTypesQueryHandler(IStructuralMetadataDbContext context, IMapper mapper) 
             {
                 _context = context;
                 _mapper = mapper;
             }
 
-            public async Task<VariableListVm> Handle(GetVariableListQuery request, CancellationToken cancellationToken)
+            public async Task<UnitTypeListVm> Handle(GetUnitTypesQuery request, CancellationToken cancellationToken)
             {
-                var variables = await _context.Variables
+                var unitTypes = await _context.UnitTypes
                     .AsNoTracking()
-                    .ProjectTo<VariableDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
+                    .ProjectTo<UnitTypeDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .OrderBy(v => v.LocalId)
                     .ToListAsync(cancellationToken);
 
-                var vm = new VariableListVm
+                var vm = new UnitTypeListVm
                 {
-                    Variables = variables
+                    UnitTypes = unitTypes
                 };
 
                 return vm;

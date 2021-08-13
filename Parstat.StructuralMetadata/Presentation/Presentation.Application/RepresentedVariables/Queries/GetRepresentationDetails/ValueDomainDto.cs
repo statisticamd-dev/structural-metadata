@@ -1,14 +1,14 @@
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models;
+using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentationDetails
 {
-    public class ValueDomainDto : IMapFrom<ValueDomain>
+    public class ValueDomainDto : AbstractBaseDto, IMapFrom<ValueDomain>
     {
-        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public ValueDomainType Type { get; set; }

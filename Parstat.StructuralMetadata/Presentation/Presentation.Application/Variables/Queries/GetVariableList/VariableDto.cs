@@ -2,14 +2,14 @@ using System;
 using AutoMapper;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Mappings;
+using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.Variables.Queries.GetVariableList
 {
-    public class VariableDto : IMapFrom<Variable>
+    public class VariableDto : AbstractBaseDto, IMapFrom<Variable>
     {
-        public long Id { get; set; }
         public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

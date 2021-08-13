@@ -10,7 +10,7 @@ using Presentation.Persistence;
 namespace Presentation.Persistence.Migrations
 {
     [DbContext(typeof(StructuralMetadataDbContext))]
-    [Migration("20210811081351_FirstCreate")]
+    [Migration("20210813071900_FirstCreate")]
     partial class FirstCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

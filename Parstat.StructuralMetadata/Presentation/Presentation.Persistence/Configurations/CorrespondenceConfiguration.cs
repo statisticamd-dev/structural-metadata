@@ -8,6 +8,8 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Correspondence> builder)
         {
+             builder.Property(c => c.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(c => c.Relationship)
                 .IsRequired();
             builder.Property(c => c.SourceId)

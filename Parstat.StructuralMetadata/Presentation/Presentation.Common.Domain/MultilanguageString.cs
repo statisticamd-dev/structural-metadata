@@ -30,5 +30,24 @@ namespace Presentation.Domain
             }
             return Text(Language.EN); //default
         }
+
+        public static MultilanguageString Init(Language language, string text) 
+        {
+            if(language == Language.RO)
+                return new MultilanguageString {Ro = text};
+            if(language == Language.RU) 
+                return new MultilanguageString {Ru = text};
+            return new MultilanguageString {En = text};
+        }
+
+        public void AddText(Language language, string text) 
+        {
+            if(language == Language.RO)
+                this.Ro = text;
+            if(language == Language.RU)
+                this.Ru = text;
+            if(language == Language.EN)
+                this.En = text;
+        }
     }
 }

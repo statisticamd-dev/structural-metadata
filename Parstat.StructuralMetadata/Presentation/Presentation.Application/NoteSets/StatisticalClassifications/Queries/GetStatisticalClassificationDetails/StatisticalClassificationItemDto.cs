@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
-using Presentation.Application.Common.Models;
+using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.GetStatisticalClassificationDetails
 {
-    public class StatisticalClassificationItemDto : IMapFrom<Node>
+    public class StatisticalClassificationItemDto : AbstractBaseDto, IMapFrom<Node>
     {
-        public long Id { get; set; }
         public string Code { get; set; }
         public string Value { get; set; }
         public int LevelNumber { get; set; }

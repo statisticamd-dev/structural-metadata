@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
@@ -18,5 +20,6 @@ namespace Presentation.Application.Common.Interfaces
          DbSet<UnitType> UnitTypes {get; set;}
          DbSet<ValueDomain> ValueDomains {get; set;}
          DbSet<Variable> Variables {get; set;}
+         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

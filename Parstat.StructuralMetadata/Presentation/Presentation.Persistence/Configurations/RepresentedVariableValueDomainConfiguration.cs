@@ -8,6 +8,8 @@ namespace Presentation.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<RepresentedVariableValueDomain> builder)
         {
+            builder.Property(r => r.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(v => v.RepresentedVariableId)
                 .IsRequired();
             builder.Property(v => v.ValueDomainId)

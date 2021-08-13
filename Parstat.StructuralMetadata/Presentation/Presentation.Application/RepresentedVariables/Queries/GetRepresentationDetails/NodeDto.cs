@@ -1,13 +1,13 @@
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models;
+using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentationDetails
 {
-    public class NodeDto : IMapFrom<Node>
+    public class NodeDto : AbstractBaseDto, IMapFrom<Node>
     {
-        public long Id { get; set; }
         public string Code { get; set; }
         public string Value { get; set; }
 

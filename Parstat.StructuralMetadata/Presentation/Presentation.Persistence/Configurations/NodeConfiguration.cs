@@ -8,6 +8,8 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Node> builder)
         {
+            builder.Property(n => n.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(n => n.AggregationType)
                 .IsRequired();
             builder.Property(n => n.Code)

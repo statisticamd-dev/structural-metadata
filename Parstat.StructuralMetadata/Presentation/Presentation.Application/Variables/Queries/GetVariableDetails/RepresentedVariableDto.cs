@@ -1,13 +1,13 @@
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models;
+using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.Variables.Queries.GetVariableDetails
 {
-    public class RepresentedVariableDto : IMapFrom<RepresentedVariable>
+    public class RepresentedVariableDto : AbstractBaseDto, IMapFrom<RepresentedVariable>
     {
-        public long Id { get; set; }
         public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

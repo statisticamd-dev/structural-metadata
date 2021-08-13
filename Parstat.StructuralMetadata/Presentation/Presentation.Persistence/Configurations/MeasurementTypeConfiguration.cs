@@ -7,6 +7,8 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<MeasurementType> builder)
         {
+             builder.Property(m => m.Id)
+                .ValueGeneratedOnAdd();
             builder.Property(m => m.Version)
                 .IsRequired(true)
                 .HasMaxLength(50);

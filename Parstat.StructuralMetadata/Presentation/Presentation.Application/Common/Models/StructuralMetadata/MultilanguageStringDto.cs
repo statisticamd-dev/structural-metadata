@@ -3,7 +3,7 @@ using Presentation.Application.Common.Mappings;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 
-namespace Presentation.Application.Common.Models
+namespace Presentation.Application.Common.Models.StructuralMetadata
 {
     public class MultilanguageStringDto : IMapFrom<MultilanguageString>
     {
