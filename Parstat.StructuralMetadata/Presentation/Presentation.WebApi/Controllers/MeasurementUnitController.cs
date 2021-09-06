@@ -15,7 +15,7 @@ namespace Presentation.WebApi.Controllers
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<MeasurementUnitVm>> Get(long id) => Ok(await Mediator.Send(new GetMeasurementUnitQuery {Id = id}));
+        public async Task<ActionResult<MeasurementUnitVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetMeasurementUnitQuery {Id = id, Language = language}));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
