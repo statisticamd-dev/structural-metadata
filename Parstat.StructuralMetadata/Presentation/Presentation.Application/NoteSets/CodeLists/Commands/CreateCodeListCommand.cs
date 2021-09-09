@@ -1,16 +1,16 @@
 using MediatR;
-using System;
-using Presentation.Application.Common.Requests;
 using Presentation.Application.Common.Interfaces;
-using System.Threading.Tasks;
-using System.Threading;
+using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
-using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 using Presentation.Domain;
+using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Presentation.Application.MeasurementTypes.Commands
+namespace Presentation.Application.NoteSets.CodeLists.Commands
 {
-    public class CreateMeasurementTypeCommand : AbstractRequest, IRequest<long>
+    public class CreateCodeListCommand : AbstractRequest, IRequest<long>
     {
         public string LocalId { get; set; }
         public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace Presentation.Application.MeasurementTypes.Commands
         public DateTime VersionDate { get; set; }
         public string VersionRationale { get; set; }
 
-        public class Handler : IRequestHandler<CreateMeasurementTypeCommand, long>
+        public class Handler : IRequestHandler<CreateCodeListCommand, long>
         {
             private readonly IStructuralMetadataDbContext _context;
 
@@ -28,11 +28,11 @@ namespace Presentation.Application.MeasurementTypes.Commands
                 _context = context;
             }
 
-            public async Task<long> Handle(CreateMeasurementTypeCommand request, CancellationToken cancellationToken)
+            public async Task<long> Handle(CreateCodeListCommand request, CancellationToken cancellationToken)
             {
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
-                var entity = new MeasurementType 
+                var entity = new NodeSet
                 {
                       LocalId = request.LocalId,
                       Name = MultilanguageString.Init(language, request.Name),
@@ -40,8 +40,9 @@ namespace Presentation.Application.MeasurementTypes.Commands
                       Version = request.Version != null ? request.Version : "1.0",
                       VersionDate = request.VersionDate != null ? request.VersionDate : DateTime.Now,
                       VersionRationale = request.VersionRationale != null ? MultilanguageString.Init(language, request.VersionRationale) : null,
+                      NodeSetType = NodeSetType.CODE_LIST,
                 };
-                _context.MeasurementTypes.Add(entity);
+                _context.NodeSets.Add(entity);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
@@ -51,5 +52,6 @@ namespace Presentation.Application.MeasurementTypes.Commands
             }
 
         }
+        
     }
 }
