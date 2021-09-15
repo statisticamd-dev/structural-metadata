@@ -8,16 +8,16 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Presentation.Application.NoteSets.CodeLists.Commands
+namespace Presentation.Application.NoteSets.CodeLists.Commands.CreateCommand
 {
     public class CreateCodeListCommand : AbstractRequest, IRequest<long>
     {
         public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Version { get; set; }
-        public DateTime VersionDate { get; set; }
-        public string VersionRationale { get; set; }
+        public string Version { get; set; } = "1.0";
+        public DateTime VersionDate { get; set; } = DateTime.Now;
+        public string VersionRationale { get; set; } = "First Version";
 
         public class Handler : IRequestHandler<CreateCodeListCommand, long>
         {

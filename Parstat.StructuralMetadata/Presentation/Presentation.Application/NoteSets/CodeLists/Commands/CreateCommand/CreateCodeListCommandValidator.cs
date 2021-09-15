@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Presentation.Application.NoteSets.CodeLists.Commands
+namespace Presentation.Application.NoteSets.CodeLists.Commands.CreateCommand
 {
     public class CreateCodeListCommandValidator : AbstractValidator<CreateCodeListCommand>
     {

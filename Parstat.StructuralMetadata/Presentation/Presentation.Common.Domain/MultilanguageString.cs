@@ -42,12 +42,15 @@ namespace Presentation.Domain
 
         public void AddText(Language language, string text) 
         {
-            if(language == Language.RO)
-                this.Ro = text;
-            if(language == Language.RU)
-                this.Ru = text;
-            if(language == Language.EN)
-                this.En = text;
+            if(!String.IsNullOrEmpty(text))
+            {
+                if(language == Language.RO)
+                    this.Ro = text;
+                if(language == Language.RU)
+                    this.Ru = text;
+                if(language == Language.EN)
+                    this.En = text;
+            }
         }
     }
 }
