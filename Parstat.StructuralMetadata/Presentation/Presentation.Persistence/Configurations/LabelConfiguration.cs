@@ -8,9 +8,13 @@ namespace Presentation.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Label> builder)
         {
-             builder.Property(l => l.Id)
+            builder.Property(l => l.Id)
                 .ValueGeneratedOnAdd();
-            builder.OwnsOne(l => l.Value);
+            builder.OwnsOne(l => l.Value, multiLang => {
+                multiLang.HasIndex(m => m.En).IsUnique();
+                multiLang.HasIndex(m => m.Ro).IsUnique();
+                multiLang.HasIndex(m => m.Ru).IsUnique();
+            });
         }
     }
 }

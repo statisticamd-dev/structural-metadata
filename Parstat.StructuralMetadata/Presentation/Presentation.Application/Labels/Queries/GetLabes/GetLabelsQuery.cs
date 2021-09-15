@@ -34,16 +34,18 @@ namespace Presentation.Application.Labels.Queries.GetLabes
                 if(string.IsNullOrEmpty(request.Value))
                 {
                 labels = await _context.Labels
+                    .AsNoTracking()
                     .ProjectTo<LabelDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
-                    .OrderBy(mu => mu.Value)
+                    .OrderBy(mu => mu.Id)
                     .ToListAsync(cancellationToken);
                 } 
                 else 
                 {
                     labels = await _context.Labels
+                        .AsNoTracking()
                         .Where(l => (l.Value.En.Contains(request.Value) || l.Value.Ro.Contains(request.Value) || l.Value.Ru.Contains(request.Value)))
                         .ProjectTo<LabelDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
-                        .OrderBy(mu => mu.Value)
+                        .OrderBy(mu => mu.Id)
                         .ToListAsync(cancellationToken);
                 }
 

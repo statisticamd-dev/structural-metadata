@@ -1,7 +1,10 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
@@ -39,7 +42,6 @@ namespace Presentation.Application.Labels.Commands.CreateLabel
 
                 return entity.Id;
             }
-
         }
     }
-}
+} 
