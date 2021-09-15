@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -21,14 +22,17 @@ namespace Presentation.WebApi.Services
             }
         }
         private string getUser(StringValues jwtHeader) {
-            var base64EncodedBytes = System.Convert.FromBase64String(jwtHeader.ToString());
+    
+            var base64EncodedBytes = System.Convert.FromBase64String(jwtHeader.ToString().Split(".")[1]);
                 string jwt = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
                  var options = new JsonDocumentOptions
                 {
                     AllowTrailingCommas = true
                 };
                 using(JsonDocument document = JsonDocument.Parse(jwt)) {
-                    return document.RootElement.EnumerateArray().Current.GetProperty("UserId").ToString();
+                    return document.RootElement.EnumerateObject()
+                        .Where(u => u.Name == "user")
+                        .FirstOrDefault().Value.ToString();
                 }
         } 
         public string UserId { get; }

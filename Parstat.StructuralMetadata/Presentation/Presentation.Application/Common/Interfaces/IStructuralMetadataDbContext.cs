@@ -1,6 +1,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Presentation.Common.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.Common.Interfaces
@@ -21,5 +23,7 @@ namespace Presentation.Application.Common.Interfaces
          DbSet<ValueDomain> ValueDomains {get; set;}
          DbSet<Variable> Variables {get; set;}
          Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
+        EntityEntry Entry(AuditableEntity entity);
     }
 }

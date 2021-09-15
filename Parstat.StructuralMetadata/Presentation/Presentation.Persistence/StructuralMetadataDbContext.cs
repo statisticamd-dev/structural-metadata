@@ -1,6 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Common.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
@@ -62,6 +63,11 @@ namespace Presentation.Persistence
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        public EntityEntry Entry(AuditableEntity entity)
+        {
+            return base.Entry(entity);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
@@ -95,5 +101,7 @@ namespace Presentation.Persistence
             modelBuilder
                 .ApplyConfigurationsFromAssembly(typeof(StructuralMetadataDbContext).Assembly);
         }
+
+       
     }
 }

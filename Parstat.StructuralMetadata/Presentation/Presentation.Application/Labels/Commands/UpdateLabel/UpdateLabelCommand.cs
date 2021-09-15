@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
@@ -35,6 +36,9 @@ namespace Presentation.Application.Labels.Commands.UpdateLabel
                 {
                     throw new NotFoundException(nameof(Label), request.Id);
                 }
+                //set the state to modified for auditing porpoises 
+                EntityEntry entityEntry =  _context.Entry(label);
+                entityEntry.State = EntityState.Modified;
                 label.Value.AddText(language, request.Value);
                 await _context.SaveChangesAsync(cancellationToken);
 
