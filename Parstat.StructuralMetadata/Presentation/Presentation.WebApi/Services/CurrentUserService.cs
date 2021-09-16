@@ -10,7 +10,7 @@ namespace Presentation.WebApi.Services
     {
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
-            StringValues jwtHeader;
+            StringValues jwtHeader = new StringValues();
             IsAuthenticated = httpContextAccessor.HttpContext?.Request.Headers.TryGetValue("jwt-auth", out jwtHeader) ?? false;
             if (IsAuthenticated)
             {
