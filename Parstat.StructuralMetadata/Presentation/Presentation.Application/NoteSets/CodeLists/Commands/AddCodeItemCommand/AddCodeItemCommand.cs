@@ -45,10 +45,11 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemComman
                 var codeItem = new Node
                 {
                     Code = request.Code,
-                    Label = label
+                    Label = label,
+                    NodeSet = codeList
                 };
 
-                codeList.Nodes.Append(codeItem);
+                _context.Nodes.Add(codeItem);
 
                 await _context.SaveChangesAsync(cancellationToken);
 

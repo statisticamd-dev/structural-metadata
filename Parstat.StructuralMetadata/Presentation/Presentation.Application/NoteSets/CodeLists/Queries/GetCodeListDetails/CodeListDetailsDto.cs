@@ -18,11 +18,11 @@ namespace Presentation.Application.NoteSets.CodeLists.Queries.GetCodeListDetails
             //default english
             string language = "en";
             profile.CreateMap<NodeSet, CodeListDetailsDto>()
-                .ForMember(ns => ns.Name, opt => opt.MapFrom(s => s.Name.Text(language)))
-                .ForMember(ns => ns.Description, opt => opt.MapFrom(s => s.Description.Text(language)))
-                .ForMember(ns => ns.Definition, opt => opt.MapFrom(s => s.Definition.Text(language)))
+                .ForMember(ns => ns.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
+                .ForMember(ns => ns.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
+                .ForMember(ns => ns.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : null))
                 .ForMember(ns => ns.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale.Text(language)))
-                .ForMember(ns => ns.Link, opt => opt.MapFrom(s => s.Link.Text(language)))
+                .ForMember(ns => ns.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : null))
                 .ForMember(ns => ns.CodeItems, opt => opt.MapFrom(s => s.Nodes));
         }
        
