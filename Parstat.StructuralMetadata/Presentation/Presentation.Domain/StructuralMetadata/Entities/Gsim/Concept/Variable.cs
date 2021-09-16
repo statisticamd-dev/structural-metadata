@@ -7,11 +7,11 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     public class Variable : AbstractConcept
     {
         public Variable() {
-            Representations = new HashSet<RepresentedVariable>();
+            Representations = new List<RepresentedVariable>();
         }
 
         public long MeasuresId { get; set; }
         public UnitType Measures { get; set; }
-        public IEnumerable<RepresentedVariable> Representations { get; set; }
+        public IList<RepresentedVariable> Representations { get; set; }
     }
 }

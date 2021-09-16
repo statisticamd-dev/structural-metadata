@@ -46,11 +46,11 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemComman
                 {
                     Code = request.Code,
                     Label = label,
-                    NodeSet = codeList
+                    NodeSet = codeList,
+                    AggregationType = AggregationType.NONE,
+
                 };
-
-                _context.Nodes.Add(codeItem);
-
+                codeList.Nodes.Add(codeItem);
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);

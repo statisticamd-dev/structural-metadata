@@ -8,10 +8,10 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     {
         public RepresentedVariable() 
         {
-            ValueDomains = new HashSet<RepresentedVariableValueDomain>();
+            ValueDomains = new List<RepresentedVariableValueDomain>();
         }
         public long VariableId { get; set; }
         public Variable Variable { get; set; }
-        public IEnumerable<RepresentedVariableValueDomain> ValueDomains { get; set; }
+        public IList<RepresentedVariableValueDomain> ValueDomains { get; set; }
     }
 }

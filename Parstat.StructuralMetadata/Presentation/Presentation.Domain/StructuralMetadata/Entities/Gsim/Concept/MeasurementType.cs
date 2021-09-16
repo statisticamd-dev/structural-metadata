@@ -7,8 +7,8 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     {
         public MeasurementType() 
         {
-            MeasureUnits = new HashSet<MeasurementUnit>();
+            MeasureUnits = new List<MeasurementUnit>();
         }
-        public IEnumerable<MeasurementUnit> MeasureUnits {get; set;}
+        public IList<MeasurementUnit> MeasureUnits {get; set;}
     }
 }

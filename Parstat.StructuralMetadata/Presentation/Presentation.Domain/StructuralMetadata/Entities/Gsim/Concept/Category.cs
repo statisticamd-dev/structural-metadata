@@ -6,8 +6,8 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     public class Category : AbstractConcept
     {
         public Category() {
-            Nodes = new HashSet<Node>();
+            Nodes = new List<Node>();
         }
-        public IEnumerable<Node> Nodes { get; set; }
+        public IList<Node> Nodes { get; set; }
     }
 }

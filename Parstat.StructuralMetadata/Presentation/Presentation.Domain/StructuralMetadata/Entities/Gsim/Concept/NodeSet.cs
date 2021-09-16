@@ -9,16 +9,16 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public NodeSet() {
             //SentinelValueDomains = new HashSet<ValueDomain>();
             //SubstantiveValueDomains = new HashSet<ValueDomain>();
-            Nodes = new HashSet<Node>();
-            Levels = new HashSet<Level>();
+            Nodes = new List<Node>();
+            Levels = new List<Level>();
         }
        // public IEnumerable<ValueDomain> SentinelValueDomains { get; set; }
 
         //public IEnumerable<ValueDomain>  SubstantiveValueDomains { get; set; }
 
         public NodeSetType NodeSetType { get; set; }
-        public IEnumerable<Node> Nodes { get; set; }
-        public IEnumerable<Level> Levels { get; set; }
+        public IList<Node> Nodes { get; set; }
+        public IList<Level> Levels { get; set; }
 
     }
 }

@@ -6,10 +6,10 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     public class Label : AbstractDomain
     {
         public MultilanguageString Value { get; set; }
-         public IEnumerable<Node> Nodes { get; set; }
+         public IList<Node> Nodes { get; set; }
 
          public Label() {
-            Nodes = new HashSet<Node>();
+            Nodes = new List<Node>();
          }
     }
 }

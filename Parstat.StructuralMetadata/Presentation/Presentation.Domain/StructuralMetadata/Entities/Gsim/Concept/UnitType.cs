@@ -8,8 +8,8 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     public class UnitType : AbstractConcept
     {
         public UnitType() {
-            Variables = new HashSet<Variable>();
+            Variables = new List<Variable>();
         }
-        public IEnumerable<Variable> Variables { get; set; }
+        public IList<Variable> Variables { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     {
         public Node() 
         {
-            Children = new HashSet<Node>();
+            Children = new List<Node>();
         }
         public long NodeSetId { get; set; }
         public long? LevelId { get; set; }
@@ -22,7 +22,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public AggregationType AggregationType { get; set; }
         public long LabelId { get; set; }
         public Label Label { get; set; }
-        public IEnumerable<Node> Children { get; set; }
+        public IList<Node> Children { get; set; }
 
     }
 }
