@@ -6,6 +6,10 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
 {
     public class Node : AbstractDomain
     {
+        public Node() 
+        {
+            Children = new HashSet<Node>();
+        }
         public long NodeSetId { get; set; }
         public long? LevelId { get; set; }
         public long? ParentId { get; set; }

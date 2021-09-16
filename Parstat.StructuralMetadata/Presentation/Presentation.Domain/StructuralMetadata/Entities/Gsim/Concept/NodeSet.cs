@@ -9,6 +9,8 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public NodeSet() {
             //SentinelValueDomains = new HashSet<ValueDomain>();
             //SubstantiveValueDomains = new HashSet<ValueDomain>();
+            Nodes = new HashSet<Node>();
+            Levels = new HashSet<Level>();
         }
        // public IEnumerable<ValueDomain> SentinelValueDomains { get; set; }
 

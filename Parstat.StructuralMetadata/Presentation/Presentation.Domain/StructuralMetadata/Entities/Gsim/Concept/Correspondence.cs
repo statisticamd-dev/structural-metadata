@@ -6,6 +6,10 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
 {
     public class Correspondence : AbstractDomain
     {
+        public Correspondence() 
+        {
+            Mappings = new HashSet<Mapping>();
+        }
         public long SourceId { get; set; }
         public NodeSet Source { get; set; }
         public long TargetId { get; set; }
