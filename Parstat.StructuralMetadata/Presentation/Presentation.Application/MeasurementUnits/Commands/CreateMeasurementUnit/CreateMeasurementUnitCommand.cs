@@ -15,9 +15,9 @@ namespace Presentation.Application.MeasurementUnits.Commands.CreateMeasurementUn
         public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Version { get; set; }
-        public DateTime VersionDate { get; set; }
-        public string VersionRationale { get; set; }
+        public string Version { get; set; } = "1.0";
+        public DateTime VersionDate { get; set; } = DateTime.Now;
+        public string VersionRationale { get; set; } = "First Version";
         public long MeasurementTypeId { get; set; }
 
         public class Handler : IRequestHandler<CreateMeasurementUnitCommand, long>
@@ -38,9 +38,9 @@ namespace Presentation.Application.MeasurementUnits.Commands.CreateMeasurementUn
                       LocalId = request.LocalId,
                       Name = MultilanguageString.Init(language, request.Name),
                       Description = request.Description != null ? MultilanguageString.Init(language, request.Description) : null,
-                      Version = request.Version != null ? request.Version : "1.0",
-                      VersionDate = request.VersionDate != null ? request.VersionDate : DateTime.Now,
-                      VersionRationale = request.VersionRationale != null ? MultilanguageString.Init(language, request.VersionRationale) : null,
+                      Version = request.Version,
+                      VersionDate = request.VersionDate,
+                      VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
                       MeasurementTypeId = request.MeasurementTypeId
                 };
                 _context.MeasurementUnits.Add(entity);

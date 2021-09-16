@@ -37,9 +37,9 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.CreateCommand
                       LocalId = request.LocalId,
                       Name = MultilanguageString.Init(language, request.Name),
                       Description = request.Description != null ? MultilanguageString.Init(language, request.Description) : null,
-                      Version = request.Version != null ? request.Version : "1.0",
-                      VersionDate = request.VersionDate != null ? request.VersionDate : DateTime.Now,
-                      VersionRationale = request.VersionRationale != null ? MultilanguageString.Init(language, request.VersionRationale) : null,
+                      Version = request.Version,
+                      VersionDate = request.VersionDate,
+                      VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
                       NodeSetType = NodeSetType.CODE_LIST,
                 };
                 _context.NodeSets.Add(entity);

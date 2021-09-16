@@ -24,7 +24,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition.Text(language)))
                 .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link.Text(language)))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale.Text(language)))
-                .ForMember(d => d.valueDomains, opt => opt.MapFrom(s => s.valueDomains));
+                .ForMember(d => d.valueDomains, opt => opt.MapFrom(s => s.ValueDomains));
         }
 
     }
