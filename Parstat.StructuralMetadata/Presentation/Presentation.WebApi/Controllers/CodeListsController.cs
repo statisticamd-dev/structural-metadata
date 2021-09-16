@@ -12,11 +12,11 @@ namespace Presentation.WebApi.Controllers
     {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<CodeListsVm>> GetAll() => Ok(await Mediator.Send(new GetCodeListsQuery()));
+        public async Task<ActionResult<CodeListsVm>> GetAll(string language) => Ok(await Mediator.Send(new GetCodeListsQuery {Language = language}));
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<CodeListVm>> Get(long id) => Ok(await Mediator.Send(new GetCodeListDetailsQuery {Id = id}));
+        public async Task<ActionResult<CodeListVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetCodeListDetailsQuery {Id = id, Language = language}));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

@@ -21,8 +21,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             string language = "en";
             profile.CreateMap<Level, LevelDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name.Text(language)))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description.Text(language)))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
                 .ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.Nodes));
         } 
     }

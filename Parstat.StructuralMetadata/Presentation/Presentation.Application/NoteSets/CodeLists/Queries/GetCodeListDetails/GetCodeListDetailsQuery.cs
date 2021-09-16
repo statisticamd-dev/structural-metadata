@@ -28,8 +28,8 @@ namespace Presentation.Application.NoteSets.CodeLists.Queries.GetCodeListDetails
             public async Task<CodeListVm> Handle(GetCodeListDetailsQuery request, CancellationToken cancellationToken)
             {
                 var codeList = await _context.NodeSets
-                    .Where(ns => ns.Id == request.Id)
                     .AsNoTracking()
+                    .Where(ns => ns.Id == request.Id)
                     .ProjectTo<CodeListDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> { ["language"] = request.Language })
                     .SingleOrDefaultAsync(cancellationToken);
 

@@ -18,8 +18,8 @@ namespace Presentation.Application.MeasurementUnits.Queries.GetMeasurementUnit
             string language = "en";
             profile.CreateMap<MeasurementType, MeasurementTypeMiniDto>()
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name.Text(language)))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description.Text(language))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null)
                 );
         }
     }

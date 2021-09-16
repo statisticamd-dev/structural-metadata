@@ -23,10 +23,10 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             profile.CreateMap<NodeSet, NodeSetDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name.Text(language)))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description.Text(language)))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
                 .ForMember(d => d.Version, opt => opt.MapFrom(s => s.Version))
-                .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition.Text(language)))
+                .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : null))
                 .ForMember(d => d.NodeSetType, opt => opt.MapFrom(s => s.NodeSetType))
                 .ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.Nodes));
         } 

@@ -19,10 +19,10 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             string language = "en";
             profile.CreateMap<RepresentedVariable, RepresentedVariableDetailsDto>()
                 .ForMember(d => d.Variable, opt => opt.MapFrom(s => s.Variable))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name.Text(language)))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description.Text(language)))
-                .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition.Text(language)))
-                .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link.Text(language)))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
+                .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : null))
+                .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : null))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale.Text(language)))
                 .ForMember(d => d.valueDomains, opt => opt.MapFrom(s => s.ValueDomains));
         }
