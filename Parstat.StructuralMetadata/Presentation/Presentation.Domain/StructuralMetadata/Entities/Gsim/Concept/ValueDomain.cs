@@ -10,7 +10,6 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
             Representations = new List<RepresentedVariableValueDomain>();
         }
         public ValueDomainType Type { get; set; }
-        public ValueDomainScope Scope { get; set; }
         public string Expression { get; set; }
         public DataType DataType { get; set; }
         public long? LevelId { get; set; }

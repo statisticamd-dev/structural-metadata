@@ -74,10 +74,6 @@ namespace Presentation.Persistence
                 .Entity<ValueDomain>()
                 .Property(v => v.Type)
                 .HasConversion<string>();
-             modelBuilder
-                .Entity<ValueDomain>()
-                .Property(v => v.Scope)
-                .HasConversion<string>();
             modelBuilder
                 .Entity<ValueDomain>()
                 .Property(v => v.DataType)

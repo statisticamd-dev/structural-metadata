@@ -1,10 +1,13 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,6 +37,13 @@ namespace Presentation.Application.Variables.Commands.CreteVariable
             {
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
+                var unitType = await _context.UnitTypes
+                    .FirstOrDefaultAsync(ut => ut.Id == request.MeasuresId);
+
+                if(unitType == null) 
+                {
+                     throw new NotFoundException(nameof(UnitType), request.MeasuresId);
+                }  
                 var entity = new Variable 
                 {
                       LocalId = request.LocalId,

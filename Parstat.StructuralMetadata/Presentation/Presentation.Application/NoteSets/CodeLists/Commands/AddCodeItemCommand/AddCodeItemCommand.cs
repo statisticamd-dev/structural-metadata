@@ -13,13 +13,13 @@ using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemCommand
 {
-    public class AddCodeItemCommand : AbstractRequest, IRequest
+    public class AddCodeItemCommand : AbstractRequest, IRequest<string>
     {
         public long NodeSetId { get; set; }
         public string Code { get; set; }
         public long LabelId { get; set; }
 
-        public class Handler : IRequestHandler<AddCodeItemCommand>
+        public class Handler : IRequestHandler<AddCodeItemCommand, string>
         {
             private readonly IStructuralMetadataDbContext _context;
 
@@ -28,20 +28,20 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemComman
                 _context = context;
             }
 
-            public async Task<Unit> Handle(AddCodeItemCommand request, CancellationToken cancellationToken)
+            public async Task<string> Handle(AddCodeItemCommand request, CancellationToken cancellationToken)
             {
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
-                var codeList = await _context.NodeSets.FirstOrDefaultAsync(ns => ns.Id == request.NodeSetId);
-                var label = await _context.Labels.FirstOrDefaultAsync(l => l.Id == request.LabelId);
-                if(codeList == null)
+                var codeList = await getCodeListAsync(request.NodeSetId);
+               
+                //codelist already containing the code
+                if(codeList.Nodes.FirstOrDefault(n => n.Code.Equals(request.Code)) != null)
                 {
-                    throw new NotFoundException(nameof(NodeSet), request.NodeSetId);
+                    return request.Code;
                 }
-                if(label == null)
-                {
-                    throw new NotFoundException(nameof(Label), request.LabelId);
-                }
+                
+                var label = await getLabelAsync(request.LabelId);
+
                 var codeItem = new Node
                 {
                     Code = request.Code,
@@ -50,12 +50,30 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemComman
                     AggregationType = AggregationType.NONE,
 
                 };
+
                 codeList.Nodes.Add(codeItem);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
+                return request.Code;
+            }
 
-                return Unit.Value;
+            private async Task<NodeSet> getCodeListAsync(long codeListId)
+            {
+                var codeList = await _context.NodeSets.FirstOrDefaultAsync(ns => ns.Id == codeListId);
+                if(codeList == null)
+                {
+                    throw new NotFoundException(nameof(NodeSet), codeListId);
+                }
+                return codeList;
+            }
+            private async Task<Label> getLabelAsync(long labelId)
+            {
+                var label = await _context.Labels.FirstOrDefaultAsync(l => l.Id == labelId);
+                if(label == null)
+                {
+                    throw new NotFoundException(nameof(Label), labelId);
+                }
+                return label;
             }
 
         }
