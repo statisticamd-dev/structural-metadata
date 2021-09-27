@@ -24,6 +24,6 @@ jobs:
         username: parstat
         password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: Build the Docker image
-      run: docker build Parstat.StructuralMetadata/Presentation --file Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Dockerfile  --tag ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
+      run: docker build Parstat.StructuralMetadata/ --file Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Dockerfile  --tag ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
     - name: Push Image to Docker
       run: docker push ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:${{ github.sha }}
