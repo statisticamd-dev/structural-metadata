@@ -5,6 +5,9 @@ on:
     branches: [ dev ]
   pull_request:
     branches: [ dev ]
+env:
+  REGISTRY_NAME: parstat
+  APP_NAME: structural-metadata
 
 jobs:
 
@@ -14,20 +17,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Login to Azure Container Registry
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${ env.REGISTRY_NAME }.azurecr.io
+        username: parstat
+        password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: Build the Docker image
-      run: docker build . --file /Presentation/Presentation.WebApi/Dockerfile --tag parstat.azurecr.io/structural-metadata:dev
-    - name: Push docker image
-      uses: julioarruda/pushimagetoregistry@v1
-      with: 
-        acr-tokenname: parstat
-        acr-token: ${{ secrets.REGISTRY_PASSWORD }}
-        acr-account: parstat.azurecr.io
-        acr-imagename: parstat.azurecr.io/structural-metadata:dev
+      run: docker build . --file /Presentation/Presentation.WebApi/Dockerfile --tag ${ env.REGISTRY_NAME }.azurecr.io/${ env.APP_NAME }:dev
+    - name: Push Image to Docker
+      run: docker push ${ env.REGISTRY_NAME }.azurecr.io/${ env.APP_NAME }:dev
     - name: Install SSH key
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.parstat_key }}
         name: id_rsa # optional
         known_hosts: ${{ secrets.KNOWN_HOSTS }}
-    - name: stack deploy
+    - name: Stack deploy
       run: ssh parstat@iais.francecentral.cloudapp.azure.com 'cd iais && docker stack deploy --compose-file docker-compose.yml --with-registry-auth iais'
