@@ -83,7 +83,7 @@ namespace Presentation.WebApi
             //Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger(c =>
             {
-                c.RouteTemplate = "api/v1/structural/swagger/{documentname}/swagger.json";
+                c.RouteTemplate = "/api/v1/structural/swagger/{documentname}/swagger.json";
             });
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
