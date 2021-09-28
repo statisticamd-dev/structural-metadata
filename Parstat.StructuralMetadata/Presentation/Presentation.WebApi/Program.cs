@@ -49,11 +49,16 @@ namespace Presentation.WebApi
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     var env = hostingContext.HostingEnvironment;
-
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-                        //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                        //.AddJsonFile($"appsettings.Local.json", optional: true, reloadOnChange: true);
-
+                    if(env.IsProduction()) 
+                    {
+                        config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+                            //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                            //.AddJsonFile($"appsettings.Local.json", optional: true, reloadOnChange: true);
+                    }
+                    else
+                    {
+                        config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
+                    }
                     if (env.IsDevelopment())
                     {
                         var appAssembly = Assembly.Load(new AssemblyName(env.ApplicationName));
