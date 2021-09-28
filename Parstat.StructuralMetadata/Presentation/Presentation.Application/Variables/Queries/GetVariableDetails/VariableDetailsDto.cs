@@ -10,7 +10,7 @@ namespace Presentation.Application.Variables.Queries.GetVariableDetails
     public class VariableDetailsDto : AbstractIdentifiableArtefactDto, IMapFrom<Variable>
     {
         public UnitTypeMiniDto Measuers {get; set;}
-        public virtual List<RepresentedVariableDto> Representations { get; set; }
+        public virtual List<RepresentedVariableMiniDto> Representations { get; set; }
         public void Mapping(Profile profile)
         {
             //language passed as parameter on request

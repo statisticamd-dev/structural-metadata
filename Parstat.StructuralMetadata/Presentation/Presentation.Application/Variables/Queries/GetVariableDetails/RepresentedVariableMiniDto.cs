@@ -6,7 +6,7 @@ using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.Variables.Queries.GetVariableDetails
 {
-    public class RepresentedVariableDto : AbstractBaseDto, IMapFrom<RepresentedVariable>
+    public class RepresentedVariableMiniDto : AbstractBaseDto, IMapFrom<RepresentedVariable>
     {
         public string LocalId { get; set; }
         public string Name { get; set; }
@@ -17,7 +17,7 @@ namespace Presentation.Application.Variables.Queries.GetVariableDetails
             //language parameter from request
             //default to english
             string language = "en";
-            profile.CreateMap<RepresentedVariable, RepresentedVariableDto>()
+            profile.CreateMap<RepresentedVariable, RepresentedVariableMiniDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
