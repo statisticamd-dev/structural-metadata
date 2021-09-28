@@ -81,11 +81,14 @@ namespace Presentation.WebApi
                 app.UseHsts();
             }
             //Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = "api/v1/structural/swagger/{documentname}/swagger.json";
+            });
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Structural Metadata API V1.0");
+                c.SwaggerEndpoint("/api/v1/structural/swagger/v1/swagger.json", "Structural Metadata API V1.0");
                 c.RoutePrefix = "api/v1/structural";
                 
             });
