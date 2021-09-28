@@ -70,6 +70,7 @@ namespace Presentation.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("iais-structural");
             modelBuilder
                 .Entity<ValueDomain>()
                 .Property(v => v.Type)
