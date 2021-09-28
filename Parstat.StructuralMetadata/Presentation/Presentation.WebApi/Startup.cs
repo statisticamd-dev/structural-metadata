@@ -89,7 +89,7 @@ namespace Presentation.WebApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/api/v1/structural/swagger/v1/swagger.json", "Structural Metadata API V1.0");
-                c.RoutePrefix = "api/v1/structural";
+                c.RoutePrefix = "v1/structural";
                 
             });
             //TODO turned off for swagger to work
