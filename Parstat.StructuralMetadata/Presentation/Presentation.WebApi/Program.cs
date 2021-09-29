@@ -51,16 +51,16 @@ namespace Presentation.WebApi
                     var env = hostingContext.HostingEnvironment;
                     if(env.IsProduction()) 
                     {
+                        Console.WriteLine("Production...");
                         config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
                             //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
                             //.AddJsonFile($"appsettings.Local.json", optional: true, reloadOnChange: true);
                     }
-                    else
-                    {
-                        config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
-                    }
+
                     if (env.IsDevelopment())
                     {
+                        Console.WriteLine("Development...");
+                        config.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true);
                         var appAssembly = Assembly.Load(new AssemblyName(env.ApplicationName));
                         if (appAssembly != null)
                         {
