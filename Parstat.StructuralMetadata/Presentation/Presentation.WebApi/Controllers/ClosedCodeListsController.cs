@@ -10,10 +10,6 @@ namespace Presentation.WebApi.Controllers
 {
     public class ClosedCodeListsController : BaseController
     {
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(CodeListVm), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<CodeListVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetCodeListDetailsQuery {Id = id, Language = language}));
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

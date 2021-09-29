@@ -7,12 +7,8 @@ using Presentation.Application.Labels.Queries.GetLabes;
 
 namespace Presentation.WebApi.Controllers
 {
-    public class LabelsController : BaseController
+    public class ClosedLabelsController : BaseController
     {
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<LabelsVm>> GetAll(string language, string value) => Ok(await Mediator.Send(new GetLabelsQuery {Language = language, Value = value}));
-
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]

@@ -6,7 +6,7 @@ using Presentation.Application.NoteSets.StatisticalClassifications.Queries.GetSt
 
 namespace Presentation.WebApi.Controllers
 {
-    public class StatisticalClassificationsController : BaseController
+    public class OpenStatisticalClassificationsController : BaseController
     {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]

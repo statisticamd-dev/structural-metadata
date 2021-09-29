@@ -7,24 +7,15 @@ using Presentation.Application.Variables.Queries.GetVariableList;
 
 namespace Presentation.WebApi.Controllers
 {
-    public class VariablesController : BaseController
+    public class OpenVariablesController : BaseController
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(VariableListVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<VariableListVm>> GetAll(string language) => Ok(await Mediator.Send(new GetVariableListQuery {Language = language}));
 
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(VariableVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<VariableVm>> Get(long id) => Ok(await Mediator.Send(new GetVariableQuery {Id = id}));
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody]CreateVariableCommand command)
-        {
-            var id =  await Mediator.Send(command);
-
-            return Ok(id);
-        }
     }
 }

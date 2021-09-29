@@ -6,7 +6,7 @@ using Presentation.Application.Correspondences.Queries.GetCorrespondences;
 
 namespace Presentation.WebApi.Controllers
 {
-    public class CorrespondenceController : BaseController
+    public class OpenCorrespondenceController : BaseController
     {
         [HttpGet("/nodeset/{nodesetId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

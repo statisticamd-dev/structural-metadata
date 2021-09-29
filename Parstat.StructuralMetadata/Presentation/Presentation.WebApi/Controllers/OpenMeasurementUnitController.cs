@@ -7,7 +7,7 @@ using Presentation.Application.MeasurementUnits.Queries.GetMeasurementUnits;
 
 namespace Presentation.WebApi.Controllers
 {
-    public class MeasurementUnitController : BaseController
+    public class OpenMeasurementUnitController : BaseController
     {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -17,14 +17,5 @@ namespace Presentation.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<MeasurementUnitVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetMeasurementUnitQuery {Id = id, Language = language}));
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody]CreateMeasurementUnitCommand command)
-        {
-            var id =  await Mediator.Send(command);
-
-            return Ok(id);
-        }
     }
 }

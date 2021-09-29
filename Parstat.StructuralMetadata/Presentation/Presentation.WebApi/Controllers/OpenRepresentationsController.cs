@@ -6,7 +6,7 @@ using Presentation.Application.RepresentedVariables.Queries.GetRepresentedVariab
 
 namespace Presentation.WebApi.Controllers
 {
-    public class RepresentationsController : BaseController
+    public class OpenRepresentationsController : BaseController
     {
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
