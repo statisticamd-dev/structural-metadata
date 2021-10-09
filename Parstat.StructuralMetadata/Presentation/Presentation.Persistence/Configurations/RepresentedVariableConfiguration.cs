@@ -20,6 +20,14 @@ namespace Presentation.Infrastructure.Configurations
                 .IsUnique();
             builder.Property(r => r.VersionDate)
                 .IsRequired();
+            builder.HasOne(r => r.SentinelValueDomain)
+                .WithMany(v => v.SentinelRepresentations)
+                .HasForeignKey(r => r.SentinelValueDomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(r => r.SubstantiveValueDomain)
+                .WithMany(v => v.SubstantiveRepresentations)
+                .HasForeignKey(r => r.SubstantiveValueDomainId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder.OwnsOne(r => r.Name);
             builder.OwnsOne(r => r.Description);
             builder.OwnsOne(r => r.VersionRationale);

@@ -10,7 +10,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
     public class RepresentedVariableDetailsDto : AbstractConceptDto, IMapFrom<RepresentedVariable>
     {
         public VariableMiniDto Variable { get; set; }
-        public List<RepresentedVariableValueDomainDto> valueDomains { get; set; }
+        public ValueDomainDto SentinelValueDomain { get; set; }
+        public ValueDomainDto SubstantiveValueDomain { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -24,7 +25,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : null))
                 .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : null))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale.Text(language)))
-                .ForMember(d => d.valueDomains, opt => opt.MapFrom(s => s.ValueDomains));
+                .ForMember(d => d.SubstantiveValueDomain, opt => opt.MapFrom(s => s.SubstantiveValueDomain))
+                .ForMember(d => d.SentinelValueDomain, opt => opt.MapFrom(s => s.SentinelValueDomain));
         }
 
     }

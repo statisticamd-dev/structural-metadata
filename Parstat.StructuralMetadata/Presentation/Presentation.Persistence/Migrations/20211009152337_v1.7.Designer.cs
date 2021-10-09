@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Presentation.Persistence;
@@ -9,9 +10,10 @@ using Presentation.Persistence;
 namespace Presentation.Persistence.Migrations
 {
     [DbContext(typeof(StructuralMetadataDbContext))]
-    partial class StructuralMetadataDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211009152337_v1.7")]
+    partial class v17
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -439,6 +441,12 @@ namespace Presentation.Persistence.Migrations
                     b.Property<long>("SubstantiveValueDomainId")
                         .HasColumnType("bigint");
 
+                    b.Property<long?>("ValueDomainId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("ValueDomainId1")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("VariableId")
                         .HasColumnType("bigint");
 
@@ -455,6 +463,10 @@ namespace Presentation.Persistence.Migrations
                     b.HasIndex("SentinelValueDomainId");
 
                     b.HasIndex("SubstantiveValueDomainId");
+
+                    b.HasIndex("ValueDomainId");
+
+                    b.HasIndex("ValueDomainId1");
 
                     b.HasIndex("VariableId");
 
@@ -1268,15 +1280,25 @@ namespace Presentation.Persistence.Migrations
             modelBuilder.Entity("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.RepresentedVariable", b =>
                 {
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.ValueDomain", "SentinelValueDomain")
-                        .WithMany("SentinelRepresentations")
+                        .WithMany()
                         .HasForeignKey("SentinelValueDomainId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.ValueDomain", "SubstantiveValueDomain")
-                        .WithMany("SubstantiveRepresentations")
+                        .WithMany()
                         .HasForeignKey("SubstantiveValueDomainId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.ValueDomain", null)
+                        .WithMany("SentinelRepresentations")
+                        .HasForeignKey("ValueDomainId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.ValueDomain", null)
+                        .WithMany("SubstantiveRepresentations")
+                        .HasForeignKey("ValueDomainId1")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.Variable", "Variable")
                         .WithMany("Representations")

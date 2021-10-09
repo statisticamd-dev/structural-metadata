@@ -38,7 +38,6 @@ namespace Presentation.Persistence
         public DbSet<Node> Nodes { get; set; }
         public DbSet<NodeSet> NodeSets { get; set; }
         public DbSet<RepresentedVariable> RepresentedVariables { get; set; }
-        public DbSet<RepresentedVariableValueDomain> RepresentedVariableValueDomains { get; set; }
         public DbSet<UnitType> UnitTypes { get; set; }
         public DbSet<ValueDomain> ValueDomains { get; set; }
         public DbSet<Variable> Variables { get; set; }
@@ -80,7 +79,7 @@ namespace Presentation.Persistence
                 .Property(v => v.DataType)
                 .HasConversion<string>();
             modelBuilder
-                .Entity<RepresentedVariableValueDomain>()
+                .Entity<ValueDomain>()
                 .Property(v => v.Scope)
                 .HasConversion<string>();
             modelBuilder

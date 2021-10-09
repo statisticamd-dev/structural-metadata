@@ -24,6 +24,14 @@ namespace Presentation.Infrastructure.Configurations
                 .IsRequired(false);
             builder.Property(v => v.NodeSetId)
                 .IsRequired(false);
+            builder.HasMany(v => v.SentinelRepresentations)
+                .WithOne(r => r.SentinelValueDomain)
+                .HasForeignKey(r => r.SentinelValueDomainId)
+                .OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(v => v.SubstantiveRepresentations)
+                .WithOne(r => r.SubstantiveValueDomain)
+                .HasForeignKey(r => r.SubstantiveValueDomainId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder.OwnsOne(v => v.Name);
             builder.OwnsOne(v => v.Description);
             builder.OwnsOne(v => v.VersionRationale);
