@@ -3,7 +3,7 @@ using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
-namespace Presentation.Application.Labels.Queries.GetLabes
+namespace Presentation.Application.Labels.Queries.GetLabels
 {
     public class LabelDto : AbstractBaseDto, IMapFrom<Label>
     {

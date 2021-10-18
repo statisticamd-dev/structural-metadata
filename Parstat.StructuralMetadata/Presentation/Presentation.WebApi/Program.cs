@@ -26,7 +26,7 @@ namespace Presentation.WebApi
                 try
                 {
                     var structuralMetadataContext = services.GetRequiredService<StructuralMetadataDbContext>();
-                    structuralMetadataContext.Database.Migrate();
+                    //structuralMetadataContext.Database.Migrate();
 /* 
                     var identityContext = services.GetRequiredService<ApplicationDbContext>();
                     identityContext.Database.Migrate();

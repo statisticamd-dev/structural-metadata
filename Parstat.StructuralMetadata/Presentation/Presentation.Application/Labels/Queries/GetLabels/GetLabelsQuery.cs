@@ -8,10 +8,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
-using Presentation.Common.Domain.StructuralMetadata.Enums;
-using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
-namespace Presentation.Application.Labels.Queries.GetLabes
+namespace Presentation.Application.Labels.Queries.GetLabels
 {
     public class GetLabelsQuery : AbstractRequest, IRequest<LabelsVm>
     {

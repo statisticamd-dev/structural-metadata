@@ -10,11 +10,11 @@ namespace Presentation.WebApi.Controllers
     public class OpenUnitTypesController : BaseController
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UnitTypeListVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<UnitTypeListVm>> GetAll(string language) => Ok(await Mediator.Send(new GetUnitTypesQuery {Language = language}));
 
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(UnitTypeVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<UnitTypeVm>> Get(long id) => Ok(await Mediator.Send(new GetUnitTypeQuery {Id = id}));
 
     }

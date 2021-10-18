@@ -9,11 +9,11 @@ namespace Presentation.WebApi.Controllers
     public class OpenCorrespondenceController : BaseController
     {
         [HttpGet("/nodeset/{nodesetId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CorrespondencesVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<CorrespondencesVm>> GetAllByNodeset(long nodesetId, string language) => Ok(await Mediator.Send(new GetNodesetCorrespondencesQuery {NodeSetId = nodesetId, Language = language}));
 
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CorrespondenceVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<CorrespondenceVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetCorrespondenceQuery {Id = id, Language = language}));
     }
 }

@@ -15,7 +15,7 @@ namespace Presentation.WebApi.Controllers
         public async Task<ActionResult<CodeListsVm>> GetAll(string language) => Ok(await Mediator.Send(new GetCodeListsQuery {Language = language}));
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(CodeListsVm), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(CodeListVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<CodeListVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetCodeListDetailsQuery {Id = id, Language = language}));
 
     }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Presentation.Application.Labels.Queries.GetLabes
+namespace Presentation.Application.Labels.Queries.GetLabels
 {
     public class LabelsVm
     {

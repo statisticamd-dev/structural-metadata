@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.Labels.Commands.CreateLabel;
 using Presentation.Application.Labels.Commands.UpdateLabel;
-using Presentation.Application.Labels.Queries.GetLabes;
 
 namespace Presentation.WebApi.Controllers
 {

@@ -9,11 +9,11 @@ namespace Presentation.WebApi.Controllers
     public class OpenRepresentationsController : BaseController
     {
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RepresentedVariableVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<RepresentedVariableVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetRepresentedVariableQuery {Id = id, Language = language}));
 
         [HttpGet("variables/{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(RepresentedVariablesVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<RepresentedVariablesVm>> GetRepresentationsByVariable(long id, string language) => Ok(await Mediator.Send(new GetRepresentedVariablesQuery {VariableId = id, Language = language}));
     }
 }
