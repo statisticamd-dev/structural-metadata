@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Primitives;
 using Presentation.Application.Common.Interfaces;
 
@@ -22,10 +23,9 @@ namespace Presentation.WebApi.Services
             }
         }
         private string getUser(StringValues jwtHeader) {
-    
-            var base64EncodedBytes = System.Convert.FromBase64String(jwtHeader.ToString().Split(".")[1]);
+            var base64EncodedBytes = WebEncoders.Base64UrlDecode(jwtHeader.ToString().Split(".")[1]);
                 string jwt = System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
-                 var options = new JsonDocumentOptions
+                var options = new JsonDocumentOptions
                 {
                     AllowTrailingCommas = true
                 };
