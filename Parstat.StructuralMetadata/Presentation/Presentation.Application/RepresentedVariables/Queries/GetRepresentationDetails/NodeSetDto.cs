@@ -14,7 +14,6 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
         public string Name { get; set; }
         public string LocalId { get; set; }
         public string Description { get; set; }
-
         public NodeSetType NodeSetType { get; set; }
         //public List<NodeDto> Nodes { get; set; }
 
