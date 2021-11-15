@@ -31,7 +31,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 //.ForMember(d => d.NoteSetLevel, opt => opt.MapFrom(s => s.Level != null ? s.Level : null));
-                .ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.NodeSet.Nodes != null ? s.NodeSet.Nodes : null));
+                .ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.NodeSet.Nodes));
         } 
     }
 }
