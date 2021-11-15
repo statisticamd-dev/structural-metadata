@@ -32,7 +32,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                     .Where(rv => rv.Id == request.Id)
                     .Include(rv => rv.SentinelValueDomain.NodeSet)
                     .Include(rv => rv.SubstantiveValueDomain.Level)
-                     .Include(rv => rv.SubstantiveValueDomain.NodeSet)
+                    .Include(rv => rv.SubstantiveValueDomain.Level.NodeSet)
+                    .Include(rv => rv.SubstantiveValueDomain.NodeSet)
                     .AsNoTracking()
                     .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .SingleOrDefaultAsync(cancellationToken);
