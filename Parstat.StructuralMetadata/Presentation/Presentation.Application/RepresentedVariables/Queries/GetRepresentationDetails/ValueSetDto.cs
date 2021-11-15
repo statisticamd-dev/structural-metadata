@@ -16,7 +16,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
 
         public List<ValueItemDto> ValueItems { get; set; }
 
-         public void Mapping(Profile profile)
+        public void Mapping(Profile profile)
         {
             //language parameter from request
             //default english

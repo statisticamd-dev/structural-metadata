@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
-using Presentation.Application.Common.Models;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
@@ -30,7 +29,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Type, opt => opt.MapFrom(s => s.Type))
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
-                .ForMember(d => d.ValueSet, opt => opt.MapFrom(s => s.NodeSet));
+                .ForMember(d => d.ValueSet, opt => opt.MapFrom(s => s.NodeSet != null ? s.NodeSet : null));
                 //.ForMember(d => d.NoteSetLevel, opt => opt.MapFrom(s => s.Level != null ? s.Level : null));
         } 
     }
