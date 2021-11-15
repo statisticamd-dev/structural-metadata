@@ -1,12 +1,11 @@
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
-using Presentation.Application.Common.Models;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentationDetails
 {
-    public class NodeDto : AbstractBaseDto, IMapFrom<Node>
+    public class ValueItemDto : AbstractBaseDto, IMapFrom<Node>
     {
         public string Code { get; set; }
         public string Value { get; set; }
@@ -16,7 +15,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             //language parameter from request
             //default to english
             string language = "en";
-            profile.CreateMap<Node, NodeDto>()
+            profile.CreateMap<Node, ValueItemDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Code, opt => opt.MapFrom(s => s.Code))
                 .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label.Value.Text(language)));
