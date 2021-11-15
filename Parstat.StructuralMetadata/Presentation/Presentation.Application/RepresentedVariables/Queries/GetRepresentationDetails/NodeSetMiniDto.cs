@@ -11,7 +11,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
 {
     public class NodeSetMiniDto : AbstractBaseDto, IMapFrom<NodeSet>
     {
-        public string Name { get; set; }
+       // public string Name { get; set; }
         public NodeSetType NodeSetType { get; set; }
         //public List<NodeDto> Nodes { get; set; }
 
@@ -22,7 +22,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             string language = "en";
             profile.CreateMap<NodeSet, NodeSetMiniDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
+               // .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
                 .ForMember(d => d.NodeSetType, opt => opt.MapFrom(s => s.NodeSetType));
                 //.ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.Nodes));
         } 
