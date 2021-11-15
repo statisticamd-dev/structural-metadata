@@ -13,7 +13,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
     {
         
         public NodeSetType NodeSetType { get; set; }
-        public List<NodeDto> Nodes { get; set; }
+        //public List<NodeDto> Nodes { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -27,8 +27,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
                 .ForMember(d => d.Version, opt => opt.MapFrom(s => s.Version))
                 .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : null))
-                .ForMember(d => d.NodeSetType, opt => opt.MapFrom(s => s.NodeSetType))
-                .ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.Nodes));
+                .ForMember(d => d.NodeSetType, opt => opt.MapFrom(s => s.NodeSetType));
+                //.ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.Nodes));
         } 
     }
 }
