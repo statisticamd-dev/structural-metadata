@@ -14,8 +14,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
         public ValueDomainType Type { get; set; }
         public string Expression { get; set; }
         public DataType DataType { get; set; }
-        public LevelDto NoteSetLevel { get; set; }
-        public NodeSetDto NodeSet { get; set; }
+        //public LevelDto NoteSetLevel { get; set; }
+        //public NodeSetDto NodeSet { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -28,9 +28,9 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
                 .ForMember(d => d.Type, opt => opt.MapFrom(s => s.Type))
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
-                .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
-                .ForMember(d => d.NoteSetLevel, opt => opt.MapFrom(s => s.Level != null ? s.Level : null))
-                .ForMember(d => d.NodeSet, opt => opt.MapFrom(s => s.NodeSet != null ? s.NodeSet : null));
+                .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType));
+                //.ForMember(d => d.NoteSetLevel, opt => opt.MapFrom(s => s.Level != null ? s.Level : null))
+                //.ForMember(d => d.NodeSet, opt => opt.MapFrom(s => s.NodeSet != null ? s.NodeSet : null));
         } 
     }
 }
