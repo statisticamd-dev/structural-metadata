@@ -32,7 +32,12 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Level != null || s.NodeSet != null);
                     opt.Condition(s => s.Level.Nodes.Count > 0 || s.NodeSet.Nodes.Count > 0);
-                    opt.MapFrom(s => s.NodeSet.Nodes);
+                    opt.MapFrom((s, d) => {
+                        if(s.Level != null) {
+                            return s.Level.Nodes;
+                        } 
+                        return s.NodeSet.Nodes;
+                    });
                     opt.NullSubstitute(new List<Node>());
                 });
                 //.ForMember(d => d.NoteSetLevel, opt => opt.MapFrom(s => s.Level != null ? s.Level : null));
