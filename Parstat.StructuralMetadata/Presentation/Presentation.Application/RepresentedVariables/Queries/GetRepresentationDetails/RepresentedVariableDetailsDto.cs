@@ -18,7 +18,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             //language parameter from request
             //default english
             string language = "en";
-            profile.CreateMap<RepresentedVariable, RepresentedVariableDetailsDto>()
+            profile.CreateMap<RepresentedVariable, RepresentedVariableDetailsDto>().MaxDepth(3)
                 .ForMember(d => d.Variable, opt => opt.MapFrom(s => s.Variable))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
