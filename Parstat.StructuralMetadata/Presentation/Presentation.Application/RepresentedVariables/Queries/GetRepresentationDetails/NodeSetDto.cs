@@ -12,7 +12,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
     public class NodeSetDto : AbstractConceptDto, IMapFrom<NodeSet>
     {
         
-        public NodeSetType NodeSetType { get; set; }
+        //public NodeSetType NodeSetType { get; set; }
         //public List<NodeDto> Nodes { get; set; }
 
         public void Mapping(Profile profile)
