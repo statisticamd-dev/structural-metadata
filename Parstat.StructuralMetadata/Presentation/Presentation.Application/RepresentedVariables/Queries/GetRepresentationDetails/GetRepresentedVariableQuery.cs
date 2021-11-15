@@ -29,7 +29,9 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             public async Task<RepresentedVariableVm> Handle(GetRepresentedVariableQuery request, CancellationToken cancellationToken)
             {
                 var representedVariable = await _context.RepresentedVariables
-                    .Where(v => v.Id == request.Id)
+                    .Where(rv => rv.Id == request.Id)
+                    .Include(rv => rv.SentinelValueDomain)
+                    .Include(rv => rv.SubstantiveValueDomain)
                     .AsNoTracking()
                     .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .SingleOrDefaultAsync(cancellationToken);
