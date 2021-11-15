@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models;
@@ -15,7 +16,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
         public string Expression { get; set; }
         public DataType DataType { get; set; }
         //public LevelDto NoteSetLevel { get; set; }
-        public NodeSetDto NodeSet { get; set; }
+        public List<NodeDto> Nodes { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -30,7 +31,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 //.ForMember(d => d.NoteSetLevel, opt => opt.MapFrom(s => s.Level != null ? s.Level : null));
-                .ForMember(d => d.NodeSet, opt => opt.MapFrom(s => s.NodeSet != null ? s.NodeSet : null));
+                .ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.NodeSet.Nodes != null ? s.NodeSet.Nodes : null));
         } 
     }
 }
