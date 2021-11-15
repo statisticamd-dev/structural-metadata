@@ -12,7 +12,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
     public class NodeSetDto : AbstractConceptDto, IMapFrom<NodeSet>
     {
         
-        //public NodeSetType NodeSetType { get; set; }
+        public NodeSetType NodeSetType { get; set; }
         //public List<NodeDto> Nodes { get; set; }
 
         public void Mapping(Profile profile)
@@ -24,8 +24,10 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
-                .ForMember(d => d.Version, opt => opt.MapFrom(s => s.Version));
-                //.ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : null))
+                .ForMember(d => d.Version, opt => opt.MapFrom(s => s.Version))
+                .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : null))
+                .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : null))
+                .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : null));
                 //.ForMember(d => d.NodeSetType, opt => opt.MapFrom(s => s.NodeSetType));
                 //.ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.Nodes));
         } 
