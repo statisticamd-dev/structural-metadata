@@ -9,9 +9,12 @@ using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentationDetails
 {
-    public class NodeSetDto : AbstractConceptDto, IMapFrom<NodeSet>
+    public class NodeSetDto : AbstractBaseDto, IMapFrom<NodeSet>
     {
-        
+        public string Name { get; set; }
+        public string LocalId { get; set; }
+        public string Description { get; set; }
+
         public NodeSetType NodeSetType { get; set; }
         //public List<NodeDto> Nodes { get; set; }
 
@@ -23,13 +26,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             profile.CreateMap<NodeSet, NodeSetDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
-                .ForMember(d => d.Version, opt => opt.MapFrom(s =>  s.Version))
-                .ForMember(d => d.VersionDate, opt => opt.MapFrom(s => s.VersionDate))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
-                .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : null))
-                .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale.Text(language)))
-                .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : null))
                 .ForMember(d => d.NodeSetType, opt => opt.MapFrom(s => s.NodeSetType));
                 //.ForMember(d => d.Nodes, opt => opt.MapFrom(s => s.Nodes));
         } 
