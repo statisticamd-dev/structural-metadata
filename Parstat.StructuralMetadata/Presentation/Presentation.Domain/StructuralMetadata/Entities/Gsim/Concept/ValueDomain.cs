@@ -15,9 +15,9 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public string Expression { get; set; }
         public DataType DataType { get; set; }
         public long? LevelId { get; set; }
-        public Level Level { get; set; }
+        public Level Level { get; set; } = null;
         public long? NodeSetId { get; set; }
-        public NodeSet NodeSet { get; set; }
+        public NodeSet NodeSet { get; set; } = null;
         //public IEnumerable<RepresentedVariable> RepresentedVariables { get; set; }
         public IList<RepresentedVariable> SentinelRepresentations { get; set; }
         public IList<RepresentedVariable> SubstantiveRepresentations { get; set; }
