@@ -32,12 +32,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED );
                     opt.MapFrom(s => s.NodeSet.Nodes);
-                    //opt.NullSubstitute(new List<ValueItemDto>());
-                })
-                .ForMember(d => d.ValueSet, opt => {
-                    opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED && s.Level != null );
-                    opt.MapFrom(s => s.Level.Nodes);
-                    //opt.NullSubstitute(new List<ValueItemDto>());
+                    opt.NullSubstitute(new List<ValueItemDto>());
                 });
                 
                 //.ForMember(d => d.NoteSetLevel, opt => opt.MapFrom(s => s.Level != null ? s.Level : null));
