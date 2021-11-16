@@ -30,15 +30,16 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 .ForMember(d => d.ValueSet, opt => {
-                    opt.PreCondition(s => s.Level != null || s.NodeSet != null);
-                    opt.Condition(s => s.Level.Nodes.Count > 0 || s.NodeSet.Nodes.Count > 0);
-                    opt.MapFrom((s, d) => {
-                        if(s.Level != null) {
-                            return s.Level.Nodes;
-                        } 
-                        return s.NodeSet.Nodes;
-                    });
-                    opt.NullSubstitute(new List<Node>());
+                    opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
+                    opt.Condition(s => s.NodeSet.NodeSetType == NodeSetType.CODE_LIST);
+                    opt.MapFrom(s => s.NodeSet.Nodes);
+                    //opt.NullSubstitute(new List<Node>());
+                })
+                .ForMember(d => d.ValueSet, opt => {
+                    opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
+                    opt.Condition(s => s.NodeSet.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION);
+                    opt.MapFrom(s => s.Level.Nodes);
+                    //opt.NullSubstitute(new List<Node>());
                 });
                 //.ForMember(d => d.NoteSetLevel, opt => opt.MapFrom(s => s.Level != null ? s.Level : null));
         } 
