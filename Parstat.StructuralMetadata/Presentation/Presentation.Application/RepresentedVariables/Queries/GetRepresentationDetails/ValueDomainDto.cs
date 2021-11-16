@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
@@ -17,6 +18,23 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
         //public LevelDto NoteSetLevel { get; set; }
         public List<ValueItemDto> ValueSet { get; set; }
 
+        public static bool HasProperty(object obj, string propertyName)
+        {
+            try
+            {
+                if(obj != null)
+                {
+                    PropertyInfo prop = obj.GetType().GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public);
+                    return (prop != null);
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        
         public void Mapping(Profile profile)
         {
             //language parameter from request
@@ -31,7 +49,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED );
-                    opt.MapFrom(s => s.Level.Nodes.Count > 0 ? s.Level.Nodes : s.NodeSet.Nodes);
+                    opt.MapFrom(s => HasProperty(s, "Level") ? s.Level.Nodes : s.NodeSet.Nodes);
                     opt.NullSubstitute(new List<ValueItemDto>());
                 });
                 
