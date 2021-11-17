@@ -28,20 +28,34 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
 
             public async Task<RepresentedVariableVm> Handle(GetRepresentedVariableQuery request, CancellationToken cancellationToken)
             {
-                var representedVariable = await _context.RepresentedVariables
-                    .Where(rv => rv.Id == request.Id)
-                    //.Include(rv => rv.SentinelValueDomain)
-                    //    .ThenInclude(svd => svd.NodeSet)
-                    //        .ThenInclude(ns => ns.Nodes)
-                    //.Include(rv => rv.SubstantiveValueDomain.Level.NodeSet.Nodes)
-                    .Include(rv => rv.SubstantiveValueDomain.Level)
-                        .ThenInclude(l => l.Nodes)
-                    .Include(rv => rv.SubstantiveValueDomain.NodeSet)
-                        .ThenInclude(ns => ns.Nodes)
-                    .AsNoTracking()
-                    .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
-                    .SingleOrDefaultAsync(cancellationToken);
-
+                var representedLevelId = await _context.RepresentedVariables
+                                                    .Where(rv => rv.Id == request.Id)
+                                                    .Select(rv => rv.SubstantiveValueDomain)
+                                                    .Select(sv => sv.LevelId)
+                                                    .SingleOrDefaultAsync();
+                
+                RepresentedVariableDetailsDto representedVariable = new RepresentedVariableDetailsDto();
+                
+                if(representedLevelId != null) 
+                {
+                    representedVariable = await _context.RepresentedVariables
+                        .Where(rv => rv.Id == request.Id)
+                        .Include(rv => rv.SubstantiveValueDomain.NodeSet)
+                            .ThenInclude(ns => ns.Nodes.Where(n => n.LevelId == representedLevelId))
+                        .AsNoTracking()
+                        .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
+                        .SingleOrDefaultAsync(cancellationToken);
+                } 
+                else
+                {
+                        representedVariable = await _context.RepresentedVariables
+                        .Where(rv => rv.Id == request.Id)
+                        .Include(rv => rv.SubstantiveValueDomain.NodeSet)
+                            .ThenInclude(ns => ns.Nodes)
+                        .AsNoTracking()
+                        .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
+                        .SingleOrDefaultAsync(cancellationToken);
+                }
                 var vm = new RepresentedVariableVm
                 {
                     RepresentedVariable = representedVariable
