@@ -8,7 +8,7 @@ namespace Presentation.WebApi.Controllers
 {
     public class OpenCorrespondenceController : BaseController
     {
-        [HttpGet("/nodeset/{nodesetId}")]
+        [HttpGet("nodeset/{nodesetId}")]
         [ProducesResponseType(typeof(CorrespondencesVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<CorrespondencesVm>> GetAllByNodeset(long nodesetId, string language) => Ok(await Mediator.Send(new GetNodesetCorrespondencesQuery {NodeSetId = nodesetId, Language = language}));
 
