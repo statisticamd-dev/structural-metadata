@@ -18,11 +18,11 @@ namespace Presentation.Application.NoteSets.CodeLists.Queries.GetCodeListDetails
             //default english
             string language = "en";
             profile.CreateMap<NodeSet, CodeListDetailsDto>()
-                .ForMember(ns => ns.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
-                .ForMember(ns => ns.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
-                .ForMember(ns => ns.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : null))
-                .ForMember(ns => ns.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale.Text(language)))
-                .ForMember(ns => ns.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : null))
+                .ForMember(ns => ns.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
+                .ForMember(ns => ns.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
+                .ForMember(ns => ns.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : String.Empty))
+                .ForMember(ns => ns.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
+                .ForMember(ns => ns.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : String.Empty))
                 .ForMember(ns => ns.CodeItems, opt => opt.MapFrom(s => s.Nodes));
         }
        
