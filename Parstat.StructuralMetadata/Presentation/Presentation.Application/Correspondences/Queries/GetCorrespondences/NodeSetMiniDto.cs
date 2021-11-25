@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
@@ -22,9 +23,9 @@ namespace Presentation.Application.Correspondences.Queries.GetCorrespondences
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
                 .ForMember(d => d.Version, opt => opt.MapFrom(s => s.Version))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name.Text(language)))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description.Text(language)))
-                .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link.Text(language)));
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
+                .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : String.Empty));
         } 
     }
 }
