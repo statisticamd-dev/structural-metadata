@@ -19,9 +19,9 @@ namespace Presentation.Application.Variables.Queries.GetVariableList
         {
             string language = "en";
             profile.CreateMap<Variable, VariableDto>()
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null))
-                .ForMember(d => d.Measures, opt => opt.MapFrom(s => s.Measures.Name.Text(language)));
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
+                .ForMember(d => d.Measures, opt => opt.MapFrom(s => s.Measures.Name != null ? s.Measures.Name.Text(language) : String.Empty));
         }
 
     }

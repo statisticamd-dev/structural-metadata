@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models;
@@ -20,8 +21,8 @@ namespace Presentation.Application.Variables.Queries.GetVariableDetails
             profile.CreateMap<RepresentedVariable, RepresentedVariableMiniDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
-                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null));
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty));
         }
     }
 }

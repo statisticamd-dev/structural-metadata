@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
@@ -19,7 +20,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentedVa
             string language = "en";
             profile.CreateMap<RepresentedVariable, RepresentedVariableDto>()
                 .ForMember(d => d.LocalId, opt => opt.MapFrom(s => s.LocalId))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : null))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : null));
         }
 

@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
@@ -18,7 +19,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             profile.CreateMap<Node, ValueItemDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Code, opt => opt.MapFrom(s => s.Code))
-                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label.Value.Text(language)));
+                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label.Value != null ? s.Label.Value.Text(language) : String.Empty));
         } 
     }
 }

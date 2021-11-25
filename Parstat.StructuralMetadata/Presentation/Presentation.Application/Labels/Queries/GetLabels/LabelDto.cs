@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
@@ -15,7 +16,7 @@ namespace Presentation.Application.Labels.Queries.GetLabels
             //default english
             string language = "en";
             profile.CreateMap<Label, LabelDto>()
-                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Value.Text(language))
+                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Value != null ? s.Value.Text(language) : String.Empty)
                 );
         }
     }
