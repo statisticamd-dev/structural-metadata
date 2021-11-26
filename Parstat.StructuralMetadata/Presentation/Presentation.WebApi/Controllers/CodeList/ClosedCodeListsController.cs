@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemCommand;
 using Presentation.Application.NoteSets.CodeLists.Commands.CreateCommand;
-using Presentation.Application.NoteSets.CodeLists.Queries.GetCodeListDetails;
-using Presentation.Application.NoteSets.CodeLists.Queries.GetCodeLists;
+
 
 namespace Presentation.WebApi.Controllers
 {
