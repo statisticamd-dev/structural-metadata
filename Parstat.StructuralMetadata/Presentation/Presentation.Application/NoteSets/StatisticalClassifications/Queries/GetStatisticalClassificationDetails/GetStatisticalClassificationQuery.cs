@@ -31,10 +31,8 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
             {
                 var statisticalClassification = await _context.NodeSets
                     .Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION)
-                    .Include(ns => ns.Nodes)
+                    .Include(ns => ns.Nodes.Where(n => n.Parent == null))
                         .ThenInclude(n => n.Children)
-                            .ThenInclude(ch1 => ch1.Children)
-                                .ThenInclude(ch2 => ch2.Children)
                     .AsNoTracking()
                     .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .SingleOrDefaultAsync(cancellationToken);
