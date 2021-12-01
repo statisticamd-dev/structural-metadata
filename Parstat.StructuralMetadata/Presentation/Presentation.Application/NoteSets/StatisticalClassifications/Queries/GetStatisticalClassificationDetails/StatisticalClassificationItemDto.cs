@@ -9,6 +9,9 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
 {
     public class StatisticalClassificationItemDto : AbstractBaseDto, IMapFrom<Node>
     {
+        public StatisticalClassificationItemDto() {
+            this.Children = new List<StatisticalClassificationItemDto>();
+        }
         public string Code { get; set; }
         public string Value { get; set; }
         public int LevelNumber { get; set; }
