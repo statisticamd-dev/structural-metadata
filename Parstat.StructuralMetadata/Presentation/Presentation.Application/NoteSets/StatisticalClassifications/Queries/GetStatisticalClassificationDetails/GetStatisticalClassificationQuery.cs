@@ -31,10 +31,11 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
             public async Task<StatisticalClassificationVm> Handle(GetStatisticalClassificationQuery request, CancellationToken cancellationToken)
             {
                 var statisticalClassification = await _context.NodeSets
-                    .Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION)
+                    //.Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION)
                     //.Include(ns => ns.Nodes.Where(n => n.Parent == null))
                     .AsNoTrackingWithIdentityResolution()
                     .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
+                    .Where(sc => sc.Id == request.Id)
                     .SingleOrDefaultAsync(cancellationToken);
 
                 var vm = new StatisticalClassificationVm
