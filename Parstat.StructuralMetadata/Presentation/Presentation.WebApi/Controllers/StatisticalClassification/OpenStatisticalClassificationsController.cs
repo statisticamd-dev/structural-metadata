@@ -10,10 +10,10 @@ namespace Presentation.WebApi.Controllers
     {
         [HttpGet]
         [ProducesResponseType(typeof(StatisticalClassificationsVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<StatisticalClassificationsVm>> GetAll() => Ok(await Mediator.Send(new GetStatisticalClassificationsQuery()));
+        public async Task<ActionResult<StatisticalClassificationsVm>> GetAll(string language) => Ok(await Mediator.Send(new GetStatisticalClassificationsQuery() {Language = language}));
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(StatisticalClassificationVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<StatisticalClassificationVm>> Get(long id) => Ok(await Mediator.Send(new GetStatisticalClassificationQuery {Id = id}));
+        public async Task<ActionResult<StatisticalClassificationVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetStatisticalClassificationQuery {Id = id, Language = language}));
     }
 }
