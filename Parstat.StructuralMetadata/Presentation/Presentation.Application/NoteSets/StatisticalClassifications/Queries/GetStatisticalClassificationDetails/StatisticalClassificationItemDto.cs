@@ -19,7 +19,7 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
             //language parameter from request
             //default english
             string language = "en";
-            profile.CreateMap<Node, StatisticalClassificationItemDto>().PreserveReferences().MaxDepth(5)
+            profile.CreateMap<Node, StatisticalClassificationItemDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Code, opt => opt.MapFrom(s => s.Code))
                 .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label != null ? s.Label.Value.Text(language) : String.Empty))
