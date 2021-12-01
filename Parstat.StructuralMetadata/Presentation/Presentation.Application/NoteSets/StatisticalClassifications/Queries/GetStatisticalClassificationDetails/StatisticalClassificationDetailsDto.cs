@@ -12,7 +12,7 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
     public class StatisticalClassificationDetailsDto : AbstractConceptDto, IMapFrom<NodeSet>
     {
         public List<LevelDetailsDto> Levels { get; set; }
-        public List<StatisticalClassificationItemDto> mainItems { get; set; }
+        public List<StatisticalClassificationItemDto> baseItems { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -25,7 +25,7 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
                 .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : String.Empty))
                 .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : String.Empty))
-                .ForMember(d => d.mainItems, opt => opt.MapFrom(s => s.Nodes.Where(n => n.Parent == null)));
+                .ForMember(d => d.baseItems, opt => opt.MapFrom(s => s.Nodes.Where(n => n.Parent == null)));
         }
 
     }
