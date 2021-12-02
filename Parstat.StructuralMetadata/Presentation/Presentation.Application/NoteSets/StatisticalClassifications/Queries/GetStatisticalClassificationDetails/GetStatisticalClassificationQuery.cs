@@ -50,9 +50,11 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
                 return vm;
             }
 
+            //Recursive filling of child items
+            //It can be slow for big statistical classifications 
+            //TODO workaround is to show a single page for each root item...
             private List<StatisticalClassificationItemDto> getChildren(long parentId, string language) 
             {
-            
                 var nodes = _context.Nodes.Where(n => n.ParentId == parentId)
                     .AsNoTrackingWithIdentityResolution()
                     .ProjectTo<StatisticalClassificationItemDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = language})
