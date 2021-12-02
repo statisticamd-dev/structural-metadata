@@ -40,7 +40,9 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                     representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
-                        .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language, ["level"] = representedLevelId})
+                        .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
+                                                                 new Dictionary<string, object> {["language"] = request.Language, 
+                                                                                                 ["level"] = representedLevelId.ToString()})
                         .SingleOrDefaultAsync(cancellationToken);
                 } 
                 else
