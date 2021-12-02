@@ -59,7 +59,7 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
                     .ToListAsync();
                 if(nodes != null && nodes.Count > 0)
                 {
-                    nodes.ForEach(async n => await getChildren(n.Id, language));
+                    nodes.ForEach(async n => n.Children = await getChildren(n.Id, language));
                 }
 
                 return nodes;
