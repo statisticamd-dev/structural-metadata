@@ -6,6 +6,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 
@@ -17,6 +18,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
 
         public class GetRepresentedVariableQueryHandler : IRequestHandler<GetRepresentedVariableQuery, RepresentedVariableVm>
         {
+            private readonly ILogger _logger;
+
             private readonly IStructuralMetadataDbContext _context;
             private readonly IMapper _mapper;
 
@@ -32,15 +35,14 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                                                     .Where(rv => rv.Id == request.Id)
                                                     .Select(rv => rv.SubstantiveValueDomain.LevelId)
                                                     .SingleOrDefaultAsync();
-                System.Console.WriteLine(representedLevelId);
+                
+                _logger.LogInformation(representedLevelId.ToString());
                 RepresentedVariableDetailsDto representedVariable = new RepresentedVariableDetailsDto();
                 
                 if(representedLevelId != null) 
                 {
                     representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
-                        .Include(rv => rv.SubstantiveValueDomain.NodeSet)
-                            .ThenInclude(ns => ns.Nodes.Where(n => n.LevelId == representedLevelId))
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                         .SingleOrDefaultAsync(cancellationToken);
@@ -49,8 +51,6 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 {
                         representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
-                        //.Include(rv => rv.SubstantiveValueDomain.NodeSet)
-                        //    .ThenInclude(ns => ns.Nodes)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                         .SingleOrDefaultAsync(cancellationToken);
