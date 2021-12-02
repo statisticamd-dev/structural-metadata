@@ -54,6 +54,7 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
             {
             
                 var nodes = await _context.Nodes.Where(n => n.ParentId == parentId)
+                    .AsNoTrackingWithIdentityResolution()
                     .ProjectTo<StatisticalClassificationItemDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = language})
                     .ToListAsync();
                 if(nodes != null && nodes.Count > 0)
