@@ -30,10 +30,9 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             {
                 var representedLevelId = await _context.RepresentedVariables
                                                     .Where(rv => rv.Id == request.Id)
-                                                    .Select(rv => rv.SubstantiveValueDomain)
-                                                    .Select(sv => sv.LevelId)
+                                                    .Select(rv => rv.SubstantiveValueDomain.LevelId)
                                                     .SingleOrDefaultAsync();
-                
+                System.Console.WriteLine(representedLevelId);
                 RepresentedVariableDetailsDto representedVariable = new RepresentedVariableDetailsDto();
                 
                 if(representedLevelId != null) 
