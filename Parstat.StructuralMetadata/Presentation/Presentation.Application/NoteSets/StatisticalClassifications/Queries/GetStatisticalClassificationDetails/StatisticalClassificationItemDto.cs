@@ -12,7 +12,7 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
         public string Code { get; set; }
         public string Value { get; set; }
         public int LevelNumber { get; set; }
-        public List<ChildItemDto> Children { get; set; }
+        public List<StatisticalClassificationItemDto> Children { get; set; }
 
         public void Mapping(Profile profile)
         {
