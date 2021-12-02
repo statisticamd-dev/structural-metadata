@@ -6,7 +6,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 
@@ -18,8 +17,6 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
 
         public class GetRepresentedVariableQueryHandler : IRequestHandler<GetRepresentedVariableQuery, RepresentedVariableVm>
         {
-            private readonly ILogger _logger;
-
             private readonly IStructuralMetadataDbContext _context;
             private readonly IMapper _mapper;
 
@@ -36,7 +33,6 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                                                     .Select(rv => rv.SubstantiveValueDomain.LevelId)
                                                     .SingleOrDefaultAsync();
                 
-                _logger.LogInformation(representedLevelId.ToString());
                 RepresentedVariableDetailsDto representedVariable = new RepresentedVariableDetailsDto();
                 
                 if(representedLevelId != null) 
@@ -44,7 +40,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                     representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
-                        .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
+                        .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language, ["level"] = representedLevelId})
                         .SingleOrDefaultAsync(cancellationToken);
                 } 
                 else
