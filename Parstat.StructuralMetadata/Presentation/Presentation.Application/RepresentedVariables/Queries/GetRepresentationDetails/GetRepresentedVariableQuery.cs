@@ -32,29 +32,19 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                                                     .Where(rv => rv.Id == request.Id)
                                                     .Select(rv => rv.SubstantiveValueDomain.LevelId)
                                                     .SingleOrDefaultAsync();
-                
-                RepresentedVariableDetailsDto representedVariable = new RepresentedVariableDetailsDto();
-                
                 if(representedLevelId != null) 
                 {
-                    representedVariable = await _context.RepresentedVariables
+                    representedLevelId = -1;
+                }                
+               
+                var representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
                                                                  new Dictionary<string, object> {["language"] = request.Language, 
                                                                                                  ["level"] = representedLevelId.ToString()})
                         .SingleOrDefaultAsync(cancellationToken);
-                } 
-                else
-                {
-                        representedVariable = await _context.RepresentedVariables
-                        .Where(rv => rv.Id == request.Id)
-                        .AsNoTrackingWithIdentityResolution()
-                        .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
-                                                                  new Dictionary<string, object> {["language"] = request.Language,
-                                                                                                  ["level"] = "-1"})
-                        .SingleOrDefaultAsync(cancellationToken);
-                }
+                
                 var vm = new RepresentedVariableVm
                 {
                     RepresentedVariable = representedVariable
