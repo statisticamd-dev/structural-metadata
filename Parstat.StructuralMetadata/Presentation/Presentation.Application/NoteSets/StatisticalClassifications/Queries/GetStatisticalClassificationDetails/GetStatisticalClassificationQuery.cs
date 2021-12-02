@@ -39,7 +39,7 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
                     .SingleOrDefaultAsync(cancellationToken);
                 if(statisticalClassification != null && statisticalClassification.RootItems != null) 
                 {
-                    statisticalClassification.RootItems.ForEach(async ri => ri.Children = await getChildren(ri.Id, request.Language));
+                    statisticalClassification.RootItems.ForEach(ri => ri.Children = getChildren(ri.Id, request.Language));
                 }
 
                 var vm = new StatisticalClassificationVm
@@ -50,16 +50,16 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Queries.G
                 return vm;
             }
 
-            private async Task<List<StatisticalClassificationItemDto>> getChildren(long parentId, string language) 
+            private List<StatisticalClassificationItemDto> getChildren(long parentId, string language) 
             {
             
-                var nodes = await _context.Nodes.Where(n => n.ParentId == parentId)
+                var nodes = _context.Nodes.Where(n => n.ParentId == parentId)
                     .AsNoTrackingWithIdentityResolution()
                     .ProjectTo<StatisticalClassificationItemDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = language})
-                    .ToListAsync();
+                    .ToList();
                 if(nodes != null && nodes.Count > 0)
                 {
-                    nodes.ForEach(async n => n.Children = await getChildren(n.Id, language));
+                    nodes.ForEach(n => n.Children = getChildren(n.Id, language));
                 }
 
                 return nodes;
