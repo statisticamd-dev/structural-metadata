@@ -41,7 +41,6 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                         .Where(rv => rv.Id == request.Id)
                         .Include(rv => rv.SubstantiveValueDomain.NodeSet)
                             .ThenInclude(ns => ns.Nodes.Where(n => n.LevelId == representedLevelId))
-                            .AsSplitQuery()
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                         .SingleOrDefaultAsync(cancellationToken);
@@ -50,10 +49,9 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 {
                         representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
-                        .Include(rv => rv.SubstantiveValueDomain.NodeSet)
-                            .ThenInclude(ns => ns.Nodes)
-                            .AsSplitQuery()
-                        .AsNoTracking()
+                        //.Include(rv => rv.SubstantiveValueDomain.NodeSet)
+                        //    .ThenInclude(ns => ns.Nodes)
+                        .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                         .SingleOrDefaultAsync(cancellationToken);
                 }
