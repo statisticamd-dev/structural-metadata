@@ -38,13 +38,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                     opt.NullSubstitute("None");
                 })
                 .ForMember(d => d.ValueSet, opt => {
-                    opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED && s.Level == null);
-                    opt.MapFrom(s => s.NodeSet.Nodes);
-                    opt.NullSubstitute(new List<ValueItemDto>());
-                })
-                 .ForMember(d => d.ValueSet, opt => {
-                    opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED && s.Level != null);
-                    opt.MapFrom(s => s.Level.Nodes);
+                    opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
+                    opt.MapFrom(s => s.NodeSet.NodeSetType == NodeSetType.CODE_LIST ? s.NodeSet.Nodes : s.Level.Nodes);
                     opt.NullSubstitute(new List<ValueItemDto>());
                 });
                 
