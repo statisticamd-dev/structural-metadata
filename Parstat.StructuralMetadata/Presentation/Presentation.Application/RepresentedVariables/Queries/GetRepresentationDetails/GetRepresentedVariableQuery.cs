@@ -31,7 +31,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 var isLevel = _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
                         .Select(rv => rv.SubstantiveValueDomain)
-                        .Select(svd => svd.Level == null)
+                        .Select(svd => svd.Level != null)
                         .SingleOrDefault();
 
                 RepresentedVariableDetailsDto representedVariable;
