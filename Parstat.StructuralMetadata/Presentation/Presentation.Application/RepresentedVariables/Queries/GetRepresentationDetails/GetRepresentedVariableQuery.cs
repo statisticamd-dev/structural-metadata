@@ -48,9 +48,6 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 else */
                 {
                     representedVariable = await _context.RepresentedVariables
-                        .Include(rv => rv.SubstantiveValueDomain)
-                            .ThenInclude(svd => svd.NodeSet)
-                                .ThenInclude(ns => ns.Nodes.Where(n => n.Level == level))
                         .Where(rv => rv.Id == request.Id && rv.SubstantiveValueDomain.NodeSet.Nodes.Any(n => n.Level == level))
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
