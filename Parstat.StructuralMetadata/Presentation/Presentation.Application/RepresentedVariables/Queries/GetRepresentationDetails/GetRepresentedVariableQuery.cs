@@ -52,6 +52,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                         .Include(rv => rv.SubstantiveValueDomain.NodeSet.Nodes.Where(n => n.Level == level))
                         .AsSplitQuery()
                         .AsNoTrackingWithIdentityResolution()
+                        .AsSingleQuery()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
                                                                  new Dictionary<string, object> {["language"] = request.Language})
                         .SingleOrDefaultAsync(cancellationToken);
