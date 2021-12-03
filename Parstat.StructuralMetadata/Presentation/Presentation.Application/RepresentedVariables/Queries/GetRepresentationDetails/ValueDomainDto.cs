@@ -34,7 +34,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 .ForMember(d => d.LevelName, opt => {
-                    opt.MapFrom(s => s.Level.Name.Text(language));
+                    opt.MapFrom(s => s.Level.LocalId);
                     opt.NullSubstitute("None");
                 })
                 .ForMember(d => d.ValueSet, opt => {
