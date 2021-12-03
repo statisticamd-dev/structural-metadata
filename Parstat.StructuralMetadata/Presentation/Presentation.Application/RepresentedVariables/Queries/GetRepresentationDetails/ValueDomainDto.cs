@@ -26,7 +26,6 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             //language parameter from request
             //default english
             string language = "en";
-            string level = "1";
             profile.CreateMap<ValueDomain, ValueDomainDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
