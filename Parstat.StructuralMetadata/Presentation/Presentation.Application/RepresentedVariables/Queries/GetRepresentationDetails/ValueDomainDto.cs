@@ -26,7 +26,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             //language parameter from request
             //default english
             string language = "en";
-            string level = "-1";
+            string level = "1";
             profile.CreateMap<ValueDomain, ValueDomainDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
@@ -40,7 +40,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 })
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
-                    opt.MapFrom(s => level == "-1" ? s.NodeSet.Nodes : s.Level.Nodes);
+                    opt.MapFrom(s => s.NodeSet.Nodes.Where(n => n.LevelId == null || n.LevelId.ToString() == level ));
                     opt.NullSubstitute(new List<ValueItemDto>());
                 });
                 
