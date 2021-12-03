@@ -16,7 +16,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
         public string Description { get; set; }
         public ValueDomainType Type { get; set; }
         public string Expression { get; set; }
-        public long? LevelId;
+        public long LevelId = -1;
         public DataType DataType { get; set; }
         //public LevelDto NoteSetLevel { get; set; }
         public List<ValueItemDto> ValueSet { get; set; }
