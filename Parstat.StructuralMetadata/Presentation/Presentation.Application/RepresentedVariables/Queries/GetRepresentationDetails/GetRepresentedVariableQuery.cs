@@ -28,35 +28,21 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
 
             public async Task<RepresentedVariableVm> Handle(GetRepresentedVariableQuery request, CancellationToken cancellationToken)
             {
-                var level = _context.RepresentedVariables
+                var isLevel = _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
                         .Select(rv => rv.SubstantiveValueDomain)
-                        .Select(svd => svd.Level)
+                        .Select(svd => svd.Level == null)
                         .SingleOrDefault();
 
                 RepresentedVariableDetailsDto representedVariable;
 
-                /* if(level == null) 
-                {
-                    representedVariable = await _context.RepresentedVariables
+                representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
-                                                                 new Dictionary<string, object> {["language"] = request.Language})
+                                                                 new Dictionary<string, object> {["language"] = request.Language,
+                                                                                                 ["isLeveled"] = isLevel})
                         .SingleOrDefaultAsync(cancellationToken);
-                } 
-                else */
-                {
-                    representedVariable = await _context.RepresentedVariables
-                        .Where(rv => rv.Id == request.Id && rv.SubstantiveValueDomain.NodeSet.Nodes.Any(n => n.Level == level))
-                        .Include(rv => rv.SubstantiveValueDomain.NodeSet.Nodes.Where(n => n.Level == level))
-                        .AsSplitQuery()
-                        .AsNoTrackingWithIdentityResolution()
-                        .AsSingleQuery()
-                        .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
-                                                                 new Dictionary<string, object> {["language"] = request.Language})
-                        .SingleOrDefaultAsync(cancellationToken);
-                }
                 var vm = new RepresentedVariableVm
                 {
                     RepresentedVariable = representedVariable
