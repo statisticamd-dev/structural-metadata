@@ -50,6 +50,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                     representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id && rv.SubstantiveValueDomain.NodeSet.Nodes.Any(n => n.Level == level))
                         .Include(rv => rv.SubstantiveValueDomain.NodeSet.Nodes.Where(n => n.Level == level))
+                        .AsSplitQuery()
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
                                                                  new Dictionary<string, object> {["language"] = request.Language})
