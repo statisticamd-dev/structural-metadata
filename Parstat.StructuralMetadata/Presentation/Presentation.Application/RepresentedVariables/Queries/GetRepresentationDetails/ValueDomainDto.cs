@@ -40,7 +40,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 })
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
-                    opt.MapFrom(s => s.NodeSet.Nodes.Where(n => n.LevelId == null || n.LevelId.ToString() == level ));
+                    opt.MapFrom(s => s.NodeSet.Nodes.Where(n => n.Level == null || n.LevelId.ToString() == level ));
                     opt.NullSubstitute(new List<ValueItemDto>());
                 });
                 
