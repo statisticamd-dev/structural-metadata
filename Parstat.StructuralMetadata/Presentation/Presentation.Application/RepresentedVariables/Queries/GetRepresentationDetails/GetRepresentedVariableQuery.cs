@@ -28,18 +28,34 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
 
             public async Task<RepresentedVariableVm> Handle(GetRepresentedVariableQuery request, CancellationToken cancellationToken)
             {
-                
-                var representedVariable = await _context.RepresentedVariables
+                var level = _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
-                        .Include(rv => rv.SubstantiveValueDomain)
-                            .ThenInclude(s => s.Level)
-                        .Include(rv => rv.SentinelValueDomain)
-                            .ThenInclude(s => s.Level)
+                        .Select(rv => rv.SentinelValueDomain.Level)
+                        .SingleOrDefault();
+
+                RepresentedVariableDetailsDto representedVariable;
+                
+                if(level == null) 
+                {
+                    representedVariable = await _context.RepresentedVariables
+                        .Where(rv => rv.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
                                                                  new Dictionary<string, object> {["language"] = request.Language})
                         .SingleOrDefaultAsync(cancellationToken);
-                
+                }
+                else 
+                {
+                    representedVariable = await _context.RepresentedVariables
+                        .Where(rv => rv.Id == request.Id)
+                        .Include(rv => rv.SubstantiveValueDomain)
+                            .ThenInclude(svd => svd.NodeSet)
+                                .ThenInclude(ns => ns.Nodes.Where(n => n.Level == level))
+                        .AsNoTrackingWithIdentityResolution()
+                        .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
+                                                                 new Dictionary<string, object> {["language"] = request.Language})
+                        .SingleOrDefaultAsync(cancellationToken);
+                }
                 var vm = new RepresentedVariableVm
                 {
                     RepresentedVariable = representedVariable
