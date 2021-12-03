@@ -30,7 +30,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             {
                 var level = _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
-                        .Select(rv => rv.SentinelValueDomain)
+                        .Select(rv => rv.SubstantiveValueDomain)
                         .Select(svd => svd.Level)
                         .SingleOrDefault();
 
@@ -50,8 +50,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                     representedVariable = await _context.RepresentedVariables
                         .Include(rv => rv.SubstantiveValueDomain)
                             .ThenInclude(svd => svd.NodeSet)
-                                .ThenInclude(ns => ns.Nodes.Where(n => n.Level.Id == level.Id))
-                        .Where(rv => rv.Id == request.Id && rv.SubstantiveValueDomain.NodeSet.Nodes.Any(n => n.Level.Id == level.Id))
+                                .ThenInclude(ns => ns.Nodes.Where(n => n.Level == level))
+                        .Where(rv => rv.Id == request.Id && rv.SubstantiveValueDomain.NodeSet.Nodes.Any(n => n.Level == level))
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
                                                                  new Dictionary<string, object> {["language"] = request.Language})
