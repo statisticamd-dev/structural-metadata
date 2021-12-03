@@ -31,8 +31,10 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 
                 var representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
-                        .Include(rv => rv.SubstantiveValueDomain.Level)
-                        .Include(rv => rv.SentinelValueDomain.Level)
+                        .Include(rv => rv.SubstantiveValueDomain)
+                            .ThenInclude(s => s.Level)
+                        .Include(rv => rv.SentinelValueDomain)
+                            .ThenInclude(s => s.Level)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
                                                                  new Dictionary<string, object> {["language"] = request.Language})
