@@ -34,9 +34,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                         .Select(svd => svd.Level != null)
                         .SingleOrDefault();
 
-                RepresentedVariableDetailsDto representedVariable;
-
-                representedVariable = await _context.RepresentedVariables
+                var representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
