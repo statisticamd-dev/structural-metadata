@@ -51,7 +51,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                         .Include(rv => rv.SubstantiveValueDomain)
                             .ThenInclude(svd => svd.NodeSet)
                                 .ThenInclude(ns => ns.Nodes.Where(n => n.Level == level))
-                        .Where(rv => rv.Id == request.Id)
+                        .Where(rv => rv.Id == request.Id && rv.SentinelValueDomain.NodeSet.Nodes.Any(n => n.Level == level))
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
                                                                  new Dictionary<string, object> {["language"] = request.Language})
