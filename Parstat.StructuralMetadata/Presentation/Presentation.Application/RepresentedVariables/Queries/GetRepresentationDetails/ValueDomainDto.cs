@@ -33,7 +33,10 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Type, opt => opt.MapFrom(s => s.Type))
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
-                .ForMember(d => d.LevelId, opt => opt.MapFrom(s => s.LevelId))
+                .ForMember(d => d.LevelId, opt => {
+                    opt.MapFrom(s => s.LevelId);
+                    opt.NullSubstitute(-1);
+                })
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED );
                     opt.MapFrom(s => s.Level.Nodes);
