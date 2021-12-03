@@ -16,7 +16,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
         public string Description { get; set; }
         public ValueDomainType Type { get; set; }
         public string Expression { get; set; }
-        public long? LevelId;
+        public string LevelName;
         public DataType DataType { get; set; }
         //public LevelDto NoteSetLevel { get; set; }
         public List<ValueItemDto> ValueSet { get; set; }
@@ -33,9 +33,9 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.Type, opt => opt.MapFrom(s => s.Type))
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
-                .ForMember(d => d.LevelId, opt => {
-                    opt.MapFrom(s => s.Level.Id);
-                    opt.NullSubstitute(-1);
+                .ForMember(d => d.LevelName, opt => {
+                    opt.MapFrom(s => s.Level.Name.Text(language));
+                    opt.NullSubstitute("None");
                 })
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED );
