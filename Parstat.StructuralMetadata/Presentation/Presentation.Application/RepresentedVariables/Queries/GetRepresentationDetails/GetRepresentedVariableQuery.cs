@@ -30,12 +30,13 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             {
                 var level = _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
-                        .Select(rv => rv.SentinelValueDomain.Level)
+                        .Select(rv => rv.SentinelValueDomain)
+                        .Select(svd => svd.Level)
                         .SingleOrDefault();
 
                 RepresentedVariableDetailsDto representedVariable;
-                
-                if(level == null) 
+
+                /* if(level == null) 
                 {
                     representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
@@ -43,14 +44,14 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
                                                                  new Dictionary<string, object> {["language"] = request.Language})
                         .SingleOrDefaultAsync(cancellationToken);
-                }
-                else 
+                } 
+                else */
                 {
                     representedVariable = await _context.RepresentedVariables
-                        .Where(rv => rv.Id == request.Id)
                         .Include(rv => rv.SubstantiveValueDomain)
                             .ThenInclude(svd => svd.NodeSet)
                                 .ThenInclude(ns => ns.Nodes.Where(n => n.Level == level))
+                        .Where(rv => rv.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
                                                                  new Dictionary<string, object> {["language"] = request.Language})
