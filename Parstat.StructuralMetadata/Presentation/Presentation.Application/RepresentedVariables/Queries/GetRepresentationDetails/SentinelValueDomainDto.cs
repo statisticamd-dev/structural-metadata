@@ -10,7 +10,7 @@ using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentationDetails
 {
-    public class ValueDomainDto : AbstractBaseDto, IMapFrom<ValueDomain>
+    public class SentinelValueDomainDto : AbstractBaseDto, IMapFrom<ValueDomain>
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -25,8 +25,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             //language parameter from request
             //default english
             string language = "en";
-            bool isLeveled = false;
-            profile.CreateMap<ValueDomain, ValueDomainDto>()
+            profile.CreateMap<ValueDomain, SentinelValueDomainDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
@@ -35,7 +34,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
-                    opt.MapFrom(s => isLeveled ? s.Level != null ? s.Level.Nodes : s.NodeSet.Nodes : s.NodeSet.Nodes);
+                    opt.MapFrom(s => s.NodeSet.Nodes);
                     opt.NullSubstitute(new List<ValueItemDto>());
                 });
                 

@@ -11,8 +11,8 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
     public class RepresentedVariableDetailsDto : AbstractConceptDto, IMapFrom<RepresentedVariable>
     {
         public VariableMiniDto Variable { get; set; }
-        public ValueDomainDto SentinelValueDomain { get; set; }
-        public ValueDomainDto SubstantiveValueDomain { get; set; }
+        public SentinelValueDomainDto SentinelValueDomain { get; set; }
+        public SubstantiveValueDomainDto SubstantiveValueDomain { get; set; }
 
         public void Mapping(Profile profile)
         {
