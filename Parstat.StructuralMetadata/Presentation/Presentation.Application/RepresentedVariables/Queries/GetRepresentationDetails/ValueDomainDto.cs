@@ -35,7 +35,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
-                    opt.MapFrom(s => isLeveled && s.Scope.ToString() == ValueDomainScope.SUBSTANTIVE.ToString() ? s.Level.Nodes : s.NodeSet.Nodes);
+                    opt.MapFrom(s => isLeveled &&  (int)s.Scope == (int)ValueDomainScope.SUBSTANTIVE ? s.Level.Nodes : s.NodeSet.Nodes);
                     opt.NullSubstitute(new List<ValueItemDto>());
                 });
                 
