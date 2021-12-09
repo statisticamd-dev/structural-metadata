@@ -16,6 +16,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public long? CategoryId { get; set; }
         public NodeSet NodeSet { get; set; }
         public string Code { get; set; }
+        public MultilanguageString Description { get; set; }
         public Level Level { get; set; }
         public Node Parent { get; set; }
         public Category Category { get; set; }

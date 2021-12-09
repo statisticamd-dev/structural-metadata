@@ -24,6 +24,7 @@ namespace Presentation.Infrastructure.Configurations
                 .IsRequired(false);
             builder.Property(n => n.CategoryId)
                 .IsRequired(false);
+            builder.OwnsOne(n => n.Description);
         }
     }
 }

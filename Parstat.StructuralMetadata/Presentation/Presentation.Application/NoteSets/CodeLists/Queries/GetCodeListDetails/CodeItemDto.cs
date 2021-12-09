@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models;
@@ -10,6 +11,7 @@ namespace Presentation.Application.NoteSets.CodeLists.Queries.GetCodeListDetails
     {
         public string Code { get; set; }
         public string Value { get; set; }
+        public string Description { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -19,7 +21,8 @@ namespace Presentation.Application.NoteSets.CodeLists.Queries.GetCodeListDetails
             profile.CreateMap<Node, CodeItemDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Code, opt => opt.MapFrom(s => s.Code))
-                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label.Value.Text(language)));
+                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label.Value.Text(language)))
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty));
         } 
     }
 }
