@@ -10,7 +10,7 @@ namespace Presentation.Application.UnitTypes.Queries.GetUnitTypes
     {
         public string LocalId { get; set; }
         public string Name { get; set; }
-        public string Descriptin { get; set; }
+        public string Description { get; set; }
          public void Mapping(Profile profile)
         {
             //language parameter from request
@@ -18,7 +18,7 @@ namespace Presentation.Application.UnitTypes.Queries.GetUnitTypes
             string language = "en";
             profile.CreateMap<UnitType, UnitTypeDto>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
-                .ForMember(d => d.Descriptin, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty)
+                .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty)
                );
         } 
     }
