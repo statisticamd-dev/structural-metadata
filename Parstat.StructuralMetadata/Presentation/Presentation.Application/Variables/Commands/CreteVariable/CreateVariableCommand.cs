@@ -7,7 +7,6 @@ using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 

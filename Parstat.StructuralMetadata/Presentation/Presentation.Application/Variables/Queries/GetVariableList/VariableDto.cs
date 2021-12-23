@@ -1,9 +1,7 @@
 using System;
 using AutoMapper;
-using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
-using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.Variables.Queries.GetVariableList
