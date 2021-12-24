@@ -11,9 +11,9 @@ using Presentation.Application.Common.Requests;
 
 namespace Presentation.Application.ValueDomains.Queries.GetValueDomains
 {
-    public class GetValueDomainsQuery : AbstractRequest, IRequest<ValueDomainVm>
+    public class GetValueDomainsQuery : AbstractRequest, IRequest<ValueDomainListVm>
     {
-        public class GetValueDomainsQueryHandler : IRequestHandler<GetValueDomainsQuery, ValueDomainVm>
+        public class GetValueDomainsQueryHandler : IRequestHandler<GetValueDomainsQuery, ValueDomainListVm>
         {
             private readonly IStructuralMetadataDbContext _context;
             private readonly IMapper _mapper;
@@ -24,7 +24,7 @@ namespace Presentation.Application.ValueDomains.Queries.GetValueDomains
                 _mapper = mapper;
             }
 
-            public async Task<ValueDomainVm> Handle(GetValueDomainsQuery request, CancellationToken cancellationToken)
+            public async Task<ValueDomainListVm> Handle(GetValueDomainsQuery request, CancellationToken cancellationToken)
             {
                 var valueDomains = await _context.ValueDomains
                     .AsNoTracking()
@@ -32,7 +32,7 @@ namespace Presentation.Application.ValueDomains.Queries.GetValueDomains
                     .OrderBy(v => v.LocalId)
                     .ToListAsync(cancellationToken);
 
-                var vm = new ValueDomainVm
+                var vm = new ValueDomainListVm
                 {
                     ValueDomains = valueDomains
                 };
