@@ -22,7 +22,7 @@ namespace Presentation.WebApi.Controllers
             return Ok(id);            
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<ActionResult<Unit>> Delete(long id) => Ok(await Mediator.Send(new DeleteVariableCommand {Id = id}));
