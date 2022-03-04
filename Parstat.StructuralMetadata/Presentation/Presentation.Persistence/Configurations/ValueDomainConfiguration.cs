@@ -27,11 +27,11 @@ namespace Presentation.Infrastructure.Configurations
             builder.HasMany(v => v.SentinelRepresentations)
                 .WithOne(r => r.SentinelValueDomain)
                 .HasForeignKey(r => r.SentinelValueDomainId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(v => v.SubstantiveRepresentations)
                 .WithOne(r => r.SubstantiveValueDomain)
                 .HasForeignKey(r => r.SubstantiveValueDomainId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             builder.OwnsOne(v => v.Name);
             builder.OwnsOne(v => v.Description);
             builder.OwnsOne(v => v.VersionRationale);
