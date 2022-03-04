@@ -13,8 +13,10 @@ namespace Presentation.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody]CreateUnitTypeCommand command)
+        public async Task<IActionResult> Create([FromBody]CreateUnitTypeCommand command, string language)
         {
+            command.Language = language.Trim();
+
             var id =  await Mediator.Send(command);
 
             return Ok(id);

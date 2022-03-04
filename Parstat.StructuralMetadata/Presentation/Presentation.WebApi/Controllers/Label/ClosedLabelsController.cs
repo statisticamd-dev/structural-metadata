@@ -11,8 +11,10 @@ namespace Presentation.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody]CreateLabelCommand command)
+        public async Task<IActionResult> Create([FromBody]CreateLabelCommand command, string language)
         {
+            command.Language = language;
+
             var id =  await Mediator.Send(command);
 
             return Ok(id);
@@ -21,8 +23,10 @@ namespace Presentation.WebApi.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Update([FromBody]UpdateLabelCommand command)
+        public async Task<IActionResult> Update([FromBody]UpdateLabelCommand command, string language)
         {
+            command.Language = language;
+            
             var id =  await Mediator.Send(command);
 
             return Ok(id);
