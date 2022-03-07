@@ -11,7 +11,7 @@ using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
 {
-    public class UpdateUnitTypeCommand : AbstractRequest, IRequest<long>
+    public class UpdateUnitTypeCommand : AbstractRequest, IRequest
     {
         
         public long Id { get; set; }
@@ -22,7 +22,7 @@ namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
         public string VersionRationale { get; set; }
         public string Definition { get; set; }
 
-        public class Handler : IRequestHandler<UpdateUnitTypeCommand, long>
+        public class Handler : IRequestHandler<UpdateUnitTypeCommand, Unit>
         {
             private readonly IStructuralMetadataDbContext _context;
 
@@ -31,7 +31,7 @@ namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
                 _context = context;
             }
 
-            public async Task<long> Handle(UpdateUnitTypeCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateUnitTypeCommand request, CancellationToken cancellationToken)
             {
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
@@ -58,7 +58,7 @@ namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
-                return entity.Id;
+                return Unit.Value;
             }
         }
     }

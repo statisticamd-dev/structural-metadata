@@ -29,12 +29,11 @@ namespace Presentation.WebApi.Controllers
         public async Task<IActionResult> Create([FromBody]UpdateUnitTypeCommand command, long id, string language)
         {
             command.Id = id;
-            
+
             command.Language = language.Trim();
 
-            var _id =  await Mediator.Send(command);
+            return Ok(await Mediator.Send(command));
 
-            return Ok(_id);
         }
     }
 }
