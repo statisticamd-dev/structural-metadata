@@ -9,20 +9,18 @@ using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
-namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
+namespace Presentation.Application.MeasurementTypes.Commands.UpdateMeasurementType
 {
-    public class UpdateUnitTypeCommand : AbstractRequest, IRequest
+    public class UpdateMeasurementTypeCommand : AbstractRequest, IRequest
     {
-        
         public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
          public string Version { get; set; }
         public DateTime? VersionDate { get; set; }
         public string VersionRationale { get; set; }
-        public string Definition { get; set; }
 
-        public class Handler : IRequestHandler<UpdateUnitTypeCommand, Unit>
+        public class Handler : IRequestHandler<UpdateMeasurementTypeCommand, Unit>
         {
             private readonly IStructuralMetadataDbContext _context;
 
@@ -31,21 +29,19 @@ namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
                 _context = context;
             }
 
-            public async Task<Unit> Handle(UpdateUnitTypeCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateMeasurementTypeCommand request, CancellationToken cancellationToken)
             {
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
-                
-                var entity = await _context.UnitTypes.SingleOrDefaultAsync(ut => ut.Id == request.Id);
+               
+                var entity = await _context.MeasurementTypes.SingleOrDefaultAsync(mt => mt.Id == request.Id);
 
-                if(entity == null) 
+                 if(entity == null) 
                 {
-                    throw new NotFoundException(nameof(UnitType), request.Id);
+                    throw new NotFoundException(nameof(MeasurementType), request.Id);
                 }
-
                 entity.Name.AddText(language, request.Name);
                 entity.Description.AddText(language, request.Description);
-                entity.Definition.AddText(language, request.Definition);
                 entity.VersionRationale.AddText(language, request.VersionRationale);
                 if(!String.IsNullOrEmpty(request.Version)) {
                     entity.Version = request.Version;
@@ -60,6 +56,8 @@ namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
 
                 return Unit.Value;
             }
+
         }
+        
     }
 }

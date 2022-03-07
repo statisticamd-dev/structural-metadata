@@ -35,7 +35,7 @@ namespace Presentation.WebApi.Controllers
 
         }
 
-        [HttpPut("{id}")]
+        [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Delete(long id)
