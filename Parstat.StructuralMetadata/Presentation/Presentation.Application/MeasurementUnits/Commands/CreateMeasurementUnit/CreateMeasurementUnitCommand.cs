@@ -18,6 +18,9 @@ namespace Presentation.Application.MeasurementUnits.Commands.CreateMeasurementUn
         public string Version { get; set; } = "1.0";
         public DateTime VersionDate { get; set; } = DateTime.Now;
         public string VersionRationale { get; set; } = "First Version";
+        public string Abbreviation { get; set; }
+        public bool IsStandard { get; set; } = false;
+        public string ConvertionRule { get; set; }
         public long MeasurementTypeId { get; set; }
 
         public class Handler : IRequestHandler<CreateMeasurementUnitCommand, long>
@@ -41,6 +44,9 @@ namespace Presentation.Application.MeasurementUnits.Commands.CreateMeasurementUn
                       Version = request.Version,
                       VersionDate = request.VersionDate,
                       VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
+                      ConvertionRule = request.ConvertionRule,
+                      Abbreviation = request.Abbreviation,
+                      IsStandard = request.IsStandard,
                       MeasurementTypeId = request.MeasurementTypeId
                 };
                 _context.MeasurementUnits.Add(entity);
