@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Presentation.Application.MeasurementTypes.Commands
+namespace Presentation.Application.MeasurementTypes.Commands.CreateMeasurementType
 {
     public class CreateMeasurementTypeCommandValidator : AbstractValidator<CreateMeasurementTypeCommand>
     {

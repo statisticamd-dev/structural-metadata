@@ -8,7 +8,7 @@ using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 using Presentation.Domain;
 
-namespace Presentation.Application.MeasurementTypes.Commands
+namespace Presentation.Application.MeasurementTypes.Commands.CreateMeasurementType
 {
     public class CreateMeasurementTypeCommand : AbstractRequest, IRequest<long>
     {
