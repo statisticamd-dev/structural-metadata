@@ -18,6 +18,8 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public Level Level { get; set; }
         public long? NodeSetId { get; set; }
         public NodeSet NodeSet { get; set; }
+        public long? MeasurementUnitId { get; set; }
+        public MeasurementUnit MeasurementUnit { get; set; }
         //public IEnumerable<RepresentedVariable> RepresentedVariables { get; set; }
         public IList<RepresentedVariable> SentinelRepresentations { get; set; }
         public IList<RepresentedVariable> SubstantiveRepresentations { get; set; }
