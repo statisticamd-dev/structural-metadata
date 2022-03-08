@@ -16,11 +16,11 @@ namespace Presentation.Application.Variables.Commands.UpdateVariable
         public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Version { get; set; } = "1.0";
-        public DateTime VersionDate { get; set; } = DateTime.Now;
-        public string VersionRationale { get; set; } = "First Version";
+        public string Version { get; set; }
+        public DateTime? VersionDate { get; set; }
+        public string VersionRationale { get; set; } 
         public string Definition { get; set; }
-        public long MeasuresId { get; set; }
+        public long? MeasuresId { get; set; }
 
         public class Handler : IRequestHandler<UpdateVariableCommand, Unit>
         {
@@ -42,11 +42,17 @@ namespace Presentation.Application.Variables.Commands.UpdateVariable
 
                 entity.Name.AddText(language, request.Name);
                 entity.Description.AddText(language, request.Description);
-                entity.Version = request.Version;
-                entity.VersionDate = request.VersionDate;
                 entity.VersionRationale.AddText(language, request.VersionRationale);
                 entity.Definition.AddText(language, request.Definition);
-                entity.MeasuresId = request.MeasuresId;                                  
+                if(!String.IsNullOrEmpty(request.Version)) {
+                    entity.Version = request.Version;
+                }
+                if(request.VersionDate.HasValue) {
+                    entity.VersionDate = request.VersionDate.Value;
+                }
+                if(request.MeasuresId.HasValue) {
+                    entity.MeasuresId = request.MeasuresId.Value;   
+                }                               
 
                 _context.Variables.Update(entity);
 
