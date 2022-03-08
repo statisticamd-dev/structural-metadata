@@ -30,6 +30,7 @@ namespace Presentation.Persistence
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Correspondence> Correspondences { get; set; }
+        public DbSet<Concept> Concepts { get; set; }
         public DbSet<Label> Labels { get; set; }
         public DbSet<Level> Levels { get; set; }
         public DbSet<Mapping> Mappings { get; set; }

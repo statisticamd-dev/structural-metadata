@@ -11,6 +11,7 @@ namespace Presentation.Application.Common.Interfaces
     {
          DbSet<Category> Categories {get; set;}
          DbSet<Correspondence> Correspondences {get; set;}
+         DbSet<Concept> Concepts { get; set; }
          DbSet<Label> Labels {get; set;}
          DbSet<Level> Levels {get; set;}
          DbSet<Mapping> Mappings {get; set;}
