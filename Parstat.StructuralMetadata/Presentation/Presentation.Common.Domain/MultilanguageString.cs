@@ -34,10 +34,18 @@ namespace Presentation.Domain
         public static MultilanguageString Init(Language language, string text) 
         {
             if(language == Language.RO)
-                return new MultilanguageString {Ro = text};
+                if(!String.IsNullOrEmpty(text))
+                    return new MultilanguageString {Ro = text};
+                else
+                    return new MultilanguageString {Ro = ""};
             if(language == Language.RU) 
-                return new MultilanguageString {Ru = text};
-            return new MultilanguageString {En = text};
+                if(!String.IsNullOrEmpty(text))
+                    return new MultilanguageString {Ru = text};
+                else    
+                    return new MultilanguageString {Ru = ""};
+            if(!String.IsNullOrEmpty(text))
+                return new MultilanguageString {En = text};
+            return new MultilanguageString {En = ""};
         }
 
         public void AddText(Language language, string text) 

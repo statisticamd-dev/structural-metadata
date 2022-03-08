@@ -37,9 +37,10 @@ namespace Presentation.Application.Labels.Commands.UpdateLabel
                     throw new NotFoundException(nameof(Label), request.Id);
                 }
                 //set the state to modified for auditing porpoises 
-                EntityEntry entityEntry =  _context.Entry(label);
-                entityEntry.State = EntityState.Modified;
+                //EntityEntry entityEntry =  _context.Entry(label);
+                //entityEntry.State = EntityState.Modified;
                 label.Value.AddText(language, request.Value);
+                _context.Labels.Update(label);
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);

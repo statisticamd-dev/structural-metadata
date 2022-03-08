@@ -40,7 +40,7 @@ namespace Presentation.Application.MeasurementUnits.Commands.CreateMeasurementUn
                 {
                       LocalId = request.LocalId,
                       Name = MultilanguageString.Init(language, request.Name),
-                      Description = request.Description != null ? MultilanguageString.Init(language, request.Description) : null,
+                      Description = MultilanguageString.Init(language, request.Description),
                       Version = request.Version,
                       VersionDate = request.VersionDate,
                       VersionRationale = MultilanguageString.Init(language, request.VersionRationale),

@@ -36,11 +36,11 @@ namespace Presentation.Application.UnitTypes.Commands.CreateUnitType
                 {
                       LocalId = request.LocalId,
                       Name = MultilanguageString.Init(language, request.Name),
-                      Description = request.Description != null ? MultilanguageString.Init(language, request.Description) : null,
+                      Description = MultilanguageString.Init(language, request.Description),
                       Version = request.Version,
                       VersionDate = request.VersionDate,
                       VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
-                      Definition = request.Definition != null ? MultilanguageString.Init(language, request.Definition) : null,
+                      Definition = MultilanguageString.Init(language, request.Definition),
                 };
                 _context.UnitTypes.Add(entity);
 

@@ -40,12 +40,12 @@ namespace Presentation.Application.Variables.Commands.UpdateVariable
                
                if(entity == null) throw new NotFoundException(nameof(Variables), request.LocalId);
 
-                entity.Name = MultilanguageString.Init(language, request.Name);
-                entity.Description = request.Description != null ? MultilanguageString.Init(language, request.Description) : null;
+                entity.Name.AddText(language, request.Name);
+                entity.Description.AddText(language, request.Description);
                 entity.Version = request.Version;
                 entity.VersionDate = request.VersionDate;
-                entity.VersionRationale = MultilanguageString.Init(language, request.VersionRationale);
-                entity.Definition = request.Definition != null ? MultilanguageString.Init(language, request.Definition) : null;
+                entity.VersionRationale.AddText(language, request.VersionRationale);
+                entity.Definition.AddText(language, request.Definition);
                 entity.MeasuresId = request.MeasuresId;                                  
 
                 _context.Variables.Update(entity);

@@ -64,7 +64,7 @@ namespace Presentation.Application.MeasurementUnits.Commands.UpdateMeasurementUn
                 if(request.VersionDate.HasValue) {
                     entity.VersionDate = request.VersionDate.Value;
                 }
-
+                _context.MeasurementUnits.Update(entity);
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);

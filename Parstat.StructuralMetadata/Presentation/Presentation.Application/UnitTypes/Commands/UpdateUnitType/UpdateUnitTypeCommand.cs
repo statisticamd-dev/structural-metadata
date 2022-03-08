@@ -54,6 +54,8 @@ namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
                 if(request.VersionDate.HasValue) {
                     entity.VersionDate = request.VersionDate.Value;
                 }
+                _context.UnitTypes.Update(entity);
+                
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);

@@ -50,6 +50,7 @@ namespace Presentation.Application.MeasurementTypes.Commands.UpdateMeasurementTy
                 if(request.VersionDate.HasValue) {
                     entity.VersionDate = request.VersionDate.Value;
                 }
+                _context.MeasurementTypes.Update(entity);
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
