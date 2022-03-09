@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Application.RepresentedVariables.Commands.CreateRepresentedVariable;
 using Presentation.Application.Variables.Commands.CreteVariable;
 using Presentation.Application.Variables.Commands.DeleteVariable;
 using Presentation.Application.Variables.Commands.UpdateVariable;
@@ -30,6 +31,17 @@ namespace Presentation.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Create([FromBody]UpdateVariableCommand command, string language)
+        {
+            command.Language = language;
+            var id =  await Mediator.Send(command);
+
+            return Ok(id);
+        }
+
+        [HttpPut("representations")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> CreateRepresentationVariable([FromBody]CreateRepresentationVariableCommand command, string language)
         {
             command.Language = language;
             var id =  await Mediator.Send(command);
