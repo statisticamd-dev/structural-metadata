@@ -4,7 +4,6 @@ using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
-using Presentation.Domain;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,21 +35,29 @@ namespace Presentation.Application.Variables.Commands.UpdateVariable
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
                
-               var entity = await _context.Variables.SingleOrDefaultAsync(ns => ns.LocalId == request.LocalId);
+                var entity = await _context.Variables.SingleOrDefaultAsync(ns => ns.LocalId == request.LocalId);
                
-               if(entity == null) throw new NotFoundException(nameof(Variables), request.LocalId);
+                if(entity == null) 
+                {
+                    throw new NotFoundException(nameof(Variables), request.LocalId);
+                }
 
                 entity.Name.AddText(language, request.Name);
                 entity.Description.AddText(language, request.Description);
                 entity.VersionRationale.AddText(language, request.VersionRationale);
                 entity.Definition.AddText(language, request.Definition);
-                if(!String.IsNullOrEmpty(request.Version)) {
+                if(!String.IsNullOrEmpty(request.Version)) 
+                {
                     entity.Version = request.Version;
                 }
-                if(request.VersionDate.HasValue) {
+
+                if(request.VersionDate.HasValue) 
+                {
                     entity.VersionDate = request.VersionDate.Value;
                 }
-                if(request.MeasuresId.HasValue) {
+
+                if(request.MeasuresId.HasValue) 
+                {
                     entity.MeasuresId = request.MeasuresId.Value;   
                 }                               
 
