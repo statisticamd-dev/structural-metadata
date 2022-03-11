@@ -17,7 +17,9 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
         public long VariableId { get; set; }
         public string LocalId { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }      
+        public string Description { get; set; }
+        public long? SentinelValueDomainId { get; set; }
+        public long SubstantiveValueDomainId { get; set; }
 
         public class Handler : IRequestHandler<CreateRepresentationVariableCommand, long>
         {
@@ -36,14 +38,26 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
                     .FirstOrDefaultAsync(v => v.Id == request.VariableId);
 
                 if(variable == null)                 
-                     throw new NotFoundException(nameof(Variable), request.VariableId);                
+                     throw new NotFoundException(nameof(Variable), request.VariableId);
 
-                var newRepresentedVariableData = new RepresentedVariable {
+                //In case SentinelValueDomainId is provided, check if this id corresponds to a valid ValueDomain
+                if(request.SentinelValueDomainId != null)
+                    {
+                        var sentinelValueDomainFound = await _context.ValueDomains.FirstOrDefaultAsync(v => v.Id == request.SentinelValueDomainId);
+                        if (sentinelValueDomainFound == null)  throw new NotFoundException(nameof(ValueDomain), request.SentinelValueDomainId); 
+                    }
 
-                        VariableId = request.VariableId,
-                        LocalId = request.LocalId,
-                        Name =  MultilanguageString.Init(language, request.Name),
-                        Description = MultilanguageString.Init(language, request.Description)
+                var substantiveValueDomainFound = await _context.ValueDomains.FirstOrDefaultAsync(v => v.Id == request.SubstantiveValueDomainId);
+                if (substantiveValueDomainFound == null)  throw new NotFoundException(nameof(ValueDomain), request.SubstantiveValueDomainId); 
+
+                var newRepresentedVariableData = new RepresentedVariable 
+                {
+                    VariableId = request.VariableId,
+                    LocalId = request.LocalId,
+                    Name =  MultilanguageString.Init(language, request.Name),
+                    SubstantiveValueDomainId = request.SubstantiveValueDomainId,
+                    SentinelValueDomainId = request.SentinelValueDomainId,
+                    Description = MultilanguageString.Init(language, request.Description)
                 };
                 
                 _context.RepresentedVariables.Add(newRepresentedVariableData);
