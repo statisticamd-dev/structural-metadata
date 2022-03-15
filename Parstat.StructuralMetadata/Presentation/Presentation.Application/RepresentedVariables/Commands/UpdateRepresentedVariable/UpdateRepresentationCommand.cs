@@ -10,7 +10,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresentedVariable
+namespace Presentation.Application.RepresentedVariables.Commands.UpdateRepresentedVariable
 {
     public class UpdateRepresentationVariableCommand : AbstractRequest, IRequest<Unit>
     {    
