@@ -23,14 +23,12 @@ namespace Presentation.WebApi.Controllers
             return Ok(id);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Update([FromBody]UpdateMeasurementUnitCommand command, long id, string language)
+        public async Task<IActionResult> Update([FromBody]UpdateMeasurementUnitCommand command, string language)
         {
-            command.Id = id;
             command.Language = language;
-
             return Ok(await Mediator.Send(command));
         }
 

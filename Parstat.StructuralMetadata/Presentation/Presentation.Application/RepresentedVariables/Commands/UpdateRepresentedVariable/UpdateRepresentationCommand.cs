@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresentedVariable
 {
-    public class UpdateRepresentationVariableCommand : AbstractRequest, IRequest<long>
+    public class UpdateRepresentationVariableCommand : AbstractRequest, IRequest<Unit>
     {    
         public long Id { get; set; }
         public long VariableId { get; set; }
@@ -22,7 +22,7 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
         public long? SentinelValueDomainId { get; set; }
         public long? SubstantiveValueDomainId { get; set; }
 
-        public class Handler : IRequestHandler<UpdateRepresentationVariableCommand, long>
+        public class Handler : IRequestHandler<UpdateRepresentationVariableCommand, Unit>
         {
             private readonly IStructuralMetadataDbContext _context;
 
@@ -31,7 +31,7 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
                 _context = context;
             }
 
-            public async Task<long> Handle(UpdateRepresentationVariableCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateRepresentationVariableCommand request, CancellationToken cancellationToken)
             {
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
@@ -41,20 +41,20 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
                 if(representedVariable == null)                 
                      throw new NotFoundException(nameof(RepresentedVariable), request.Id);
                 
-                if(request.SentinelValueDomainId != null)                    
+                if(request.SentinelValueDomainId.HasValue)                    
                    {
-                       var sentinelValueDomainFound = await _context.ValueDomains.FirstOrDefaultAsync(v => v.Id == request.SentinelValueDomainId);
-                       if (sentinelValueDomainFound == null) throw new NotFoundException(nameof(ValueDomain), request.SentinelValueDomainId); 
+                       var sentinelValueDomainFound = await _context.ValueDomains.FirstOrDefaultAsync(v => v.Id == request.SentinelValueDomainId.Value);
+                       if (sentinelValueDomainFound == null) throw new NotFoundException(nameof(ValueDomain), request.SentinelValueDomainId.Value); 
 
-                       representedVariable.SentinelValueDomainId = request.SentinelValueDomainId;
+                       representedVariable.SentinelValueDomainId = request.SentinelValueDomainId.Value;
                    }
                      
-                if(request.SubstantiveValueDomainId != null)
+                if(request.SubstantiveValueDomainId.HasValue)
                     { 
-                       var substantiveValueDomainFound = await _context.ValueDomains.FirstOrDefaultAsync(v => v.Id == request.SubstantiveValueDomainId);                
-                       if (substantiveValueDomainFound == null) throw new NotFoundException(nameof(ValueDomain), request.SubstantiveValueDomainId); 
+                       var substantiveValueDomainFound = await _context.ValueDomains.FirstOrDefaultAsync(v => v.Id == request.SubstantiveValueDomainId.Value);                
+                       if (substantiveValueDomainFound == null) throw new NotFoundException(nameof(ValueDomain), request.SubstantiveValueDomainId.Value); 
 
-                       representedVariable.SubstantiveValueDomainId = (long)request.SubstantiveValueDomainId;
+                       representedVariable.SubstantiveValueDomainId = request.SubstantiveValueDomainId.Value;
                     }
                                 
                 if(!string.IsNullOrWhiteSpace(request.Name))
@@ -67,7 +67,7 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
-                return representedVariable.Id;
+                return Unit.Value;
             }
         }
     }

@@ -25,9 +25,7 @@ namespace Presentation.WebApi.Controllers.RepresentationVariable
         public async Task<IActionResult> Update([FromBody]UpdateRepresentationVariableCommand command, string language)
         {
             command.Language = language;
-            var id =  await Mediator.Send(command);
-
-            return Ok(id);
+            return Ok(await Mediator.Send(command));
         }       
     }
 }
