@@ -54,21 +54,30 @@ namespace Presentation.Application.ValueDomains.Commands.CreteValueDomain
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
 
-                var measurementUnit = await _context.MeasurementUnits
-                    .FirstOrDefaultAsync(ut => ut.Id == request.MeasurementUnitId);
-                if (measurementUnit == null)
-                    throw new NotFoundException(nameof(MeasurementUnit), request.MeasurementUnitId);
+                if(request.MeasurementUnitId.HasValue) 
+                {
+                    var measurementUnit = await _context.MeasurementUnits
+                        .FirstOrDefaultAsync(ut => ut.Id == request.MeasurementUnitId);
+                    if (measurementUnit == null)
+                        throw new NotFoundException(nameof(MeasurementUnit), request.MeasurementUnitId);
+                }
 
-                var level = await _context.Levels
-                   .FirstOrDefaultAsync(ut => ut.Id == request.LevelId);
-                if (level == null)
-                    throw new NotFoundException(nameof(Level), request.LevelId);
+                if(request.LevelId.HasValue)
+                {
+                    var level = await _context.Levels
+                    .FirstOrDefaultAsync(ut => ut.Id == request.LevelId);
+                    if (level == null)
+                        throw new NotFoundException(nameof(Level), request.LevelId);
+                }
 
-                var nodeSet = await _context.NodeSets
-                   .FirstOrDefaultAsync(ut => ut.Id == request.NodesetId);
-                if (nodeSet == null)
-                    throw new NotFoundException(nameof(NodeSet), request.NodesetId);
-
+                if(request.NodesetId.HasValue)
+                {
+                    var nodeSet = await _context.NodeSets
+                    .FirstOrDefaultAsync(ut => ut.Id == request.NodesetId);
+                    if (nodeSet == null)
+                        throw new NotFoundException(nameof(NodeSet), request.NodesetId);
+                }
+                
                 var newValueDomain = new ValueDomain()
                 {
                     LevelId = request.LevelId,
