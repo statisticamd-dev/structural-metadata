@@ -12,7 +12,7 @@ namespace Presentation.Application.ValueDomains.Commands.CreateValueDomain
             RuleFor(x => x.Description).Length(5, 255);
             RuleFor(x => x.Name).NotEmpty();
             RuleFor(x => x.Expression).NotEmpty().When(x => x.Type == ValueDomainType.DESCRIBED);
-            RuleFor(x => x.NodesetId).NotEmpty().When(x => x.Type == ValueDomainType.ENUMERATED);
+            //RuleFor(x => x.NodesetId).NotEmpty().When(x => x.Type == ValueDomainType.ENUMERATED); I think this is checked in the next one
             RuleFor(x => x.LevelId).NotEmpty().When(x => (x.Type == ValueDomainType.ENUMERATED && x.NodesetId == null));
         }
     }
