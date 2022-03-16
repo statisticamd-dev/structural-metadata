@@ -18,6 +18,7 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemComman
         public long NodeSetId { get; set; }
         public string Code { get; set; }
         public long LabelId { get; set; }
+        public string Description { get; set; }
 
         public class Handler : IRequestHandler<AddCodeItemCommand, string>
         {
@@ -48,7 +49,7 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemComman
                     Label = label,
                     NodeSet = codeList,
                     AggregationType = AggregationType.NONE,
-
+                    Description = MultilanguageString.Init(language, request.Description)
                 };
 
                 codeList.Nodes.Add(codeItem);
