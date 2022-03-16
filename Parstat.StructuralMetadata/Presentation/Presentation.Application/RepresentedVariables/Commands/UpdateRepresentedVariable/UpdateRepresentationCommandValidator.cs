@@ -1,7 +1,7 @@
 using FluentValidation;
-using Presentation.Application.RepresentedVariables.Commands.CreateRepresentedVariable;
+using Presentation.Application.RepresentedVariables.Commands.UpdateRepresentedVariable;
 
-namespace Presentation.Application.Variables.Commands.CreteVariable
+namespace Presentation.Application.Variables.Commands.UpdateRepresentedVariable
 {
     public class UpdateRepresentedVariableCommandValidator : AbstractValidator<UpdateRepresentationVariableCommand>
     {

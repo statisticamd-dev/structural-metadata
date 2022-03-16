@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.RepresentedVariables.Commands.CreateRepresentedVariable;
+using Presentation.Application.RepresentedVariables.Commands.UpdateRepresentedVariable;
 
 namespace Presentation.WebApi.Controllers.RepresentationVariable
 {
