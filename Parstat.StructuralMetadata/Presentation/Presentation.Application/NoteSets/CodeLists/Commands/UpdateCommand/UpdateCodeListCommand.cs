@@ -15,11 +15,10 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.UpdateCommand
     public class UpdateCodeListCommand : AbstractRequest, IRequest
     {
         public long Id { get; set; }
-        public string LocaLId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Version { get; set; }
-        public DateTime VersionDate { get; set; }
+        public DateTime? VersionDate { get; set; }
         public string VersionRationale { get; set; }
 
         public class Handler : IRequestHandler<UpdateCodeListCommand>
@@ -40,14 +39,27 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.UpdateCommand
                 {
                     throw new NotFoundException(nameof(NodeSet), request.Id);
                 }
-                entity.Name.AddText(language, request.Name);
-                entity.Description.AddText(language, request.Description);
-                entity.VersionRationale.AddText(language, request.VersionRationale);
-                entity.Version = request.Version;
-                entity.VersionDate = request.VersionDate;
-                entity.LocalId = request.LocaLId;
+                if(!String.IsNullOrWhiteSpace(request.Name)) 
+                {
+                    entity.Name.AddText(language, request.Name);
+                }
+                if(!String.IsNullOrWhiteSpace(request.Description)) 
+                {
+                    entity.Description.AddText(language, request.Description);
+                }
+                if(!String.IsNullOrWhiteSpace(request.VersionRationale)) 
+                {
+                    entity.VersionRationale.AddText(language, request.VersionRationale);
+                }
+                if(!String.IsNullOrWhiteSpace(request.Version)) 
+                {
+                    entity.Version = request.Version;
+                }
+                if(request.VersionDate.HasValue)
+                {
+                    entity.VersionDate = request.VersionDate.Value;
+                }
                 
-
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
