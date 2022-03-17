@@ -13,6 +13,8 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public NodeSet NodeSet { get; set; }
         public IList<Node> Nodes { get; set; }
 
+        public long LevelId { get; set; }
+
         //public SubstantiveValueDomain SubstantiveValueDomain { get; set; }
     }
 }
