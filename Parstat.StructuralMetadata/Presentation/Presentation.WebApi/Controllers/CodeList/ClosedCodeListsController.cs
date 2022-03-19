@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.MeasurementUnits.Commands.DeleteMeasurementUnit;
 using Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemCommand;
 using Presentation.Application.NoteSets.CodeLists.Commands.CreateCommand;
-
+using Presentation.Application.NoteSets.Commands.DeleteCodeItem;
 
 namespace Presentation.WebApi.Controllers
 {
@@ -35,6 +35,14 @@ namespace Presentation.WebApi.Controllers
         public async Task<IActionResult> Delete([FromBody] long id)
         {            
             return Ok(await Mediator.Send(new DeleteCodeListCommand { Id = id }));
+        }
+
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete([FromBody] DeleteCodeItemCommand command)
+        {
+            return Ok(await Mediator.Send(command));
         }
     }
 }
