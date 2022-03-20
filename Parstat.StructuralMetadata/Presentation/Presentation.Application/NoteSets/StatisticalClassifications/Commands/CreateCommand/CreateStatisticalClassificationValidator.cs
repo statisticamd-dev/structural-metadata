@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Presentation.Application.NoteSets.StatisticalClassifications.Commands
+namespace Presentation.Application.NoteSets.StatisticalClassifications.Commands.CreateCommand
 {
     public class CreateStatisticalClassificationValidator : AbstractValidator<CreateStatisticalClassificationCommand>
     {

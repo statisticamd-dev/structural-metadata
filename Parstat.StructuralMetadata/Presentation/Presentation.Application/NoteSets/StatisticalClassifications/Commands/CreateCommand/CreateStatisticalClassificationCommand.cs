@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Presentation.Application.NoteSets.StatisticalClassifications.Commands
+namespace Presentation.Application.NoteSets.StatisticalClassifications.Commands.CreateCommand
 {
     public class CreateStatisticalClassificationCommand : AbstractRequest, IRequest<long>
     {
