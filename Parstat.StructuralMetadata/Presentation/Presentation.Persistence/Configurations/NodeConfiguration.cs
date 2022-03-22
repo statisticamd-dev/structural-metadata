@@ -14,7 +14,7 @@ namespace Presentation.Infrastructure.Configurations
                 .IsRequired();
             builder.Property(n => n.Code)
                 .IsRequired();
-            builder.HasIndex(n => new {n.Code, n.NodeSetId})
+            builder.HasIndex(n => new { n.Code, n.NodeSetId })
                 .IsUnique();
             builder.Property(n => n.LabelId)
                 .IsRequired();
@@ -25,6 +25,11 @@ namespace Presentation.Infrastructure.Configurations
             builder.Property(n => n.CategoryId)
                 .IsRequired(false);
             builder.OwnsOne(n => n.Description);
+
+            builder.HasOne(l => l.NodeSet)
+                    .WithMany(ns => ns.Nodes)
+                    .HasForeignKey(l => l.NodeSetId)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
