@@ -26,10 +26,6 @@ namespace Presentation.Infrastructure.Configurations
                 .IsRequired(false);
             builder.OwnsOne(n => n.Description);
 
-            builder.HasOne(l => l.NodeSet)
-                    .WithMany(ns => ns.Nodes)
-                    .HasForeignKey(l => l.NodeSetId)
-                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

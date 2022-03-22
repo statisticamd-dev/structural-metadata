@@ -40,11 +40,12 @@ namespace Presentation.Infrastructure.Configurations
             builder.HasOne(r => r.SubstantiveValueDomain)
                     .WithMany(s => s.RepresentedVariables)
                     .HasForeignKey(r => r.SubstantiveValueDomainId);
-                     */
+                     
             builder.HasOne(r => r.Variable)
                     .WithMany(v => v.Representations)
                     .HasForeignKey(r => r.VariableId)
                     .OnDelete(DeleteBehavior.Cascade);
+                    */
                    
         }
     }

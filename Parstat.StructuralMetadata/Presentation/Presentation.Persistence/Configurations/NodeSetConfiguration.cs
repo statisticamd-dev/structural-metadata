@@ -25,6 +25,14 @@ namespace Presentation.Infrastructure.Configurations
             builder.OwnsOne(n => n.VersionRationale);
             builder.OwnsOne(n => n.Definition);
             builder.OwnsOne(n => n.Link);
+            builder.HasMany(ns => ns.Levels)
+                    .WithOne(l => l.NodeSet)
+                    .HasForeignKey(l => l.NodeSetId)
+                    .OnDelete(DeleteBehavior.Cascade);
+             builder.HasMany(ns => ns.Nodes)
+                    .WithOne(n => n.NodeSet)
+                    .HasForeignKey(n => n.NodeSetId)
+                    .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
