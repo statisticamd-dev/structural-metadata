@@ -21,13 +21,13 @@ namespace Presentation.Application.ValueDomains.Commands.UpdateValueDomain
 
         public string Description { get; set; }
 
-        public ValueDomainType Type { get; set; }
+        public ValueDomainType? Type { get; set; }
 
-        public ValueDomainScope Scope { get; set; }
+        public ValueDomainScope? Scope { get; set; }
 
         public string Expression { get; set; }
 
-        public DataType DataType { get; set; }
+        public DataType? DataType { get; set; }
 
         public long? MeasurementUnitId { get; set; }
 
@@ -35,11 +35,11 @@ namespace Presentation.Application.ValueDomains.Commands.UpdateValueDomain
 
         public long? LevelId { get; set; }
 
-        public string Version { get; set; } = "1.0";
+        public string Version { get; set; }
 
-        public DateTime VersionDate { get; set; } = DateTime.Now;
+        public DateTime? VersionDate { get; set; }
 
-        public string VersionRationale { get; set; } = "First Version";
+        public string VersionRationale { get; set; }
 
 
         public class Handler : IRequestHandler<UpdateValueDomainCommand, Unit>
@@ -59,47 +59,84 @@ namespace Presentation.Application.ValueDomains.Commands.UpdateValueDomain
                 var valueDomain = await _context.ValueDomains
                         .FirstOrDefaultAsync(ut => ut.Id == request.Id);
                 if (valueDomain == null)
+                {
                     throw new NotFoundException(nameof(ValueDomains), request.Id);
-
-                if (request.MeasurementUnitId.HasValue)
-                {
-                    var measurementUnit = await _context.MeasurementUnits
-                        .FirstOrDefaultAsync(ut => ut.Id == request.MeasurementUnitId);
-                    if (measurementUnit == null)
-                        throw new NotFoundException(nameof(MeasurementUnit), request.MeasurementUnitId);
                 }
-
-                if (request.LevelId.HasValue)
-                {
-                    var level = await _context.Levels
-                    .FirstOrDefaultAsync(ut => ut.Id == request.LevelId);
-                    if (level == null)
-                        throw new NotFoundException(nameof(Level), request.LevelId);
-                }
-
-                if (request.NodesetId.HasValue)
-                {
-                    var nodeSet = await _context.NodeSets
-                    .FirstOrDefaultAsync(ut => ut.Id == request.NodesetId);
-                    if (nodeSet == null)
-                        throw new NotFoundException(nameof(NodeSet), request.NodesetId);
-                }
-
-                valueDomain.LevelId = request.LevelId;
-                valueDomain.NodeSetId = request.NodesetId;
-                valueDomain.Type = request.Type;
+                updateMeasurmentUnit(valueDomain, request.MeasurementUnitId.Value);
+                updateLevel(valueDomain, request.LevelId.Value);
+                updateNodeSet(valueDomain, request.NodesetId.Value);
                 valueDomain.Name.AddText(language, request.Name);
-                valueDomain.Scope = request.Scope;
-                valueDomain.MeasurementUnitId = request.MeasurementUnitId;
                 valueDomain.Description.AddText(language, request.Description);
-                valueDomain.Version = request.Version;
-                valueDomain.VersionDate = request.VersionDate;
+
+                if(request.Type.HasValue)
+                {
+                    valueDomain.Type = request.Type.Value;
+                }
+
+                if(request.Scope.HasValue)
+                {
+                    valueDomain.Scope = request.Scope.Value;
+                }
+                
+                if(!String.IsNullOrWhiteSpace(request.Version)) 
+                {
+                    valueDomain.Version = request.Version;
+                }
+
+                if(request.VersionDate.HasValue)
+                {
+                    valueDomain.VersionDate = request.VersionDate.Value;
+                }
 
                 await _context.SaveChangesAsync(cancellationToken);
-
-                //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
-
                 return Unit.Value;
+            }
+
+            private async void updateMeasurmentUnit(ValueDomain valueDomain, long? measurementUnitId) {
+                if(measurementUnitId.HasValue)
+                {
+                    var measurementUnit = await _context.MeasurementUnits
+                        .FirstOrDefaultAsync(mu => mu.Id == measurementUnitId.Value);
+                    if(measurementUnit != null)
+                    {
+                        valueDomain.MeasurementUnit = measurementUnit;
+                    }
+                     else
+                    {
+                        throw new NotFoundException(nameof(MeasurementUnit), measurementUnitId.Value);
+                    }
+                }
+               
+            }
+
+            private async void updateLevel(ValueDomain valueDomain, long? levelId) {
+                if(levelId.HasValue)
+                {
+                    var level = await _context.Levels.FirstOrDefaultAsync(l => l.Id == levelId.Value);
+                    if(level != null)
+                    {
+                        valueDomain.Level = level;
+                    }
+                    else
+                    {
+                        throw new NotFoundException(nameof(Level), levelId.Value);
+                    }
+                }
+            }
+
+            
+            private async void updateNodeSet(ValueDomain valueDomain, long? nodeSetId) {
+                if(nodeSetId.HasValue)
+                {
+                    var nodeSet = await _context.NodeSets.FirstOrDefaultAsync(ns => ns.Id == nodeSetId.Value);
+                    if(nodeSet != null)
+                    {
+                        valueDomain.NodeSet = nodeSet;
+                    }
+                    else {
+                        throw new NotFoundException(nameof(NodeSet), nodeSetId.Value);
+                    }
+                }
             }
         }
     }

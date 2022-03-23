@@ -36,13 +36,6 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Commands.
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
 
-                 var statisticalClassifications = await _context.NodeSets.FirstOrDefaultAsync(ns => ns.Name.Text(language) == request.Name);                 
-                 
-                 if(statisticalClassifications != null)
-                 {
-                     throw new Exception($"Statistical classification with name '{request.Name}' already exists");
-                 }
-
                  var newNodeSet = new NodeSet() {
                         Name = MultilanguageString.Init(language, request.Name),
                         Description = MultilanguageString.Init(language, request.Description),
