@@ -11,16 +11,18 @@ namespace Presentation.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody] CreateStatisticalClassificationCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateStatisticalClassificationCommand command, string language)
         {
+            command.Language = language;
             return Ok(await Mediator.Send(command));
         }
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Update([FromBody] UpdateStatisticalClassificationCommand command)
+        public async Task<IActionResult> Update([FromBody] UpdateStatisticalClassificationCommand command, string language)
         {
+            command.Language = language;
             return Ok(await Mediator.Send(command));
         }
     }
