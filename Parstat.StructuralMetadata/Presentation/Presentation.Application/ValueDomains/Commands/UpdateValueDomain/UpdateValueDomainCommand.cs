@@ -65,28 +65,12 @@ namespace Presentation.Application.ValueDomains.Commands.UpdateValueDomain
                 updateMeasurmentUnit(valueDomain, request.MeasurementUnitId.Value);
                 updateLevel(valueDomain, request.LevelId.Value);
                 updateNodeSet(valueDomain, request.NodesetId.Value);
+                updateType(valueDomain, request.Type);
+                updateScope(valueDomain, request.Scope);
                 valueDomain.Name.AddText(language, request.Name);
                 valueDomain.Description.AddText(language, request.Description);
-
-                if(request.Type.HasValue)
-                {
-                    valueDomain.Type = request.Type.Value;
-                }
-
-                if(request.Scope.HasValue)
-                {
-                    valueDomain.Scope = request.Scope.Value;
-                }
-                
-                if(!String.IsNullOrWhiteSpace(request.Version)) 
-                {
-                    valueDomain.Version = request.Version;
-                }
-
-                if(request.VersionDate.HasValue)
-                {
-                    valueDomain.VersionDate = request.VersionDate.Value;
-                }
+                valueDomain.VersionRationale.AddText(language, request.VersionRationale);
+                updateVersion(valueDomain, request.VersionDate, request.Version);
 
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
@@ -136,6 +120,34 @@ namespace Presentation.Application.ValueDomains.Commands.UpdateValueDomain
                     else {
                         throw new NotFoundException(nameof(NodeSet), nodeSetId.Value);
                     }
+                }
+            }
+
+            private void updateType(ValueDomain valueDomain, ValueDomainType? valueDomainType) 
+            {
+                if(valueDomainType.HasValue)
+                {
+                    valueDomain.Type = valueDomainType.Value;
+                }
+            }
+
+            private void updateScope(ValueDomain valueDomain, ValueDomainScope? valueDomainScope) 
+            {
+                if(valueDomainScope.HasValue) 
+                {
+                    valueDomain.Scope = valueDomainScope.Value;
+                }
+            }
+
+            private void updateVersion(ValueDomain valueDomain, DateTime? versionDate, string version)
+            {
+                if(versionDate.HasValue)
+                {
+                    valueDomain.VersionDate = versionDate.Value;
+                }
+                if(!String.IsNullOrEmpty(version)) 
+                {
+                    valueDomain.Version = version;
                 }
             }
         }
