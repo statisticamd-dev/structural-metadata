@@ -2,9 +2,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.MeasurementUnits.Commands.DeleteMeasurementUnit;
+using Presentation.Application.NoteSets.CodeList.Commands.RemoveCodeItemCommand;
 using Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemCommand;
 using Presentation.Application.NoteSets.CodeLists.Commands.CreateCommand;
-using Presentation.Application.NoteSets.Commands.DeleteCodeItem;
 
 namespace Presentation.WebApi.Controllers
 {
@@ -40,7 +40,7 @@ namespace Presentation.WebApi.Controllers
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Delete([FromBody] DeleteCodeItemCommand command)
+        public async Task<IActionResult> Delete([FromBody] RemoveCodeItemCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
