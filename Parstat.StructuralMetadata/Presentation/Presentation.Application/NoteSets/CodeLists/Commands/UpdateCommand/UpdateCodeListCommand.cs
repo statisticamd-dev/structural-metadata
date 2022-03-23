@@ -39,18 +39,9 @@ namespace Presentation.Application.NoteSets.CodeLists.Commands.UpdateCommand
                 {
                     throw new NotFoundException(nameof(NodeSet), request.Id);
                 }
-                if(!String.IsNullOrWhiteSpace(request.Name)) 
-                {
-                    entity.Name.AddText(language, request.Name);
-                }
-                if(!String.IsNullOrWhiteSpace(request.Description)) 
-                {
-                    entity.Description.AddText(language, request.Description);
-                }
-                if(!String.IsNullOrWhiteSpace(request.VersionRationale)) 
-                {
-                    entity.VersionRationale.AddText(language, request.VersionRationale);
-                }
+                entity.Name.AddText(language, request.Name);
+                entity.Description.AddText(language, request.Description);
+                entity.VersionRationale.AddText(language, request.VersionRationale);
                 if(!String.IsNullOrWhiteSpace(request.Version)) 
                 {
                     entity.Version = request.Version;

@@ -40,29 +40,25 @@ namespace Presentation.Application.NoteSets.StatisticalClassifications.Commands.
                 var statisticalClassifications = await _context.NodeSets.FirstOrDefaultAsync(ns => ns.Id == request.Id);
 
                 if (statisticalClassifications != null)
+                {
                     throw new NotFoundException(nameof(NodeSet), request.Id);
+                }
 
-                if (!string.IsNullOrWhiteSpace(request.Name))
-                    statisticalClassifications.Name = MultilanguageString.Init(language, request.Name);
+                statisticalClassifications.Name.AddText(language, request.Name);
+                statisticalClassifications.Description.AddText(language, request.Description);
+                statisticalClassifications.Definition.AddText(language, request.Definition);
+                statisticalClassifications.Link.AddText(language, request.Link);
+                statisticalClassifications.VersionRationale.AddText(language, request.VersionRationale);
 
-                if (!string.IsNullOrWhiteSpace(request.Description))
-                    statisticalClassifications.Description = MultilanguageString.Init(language, request.Description);
-
-                if (!string.IsNullOrWhiteSpace(request.Definition))
-                    statisticalClassifications.Definition = MultilanguageString.Init(language, request.Definition);
-
-                if (!string.IsNullOrWhiteSpace(request.Link))
-                    statisticalClassifications.Link = MultilanguageString.Init(language, request.Link);
-
-                if (!string.IsNullOrWhiteSpace(request.Version))
+                if(!String.IsNullOrWhiteSpace(request.Version)) {
                     statisticalClassifications.Version = request.Version;
+                }
 
-                if (request.VersionDate.HasValue)
+                if(request.VersionDate.HasValue)
+                {
                     statisticalClassifications.VersionDate = request.VersionDate.Value;
-
-                if (!string.IsNullOrWhiteSpace(request.VersionRationale))
-                    statisticalClassifications.VersionRationale = MultilanguageString.Init(language, request.VersionRationale);
-
+                }
+               
                 var updatedStatisticalClasification = _context.NodeSets.Update(statisticalClassifications);
                 await _context.SaveChangesAsync(cancellationToken);
 

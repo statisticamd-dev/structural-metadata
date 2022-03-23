@@ -50,7 +50,7 @@ namespace Presentation.Domain
 
         public void AddText(Language language, string text) 
         {
-            if(!String.IsNullOrEmpty(text))
+            if(!String.IsNullOrWhiteSpace(text))
             {
                 if(language == Language.RO)
                     this.Ro = text;
