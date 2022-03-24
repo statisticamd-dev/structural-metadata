@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Application.NodeSets.StatisticalClassifications.Commands.AddStatisticalClassificationLevelCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.CreateCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UpdateCommand;
 
@@ -12,6 +13,16 @@ namespace Presentation.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Create([FromBody] CreateStatisticalClassificationCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpPost]
+        [Route("level")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> AddLevel([FromBody] AddStatisticalClassificationLevelCommand command, string language)
         {
             command.Language = language;
             return Ok(await Mediator.Send(command));
