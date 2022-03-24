@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Application.MeasurementUnits.Commands.DeleteMeasurementUnit;
-using Presentation.Application.NoteSets.CodeList.Commands.RemoveCodeItemCommand;
-using Presentation.Application.NoteSets.CodeLists.Commands.AddCodeItemCommand;
-using Presentation.Application.NoteSets.CodeLists.Commands.CreateCommand;
+using Presentation.Application.NodeSets.CodeList.Commands.RemoveCodeItemCommand;
+using Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemCommand;
+using Presentation.Application.NodeSets.CodeLists.Commands.CreateCommand;
+using Presentation.Application.NodeSets.CodeLists.Commands.DeleteCommand;
 
 namespace Presentation.WebApi.Controllers
 {

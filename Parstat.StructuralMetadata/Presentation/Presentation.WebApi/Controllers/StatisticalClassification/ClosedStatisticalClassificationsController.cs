@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Application.NoteSets.StatisticalClassifications.Commands.CreateCommand;
-using Presentation.Application.NoteSets.StatisticalClassifications.Commands.UpdateCommand;
+using Presentation.Application.NodeSets.StatisticalClassifications.Commands.CreateCommand;
+using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UpdateCommand;
 
 namespace Presentation.WebApi.Controllers
 {

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Application.NoteSets.StatisticalClassifications.Queries.GetStatisticalClassificationDetails;
-using Presentation.Application.NoteSets.StatisticalClassifications.Queries.GetStatisticalClassifications;
+using Presentation.Application.NodeSets.StatisticalClassifications.Queries.GetStatisticalClassificationDetails;
+using Presentation.Application.NodeSets.StatisticalClassifications.Queries.GetStatisticalClassifications;
 
 namespace Presentation.WebApi.Controllers
 {
