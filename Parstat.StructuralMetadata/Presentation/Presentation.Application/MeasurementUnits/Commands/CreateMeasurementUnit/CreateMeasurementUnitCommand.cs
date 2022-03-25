@@ -21,7 +21,7 @@ namespace Presentation.Application.MeasurementUnits.Commands.CreateMeasurementUn
         public string Abbreviation { get; set; }
         public bool IsStandard { get; set; } = false;
         public string ConvertionRule { get; set; }
-        public long MeasurementTypeId { get; set; }
+        public long? MeasurementTypeId { get; set; }
 
         public class Handler : IRequestHandler<CreateMeasurementUnitCommand, long>
         {
