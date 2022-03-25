@@ -8,17 +8,16 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Presentation.Application.Common.Exceptions;
-using CsvHelper;
-using System.Globalization;
-using System.IO;
-using Presentation.Domain.StructuralMetadata.Entities.Utilities;
-using System.Collections.Generic;
+using Presentation.Application.Common.Utils;
+using Microsoft.EntityFrameworkCore;
+using Presentation.Common.Domain.StructuralMetadata.Enums;
 
 namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadStatisticalClassificationCommand
 {
     public class UploadStatisticalClassificationItemsCommand : AbstractRequest, IRequest<Unit>
     {
         public long StatisticalClassificationId  { get; set; }
+        public AggregationType AggregationType { get; set; }
         public string CsvItems { get; set; }        
 
         public class Handler : IRequestHandler<UploadStatisticalClassificationItemsCommand, Unit>
@@ -33,68 +32,110 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
             public async Task<Unit> Handle(UploadStatisticalClassificationItemsCommand request, CancellationToken cancellationToken)
             {               
                 //Check if provided statistical classification id exists
-                var statisticalClassification = _context.NodeSets.Where((x) => x.Id == request.StatisticalClassificationId).FirstOrDefault();
-                if(statisticalClassification == null) throw new NotFoundException(nameof(NodeSet), request.StatisticalClassificationId);
-
-                //deserialise and validate data
-                List<StatisticalClassificationItems> scItems = null;
-                using(TextReader reader = new StringReader(request.CsvItems))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                var statisticalClassification = await _context.NodeSets.Where((x) => x.Id == request.StatisticalClassificationId)
+                                                                        .FirstOrDefaultAsync();
+                if(statisticalClassification == null) 
                 {
-                    scItems = csv.GetRecords<StatisticalClassificationItems>().ToList();
-                    if (scItems == null) throw new Exception("No statistical classification items were found!");
+                    throw new NotFoundException(nameof(NodeSet), request.StatisticalClassificationId);
                 }
-
-                // get the maximum number of levels
-                int maxLevel = scItems.Max((x) => x.LevelNumber);
-
-                //loop through all levels, starting from root. Considering that LevelNumber starts from 1 and not 0
-                for(int currentLevel = 1; currentLevel <= maxLevel; currentLevel++)
+                if(statisticalClassification.Levels.Count() > 0) {
+                    return await createLevelNodes(statisticalClassification, request, cancellationToken);
+                }
+                else
                 {
-                    //retrieve only current level items
-                    var currentLevelItems = scItems.Where((x) => x.LevelNumber == currentLevel).ToList();
-                    foreach(var singleItem in currentLevelItems)
-                    {
-                        Node parent = null;
-                        if (!string.IsNullOrWhiteSpace(singleItem.ParentCode)) //get parent node if parentCode provided
-                         parent = _context.Nodes.Where((x) => x.Code == singleItem.ParentCode).FirstOrDefault();
-
-                        //get level from level number
-                        var level = _context.Levels.Where((x) => x.LevelNumber == singleItem.LevelNumber).FirstOrDefault();
-                        if (level == null) throw new NotFoundException(nameof(Level), singleItem.LevelNumber);
-                        
-                        var labelValues = new MultilanguageString  { En = singleItem.Label_En, Ro = singleItem.Label_Ro,  Ru = singleItem.Label_Ru };
-                        var label = _context.Labels.Where((x) => x.Value == labelValues).FirstOrDefault();// get label if exists for the provided strings
-
-                        //if label does not exists, create it
-                        if(label == null)
-                        {                            
-                            var newLabel = new Label { Value = labelValues };
-
-                            _context.Labels.Add(newLabel);
-                            label = newLabel;
-                        }
-
-                        //finally, create the node and add it
-                        var newNode = new Node {
-                            Code = singleItem.Code,
-                            Parent = parent,
-                            ParentId = parent.Id,
-                            NodeSet = statisticalClassification,
-                            Level = level,
-                            Label = label
-                        };
-
-                        _context.Nodes.Add(newNode);
-
-                        //save changes, this node can be parent for the incoming ones
-                        await _context.SaveChangesAsync(cancellationToken);                        
-                    }
+                    return await createNodes(statisticalClassification, request, cancellationToken);
                 }
+            }
 
-                //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
+            private async Task<Unit> createNodes(NodeSet statisticalClassification, UploadStatisticalClassificationItemsCommand request, CancellationToken cancellationToken) 
+            {
+                Node[] nodes = new Node[] {};
+                foreach(StatisticalClassificationItemCsv itemCsv in
+                            CSVRecordReader<StatisticalClassificationItemCsv>.Read(request.CsvItems))
+                {
+                    var labelValues = new MultilanguageString  { En = itemCsv.Label_En, 
+                                                                 Ro = itemCsv.Label_Ro,  
+                                                                 Ru = itemCsv.Label_Ru };
+                    Label label = await getOrCreateLabel(labelValues, cancellationToken);
 
+                    nodes.Append(createNode(statisticalClassification, itemCsv.Code, label));
+                }
+                _context.Nodes.AddRange(nodes);
+                await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
+            }
+
+            private async Task<Unit> createLevelNodes(NodeSet statisticalClassification, UploadStatisticalClassificationItemsCommand request, CancellationToken cancellationToken)
+            {
+                foreach(Level level in statisticalClassification.Levels.OrderBy(l => l.LevelNumber))
+                {
+                    Node[] nodes = new Node[] {};
+                    foreach(StatisticalClassificationItemCsv itemCsv in
+                            CSVRecordReader<StatisticalClassificationItemCsv>.ReadLevel(request.CsvItems, level.LevelNumber))
+                    {
+                        Node parent = await getParent(itemCsv.ParentCode, statisticalClassification);
+                               
+                        var labelValues = new MultilanguageString  { En = itemCsv.Label_En, 
+                                                                     Ro = itemCsv.Label_Ro,  
+                                                                     Ru = itemCsv.Label_Ru };
+                        Label label = await getOrCreateLabel(labelValues, cancellationToken);
+
+                        nodes.Append(createLevelNode(parent, level, statisticalClassification, itemCsv.Code, label, request.AggregationType));
+                    }
+                    _context.Nodes.AddRange(nodes);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
+                return Unit.Value;
+            }
+
+            private async Task<Node> getParent(string parentCode, NodeSet statisticalClassification)
+            {
+                if(String.IsNullOrWhiteSpace(parentCode))
+                {
+                    return null;
+                }
+                return await _context.Nodes.Where(n => n.Code == parentCode 
+                                                && n.NodeSet == statisticalClassification)
+                                                .FirstOrDefaultAsync();
+            }
+
+            private async Task<Label> getOrCreateLabel(MultilanguageString multilanguageString, CancellationToken cancellationToken)
+            {
+                Label label = await _context.Labels.Where(l => l.Value == multilanguageString).FirstOrDefaultAsync();
+                if(label == null) 
+                {
+                    label = new Label() {Value = multilanguageString};
+                    _context.Labels.Add(label);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
+                return label;
+            }
+
+            private Node createLevelNode(Node parent, Level level, NodeSet statisticalClassification, string code, Label label, AggregationType aggregationType)
+            {
+                Node node = new Node() 
+                {
+                    Parent = parent,
+                    Level = level,
+                    NodeSet = statisticalClassification,
+                    Code = code,
+                    AggregationType = aggregationType,
+                    Label = label
+                };
+
+                return node;
+            }
+
+             private Node createNode(NodeSet statisticalClassification, string code, Label label)
+            {
+                Node node = new Node() 
+                {
+                    NodeSet = statisticalClassification,
+                    Code = code,
+                    AggregationType = AggregationType.NONE,
+                    Label = label
+                };
+                return node;
             }
         }
     }
