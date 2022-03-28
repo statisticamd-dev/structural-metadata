@@ -42,19 +42,19 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 
                 List<StatisticalClassificationItemCsv> csvItems = UploadCommandTranslator.ReadCSV(request.CsvItems);
 
-                await createLabelDictionary(csvItems, request.Language, cancellationToken);
+                await addLabelsToCSV(csvItems, request.Language, cancellationToken);
 
                 UploadCommandTranslator.TranslateRecursivly(csvItems, statisticalClassification, request.AggregationType);
 
                 _context.NodeSets.Update(statisticalClassification);
+
                 await _context.SaveChangesAsync(cancellationToken);
 
                 return Unit.Value;
             }
 
-            private async Task<Unit> createLabelDictionary(IEnumerable<StatisticalClassificationItemCsv> items, string language, CancellationToken cancellationToken)
+            private async Task<Unit> addLabelsToCSV(List<StatisticalClassificationItemCsv> items, string language, CancellationToken cancellationToken)
             {
-                Dictionary<long, string> languageDictionary = new Dictionary<long, string>();
                 foreach(StatisticalClassificationItemCsv item in items)
                 {
                     MultilanguageString multilanguageString = new MultilanguageString() {
@@ -68,7 +68,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 return Unit.Value;
             }
 
-                        private async Task<Label> getOrCreateLabel(MultilanguageString multilanguageString, CancellationToken cancellationToken)
+            private async Task<Label> getOrCreateLabel(MultilanguageString multilanguageString, CancellationToken cancellationToken)
             {
                 Label label = await _context.Labels.Where(l => l.Value == multilanguageString).FirstOrDefaultAsync();
                 if(label == null) 
