@@ -12,5 +12,6 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
         public string Label_Ro { get; set; }
         public int LevelNumber { get; set; }
         public string ParentCode { get; set; }
+        public long LabelId { get; set; }
     }
 }
