@@ -10,7 +10,6 @@ using Presentation.Application.Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using System.Collections.Generic;
-using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadStatisticalClassificationCommand.translator;
 
 namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadStatisticalClassificationCommand
 {
@@ -18,7 +17,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
     {
         public long StatisticalClassificationId  { get; set; }
         public AggregationType AggregationType { get; set; }
-        public string CsvItems { get; set; }        
+        public List<StatisticalClassificationItemCsvDto> RootItems { get; set; }        
 
         public class Handler : IRequestHandler<UploadStatisticalClassificationItemsCommand, Unit>
         {
@@ -39,12 +38,10 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 {
                     throw new NotFoundException(nameof(NodeSet), request.StatisticalClassificationId);
                 }
-                
-                List<StatisticalClassificationItemCsv> csvItems = UploadCommandTranslator.ReadCSV(request.CsvItems);
 
-                await addLabelsToCSV(csvItems, request.Language, cancellationToken);
+                await addLabelsToCSV(request.RootItems, cancellationToken);
 
-                UploadCommandTranslator.TranslateRecursivly(csvItems, statisticalClassification, request.AggregationType);
+                createNodeRecursivly(statisticalClassification, request.RootItems, request.AggregationType);
 
                 _context.NodeSets.Update(statisticalClassification);
 
@@ -53,17 +50,22 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 return Unit.Value;
             }
 
-            private async Task<Unit> addLabelsToCSV(List<StatisticalClassificationItemCsv> items, string language, CancellationToken cancellationToken)
+            private async Task<Unit> addLabelsToCSV(List<StatisticalClassificationItemCsvDto> rootItems, CancellationToken cancellationToken)
             {
-                foreach(StatisticalClassificationItemCsv item in items)
+                if(rootItems == null || rootItems.Count == 0) 
+                {
+                    return Unit.Value;
+                }
+                foreach(StatisticalClassificationItemCsvDto item in rootItems)
                 {
                     MultilanguageString multilanguageString = new MultilanguageString() {
-                        En = item.Label_En,
-                        Ro = item.Label_Ro,
-                        Ru = item.Label_Ru
+                        En = item.ValueEn,
+                        Ro = item.ValueRo,
+                        Ru = item.ValueRu
                     };
                     Label label = await getOrCreateLabel(multilanguageString, cancellationToken);
                     item.LabelId = label.Id;
+                    await addLabelsToCSV(item.Children, cancellationToken);
                 }
                 return Unit.Value;
             }
@@ -78,6 +80,31 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                     await _context.SaveChangesAsync(cancellationToken);
                 }
                 return label;
+            }
+
+            private List<Node> createNodeRecursivly(NodeSet statisticalClassification, List<StatisticalClassificationItemCsvDto> rootNodes, AggregationType aggregationType)
+            {
+                if(rootNodes == null || rootNodes.Count == 0) {
+                    return null;
+                }
+
+                List<Node> nodes = new List<Node>();
+
+                foreach( StatisticalClassificationItemCsvDto item in rootNodes)
+                {
+                    Node node = new Node() 
+                    {
+                        Code = item.Code,
+                        AggregationType = aggregationType,
+                        Level = statisticalClassification.Levels.Where(l => l.LevelNumber == item.LevelNumber).FirstOrDefault(),
+                        LabelId =  item.LabelId.Value,
+                        NodeSet = statisticalClassification,
+                        Children = createNodeRecursivly(statisticalClassification, item.Children, aggregationType)
+                    };
+                    nodes.Add(node);
+                    statisticalClassification.Nodes.Add(node);
+                }
+                return nodes;
             }
         }
     }

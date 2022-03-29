@@ -32,41 +32,32 @@ namespace Presentation.Application.Correspondences.Commands.CreateCommand
 
             public async Task<long> Handle(CreateCorrespondenceCommand request, CancellationToken cancellationToken)
             {
-                var sourceNodeSetFound = _context.NodeSets.FirstOrDefault((x) => x.Id == request.SourceId);
-                if (sourceNodeSetFound == null) throw new NotFoundException(nameof(NodeSet), request.SourceId);
+                var sourceNodeSet = _context.NodeSets.FirstOrDefault((x) => x.Id == request.SourceId);
+                if (sourceNodeSet == null) 
+                {
+                    throw new NotFoundException(nameof(NodeSet), request.SourceId);
+                }
 
-                var targetNodeSetFound = _context.NodeSets.FirstOrDefault((x) => x.Id == request.TargetId);
-                if (targetNodeSetFound == null) throw new NotFoundException(nameof(NodeSet), request.TargetId);
-
-                //Should we check if correspondence exists? If yes the below statement should be uncomented
+                var targetNodeSet = _context.NodeSets.FirstOrDefault((x) => x.Id == request.TargetId);
+                if (targetNodeSet == null)
+                {
+                    throw new NotFoundException(nameof(NodeSet), request.TargetId);
+                } 
 
                 Correspondence correspondence = null;
-                //correspondence = _context.Correspondences.Where((x) => x.SourceId == sourceNodeSetFound.Id && x.TargetId == targetNodeSetFound.Id).FirstOrDefault();
-                //if (correspondence != null)
-                //{
-                //    correspondence.Source = sourceNodeSetFound;
-                //    correspondence.SourceId = sourceNodeSetFound.Id;
-                //    correspondence.Target = targetNodeSetFound;
-                //    correspondence.TargetId = targetNodeSetFound.Id;
-                //    correspondence.Relationship = request.Relationship;
-                //}
-                //else
-                //{
-                correspondence = new Correspondence
-                {
-                    Source = sourceNodeSetFound,
-                    SourceId = sourceNodeSetFound.Id,
-                    Target = targetNodeSetFound,
-                    TargetId = targetNodeSetFound.Id,
-                    Relationship = request.Relationship
-                };
-
-                _context.Correspondences.Add(correspondence);
-
-                //}
-
-                await _context.SaveChangesAsync(cancellationToken);
-
+                
+                correspondence = _context.Correspondences.Where(c => (c.Source == sourceNodeSet && c.Target == targetNodeSet) 
+                                                                            || (c.Source == targetNodeSet && c.Target == sourceNodeSet)).FirstOrDefault();
+                if (correspondence == null) {
+                    correspondence = new Correspondence
+                    {
+                        Source = sourceNodeSet,
+                        Target = targetNodeSet,
+                        Relationship = request.Relationship
+                    };
+                     _context.Correspondences.Add(correspondence);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
                 return correspondence.Id;

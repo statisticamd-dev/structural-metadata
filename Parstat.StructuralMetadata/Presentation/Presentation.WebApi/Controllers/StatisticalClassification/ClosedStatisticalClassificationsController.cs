@@ -19,8 +19,8 @@ namespace Presentation.WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpPost]
-        [Route("level")]
+        [HttpPut]
+        [Route("level/add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> AddLevel([FromBody] AddStatisticalClassificationLevelCommand command, string language)
@@ -38,12 +38,13 @@ namespace Presentation.WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("upload")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> UploadData([FromBody] UploadStatisticalClassificationItemsCommand command)
+        public async Task<IActionResult> UploadData([FromBody] UploadStatisticalClassificationItemsCommand command, string language)
         {
+            command.Language = language;
             return Ok(await Mediator.Send(command));
         }
     }

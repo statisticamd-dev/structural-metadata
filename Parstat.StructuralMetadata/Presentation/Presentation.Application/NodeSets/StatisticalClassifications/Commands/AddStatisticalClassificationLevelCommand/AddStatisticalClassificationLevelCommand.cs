@@ -34,21 +34,25 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
 
-                var scFound = _context.NodeSets.Where((x) => x.Id == request.StatisticalClassificationId).FirstOrDefault();
-                if(scFound == null) throw new NotFoundException(nameof(NodeSet), request.StatisticalClassificationId);
+                var statisticalClassification = _context.NodeSets.Where((x) => x.Id == request.StatisticalClassificationId).FirstOrDefault();
+               
+                if(statisticalClassification == null) 
+                {
+                    throw new NotFoundException(nameof(NodeSet), request.StatisticalClassificationId);
+                }
 
-                var lvlFound =  scFound.Levels.Where((x) => x.LevelNumber == request.LevelNumber && x.Name.Text(language) == request.Name).FirstOrDefault();
+                var level =  statisticalClassification.Levels.Where((x) => x.LevelNumber == request.LevelNumber).FirstOrDefault();
 
-                if(lvlFound != null)
+                if(level != null)
                 {
                     //Level already exists, return level Id and do nothing more
-                    return lvlFound.Id;
+                    return level.Id;
                 }
 
                 var newLevel = new Level {
                     LevelNumber = request.LevelNumber,
                     Name = MultilanguageString.Init(language, request.Name),
-                    NodeSetId = scFound.Id
+                    NodeSet = statisticalClassification
                 };
                 
                 _context.Levels.Add(newLevel);               

@@ -11,8 +11,9 @@ namespace Presentation.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody] CreateCorrespondenceCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateCorrespondenceCommand command, string language)
         {
+            command.Language = language;
             return Ok(await Mediator.Send(command));
         }
 
@@ -20,8 +21,9 @@ namespace Presentation.WebApi.Controllers
         [Route("mapping/add")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> AddMapping([FromBody] AddMappingCommand command)
+        public async Task<IActionResult> AddMapping([FromBody] AddMappingCommand command, string language)
         {
+            command.Language = language;
             return Ok(await Mediator.Send(command));
         }
     }

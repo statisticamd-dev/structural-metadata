@@ -28,31 +28,41 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
 
             public async Task<long> Handle(AddMappingCommand request, CancellationToken cancellationToken)
             {
-                var correspondenceFound = _context.Correspondences.FirstOrDefault((x) => x.Id == request.CorrespondenceId);
-                if (correspondenceFound == null) throw new NotFoundException(nameof(Correspondence), request.CorrespondenceId);
-
-                var sourceNodeFound = correspondenceFound.Source.Nodes.FirstOrDefault((x) => x.Id == request.SourceId);
-                if (sourceNodeFound == null) throw new NotFoundException(nameof(Node), request.SourceId);
-
-                var targetNodeFound = correspondenceFound.Target.Nodes.FirstOrDefault((x) => x.Id == request.TargetId);
-                if (targetNodeFound == null) throw new NotFoundException(nameof(Node), request.TargetId);
-
-                var newMap = new Mapping
+                var correspondence = _context.Correspondences.FirstOrDefault((x) => x.Id == request.CorrespondenceId);
+                if (correspondence == null) 
                 {
-                    Target = targetNodeFound,
-                    TargetId = targetNodeFound.Id,
-                    Source = sourceNodeFound,
-                    SourceId = sourceNodeFound.Id,
-                    Correspondence = correspondenceFound,
-                    CorrespondenceId = correspondenceFound.Id
-                };
+                    throw new NotFoundException(nameof(Correspondence), request.CorrespondenceId);
+                }
 
-                correspondenceFound.Mappings.Add(newMap);
-                await _context.SaveChangesAsync(cancellationToken);
+                var sourceNode = correspondence.Source.Nodes.FirstOrDefault((x) => x.Id == request.SourceId);
+                if (sourceNode == null) 
+                {
+                    throw new NotFoundException(nameof(Node), request.SourceId);
+                }
 
+                var targetNode = correspondence.Target.Nodes.FirstOrDefault((x) => x.Id == request.TargetId);
+                if (targetNode== null) 
+                {
+                    throw new NotFoundException(nameof(Node), request.TargetId);
+                }
+                
+                Mapping mapping = correspondence.Mappings.Where(m => m.Source == sourceNode && m.Target == targetNode).FirstOrDefault();
+                
+                if(mapping == null) 
+                {
+                    mapping = new Mapping
+                    {
+                        Target = targetNode,
+                        Source = sourceNode,
+                        Correspondence = correspondence,
+                    };
+
+                    correspondence.Mappings.Add(mapping);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
-                return newMap.Id;
+                return mapping.Id;
             }
         }
     }
