@@ -35,9 +35,7 @@ namespace Presentation.Application.NodeSets.CodeList.Commands.RemoveCodeItemComm
 
                 if (node != null)
                 {
-                    nodeset.Nodes.Remove(node);
-                    //TODO check if this is needed
-                   // _context.Nodes.Remove(node); 
+                    _context.Nodes.Remove(node); 
                     await _context.SaveChangesAsync(cancellationToken);
                 }
 
