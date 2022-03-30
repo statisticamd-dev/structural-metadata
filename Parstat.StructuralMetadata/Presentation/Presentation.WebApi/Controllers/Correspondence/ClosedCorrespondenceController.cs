@@ -29,6 +29,7 @@ namespace Presentation.WebApi.Controllers
         }
 
         [HttpDelete]
+        [Route("mapping/remove")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> RemoveMapping([FromBody] RemoveMappingCommand command)
