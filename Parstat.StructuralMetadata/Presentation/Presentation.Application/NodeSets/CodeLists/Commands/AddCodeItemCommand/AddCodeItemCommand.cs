@@ -13,14 +13,14 @@ using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemCommand
 {
-    public class AddCodeItemCommand : AbstractRequest, IRequest<string>
+    public class AddCodeItemCommand : AbstractRequest, IRequest<long>
     {
         public long NodeSetId { get; set; }
         public string Code { get; set; }
-        public long LabelId { get; set; }
+        public string Value{ get; set; }
         public string Description { get; set; }
 
-        public class Handler : IRequestHandler<AddCodeItemCommand, string>
+        public class Handler : IRequestHandler<AddCodeItemCommand, long>
         {
             private readonly IStructuralMetadataDbContext _context;
 
@@ -29,7 +29,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
                 _context = context;
             }
 
-            public async Task<string> Handle(AddCodeItemCommand request, CancellationToken cancellationToken)
+            public async Task<long> Handle(AddCodeItemCommand request, CancellationToken cancellationToken)
             {
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
@@ -38,10 +38,10 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
                 //codelist already containing the code
                 if(codeList.Nodes.FirstOrDefault(n => n.Code.Equals(request.Code)) != null)
                 {
-                    return request.Code;
+                    return codeList.Id;
                 }
                 
-                var label = await getLabelAsync(request.LabelId);
+                var label = await getOrCreateLabelAsync(request.Value, language, cancellationToken);
 
                 var codeItem = new Node
                 {
@@ -55,7 +55,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
                 codeList.Nodes.Add(codeItem);
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return request.Code;
+                return codeList.Id;
             }
 
             private async Task<NodeSet> getCodeListAsync(long codeListId)
@@ -67,12 +67,17 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
                 }
                 return codeList;
             }
-            private async Task<Label> getLabelAsync(long labelId)
+            private async Task<Label> getOrCreateLabelAsync(string value, Language language, CancellationToken cancellationToken)
             {
-                var label = await _context.Labels.FirstOrDefaultAsync(l => l.Id == labelId);
+                var label = await _context.Labels.FirstOrDefaultAsync(l => l.Value.Text(language) == value);
                 if(label == null)
                 {
-                    throw new NotFoundException(nameof(Label), labelId);
+                    label = new Label() 
+                    {
+                        Value = MultilanguageString.Init(language, value)
+                    };
+                    _context.Labels.Add(label);
+                    await _context.SaveChangesAsync(cancellationToken);
                 }
                 return label;
             }

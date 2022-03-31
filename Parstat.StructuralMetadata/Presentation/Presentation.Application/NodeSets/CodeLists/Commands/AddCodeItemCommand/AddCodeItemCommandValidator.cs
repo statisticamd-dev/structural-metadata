@@ -8,7 +8,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
         {
             RuleFor(x => x.NodeSetId).NotNull();
             RuleFor(x => x.Code).Length(1, 50).NotEmpty().NotNull();
-            RuleFor(x => x.LabelId).NotNull();
+            RuleFor(x => x.Value).NotNull();
         }
     }
 }

@@ -13,20 +13,19 @@ namespace Presentation.WebApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody] CreateCodeListCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateCodeListCommand command, string language)
         {
-            var id = await Mediator.Send(command);
-
-            return Ok(id);
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
         }
 
         [HttpPut("codeitems/add")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> AddCodeItem([FromBody] AddCodeItemCommand command)
+        public async Task<IActionResult> AddCodeItem([FromBody] AddCodeItemCommand command, string language)
         {
-            var unit = await Mediator.Send(command);
-            return Ok(unit);
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
         }
 
         [HttpDelete("{id}")]
