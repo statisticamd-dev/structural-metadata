@@ -46,7 +46,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 if(level != null)
                 {
                     //Level already exists, return level Id and do nothing more
-                    return level.Id;
+                    return statisticalClassification.Id;
                 }
 
                 var newLevel = new Level {
@@ -60,7 +60,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
-                return newLevel.Id;
+                return statisticalClassification.Id;
             }
         }
     }
