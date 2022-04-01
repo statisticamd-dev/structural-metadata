@@ -50,8 +50,10 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 }
 
                 var newLevel = new Level {
+                    LocalId = request.LocalId,
                     LevelNumber = request.LevelNumber,
                     Name = MultilanguageString.Init(language, request.Name),
+                    Description = MultilanguageString.Init(language, request.Description),
                     NodeSet = statisticalClassification
                 };
                 
