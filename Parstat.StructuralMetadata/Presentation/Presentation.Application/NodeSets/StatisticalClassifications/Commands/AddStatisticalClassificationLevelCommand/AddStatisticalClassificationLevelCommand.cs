@@ -19,6 +19,9 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
         public string Name { get; set; }
         public string Description { get; set; }
         public int LevelNumber { get; set; }
+        public string Version { get; set; } = "1.0";
+        public DateTime VersionDate { get; set; } = DateTime.Now;
+        public string VersionRationale { get; set; } = "First Version";
 
         public class Handler : IRequestHandler<AddStatisticalClassificationLevelCommand, long>
         {
@@ -54,6 +57,9 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                     LevelNumber = request.LevelNumber,
                     Name = MultilanguageString.Init(language, request.Name),
                     Description = MultilanguageString.Init(language, request.Description),
+                    Version = request.Version,
+                    VersionDate = request.VersionDate,
+                    VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
                     NodeSet = statisticalClassification
                 };
                 
