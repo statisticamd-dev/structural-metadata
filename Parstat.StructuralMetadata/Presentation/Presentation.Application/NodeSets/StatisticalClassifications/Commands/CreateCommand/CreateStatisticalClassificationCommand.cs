@@ -37,6 +37,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 Enum.TryParse<Language>(request.Language, true, out language);
 
                  var newNodeSet = new NodeSet() {
+                        LocalId = request.LocalId,
                         Name = MultilanguageString.Init(language, request.Name),
                         Description = MultilanguageString.Init(language, request.Description),
                         Definition = MultilanguageString.Init(language, request.Definition),
