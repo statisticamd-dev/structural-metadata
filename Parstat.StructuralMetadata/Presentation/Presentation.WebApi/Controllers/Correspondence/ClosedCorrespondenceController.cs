@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.Correspondences.Commands.AddMappingCommand;
 using Presentation.Application.Correspondences.Commands.CreateCommand;
 using Presentation.Application.Correspondences.Commands.RemoveMappingCommand;
+using Presentation.Application.Correspondences.Commands.UploadMappingCommand;
 
 namespace Presentation.WebApi.Controllers
 {
@@ -23,6 +24,16 @@ namespace Presentation.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> AddMapping([FromBody] AddMappingCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpPut]
+        [Route("mapping/upload")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> UploadMapping([FromBody] UploadMappingCommand command, string language)
         {
             command.Language = language;
             return Ok(await Mediator.Send(command));
