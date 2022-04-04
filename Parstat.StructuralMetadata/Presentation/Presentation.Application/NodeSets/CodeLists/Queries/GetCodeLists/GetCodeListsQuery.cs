@@ -28,7 +28,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeLists
             public async Task<CodeListsVm> Handle(GetCodeListsQuery request, CancellationToken cancellationToken)
             {
                 var codeLists = await _context.NodeSets
-                    .Where(ns => ns.NodeSetType == NodeSetType.CODE_LIST)
+                    .Where(ns => ns.NodeSetType == NodeSetType.CODE_LIST || ns.NodeSetType == NodeSetType.SENTINEL_CODE_LIST)
                     .AsNoTracking()
                     .ProjectTo<CodeListDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .OrderBy(cl => cl.LocalId)
