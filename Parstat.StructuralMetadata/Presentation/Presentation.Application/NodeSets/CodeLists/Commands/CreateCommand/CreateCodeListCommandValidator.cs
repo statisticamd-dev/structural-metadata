@@ -8,7 +8,6 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.CreateCommand
         {
             RuleFor(x => x.LocalId).MinimumLength(1).NotEmpty().NotNull();
             RuleFor(x => x.Name).MinimumLength(3).NotEmpty().NotNull();
-            RuleFor(x => x.Description).Length(5, 255);
         }
     }
 }
