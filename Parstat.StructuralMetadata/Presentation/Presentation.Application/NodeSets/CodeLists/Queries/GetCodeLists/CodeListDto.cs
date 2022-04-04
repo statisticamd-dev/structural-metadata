@@ -14,7 +14,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeLists
         public string Name { get; set; }
         public string Description { get; set; }
         public string Link { get; set; }
-        public bool IsSentinel { get; set; }
+        public NodeSetType NodeSetType { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -27,7 +27,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeLists
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : String.Empty))
-                .ForMember(d => d.IsSentinel, opt => opt.MapFrom(s => s.NodeSetType == NodeSetType.SENTINEL_CODE_LIST ? true : false));
+                .ForMember(d => d.NodeSetType, opt => opt.MapFrom(s => s.NodeSetType));
         }
     }
 }
