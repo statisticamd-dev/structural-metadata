@@ -18,6 +18,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.CreateCommand
         public string Version { get; set; } = "1.0";
         public DateTime VersionDate { get; set; } = DateTime.Now;
         public string VersionRationale { get; set; } = "First Version";
+        public bool IsSentinel { get; set; } = false;
 
         public class Handler : IRequestHandler<CreateCodeListCommand, long>
         {
@@ -40,7 +41,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.CreateCommand
                       Version = request.Version,
                       VersionDate = request.VersionDate,
                       VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
-                      NodeSetType = NodeSetType.CODE_LIST,
+                      NodeSetType = request.IsSentinel ? NodeSetType.SENTINEL_CODE_LIST : NodeSetType.CODE_LIST,
                 };
                 _context.NodeSets.Add(entity);
 

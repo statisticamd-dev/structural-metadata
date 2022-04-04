@@ -43,11 +43,12 @@ namespace Presentation.Application.Correspondences.Commands.CreateCommand
                 {
                     throw new NotFoundException(nameof(NodeSet), request.TargetId);
                 } 
-
-                Correspondence correspondence = null;
                 
-                correspondence = _context.Correspondences.Where(c => (c.Source == sourceNodeSet && c.Target == targetNodeSet) 
-                                                                            || (c.Source == targetNodeSet && c.Target == sourceNodeSet)).FirstOrDefault();
+                var correspondence = _context.Correspondences.Where(c => (c.Source == sourceNodeSet 
+                                                                            && c.Target == targetNodeSet) 
+                                                                            || (c.Source == targetNodeSet
+                                                                            && c.Target == sourceNodeSet))
+                                                                        .FirstOrDefault();
                 if (correspondence == null) {
                     correspondence = new Correspondence
                     {
@@ -55,7 +56,7 @@ namespace Presentation.Application.Correspondences.Commands.CreateCommand
                         Target = targetNodeSet,
                         Relationship = request.Relationship
                     };
-                     _context.Correspondences.Add(correspondence);
+                    _context.Correspondences.Add(correspondence);
                     await _context.SaveChangesAsync(cancellationToken);
                 }
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
