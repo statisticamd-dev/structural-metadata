@@ -34,16 +34,15 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
                 var codeList = await getCodeListAsync(request.NodeSetId);
-               
+                var codeItem = codeList.Nodes.FirstOrDefault(n => n.Code == request.Code);
+
                 //codelist already containing the code
-                if(codeList.Nodes.FirstOrDefault(n => n.Code.Equals(request.Code)) != null)
+                if( codeItem != null)
                 {
                     return codeList.Id;
                 }
-                
                 var label = await getOrCreateLabelAsync(request.Value, language, cancellationToken);
-
-                var codeItem = new Node
+                codeItem = new Node
                 {
                     Code = request.Code,
                     Label = label,

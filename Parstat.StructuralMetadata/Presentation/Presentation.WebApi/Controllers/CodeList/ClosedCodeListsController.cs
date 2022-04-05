@@ -5,6 +5,7 @@ using Presentation.Application.NodeSets.CodeList.Commands.RemoveCodeItemCommand;
 using Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemCommand;
 using Presentation.Application.NodeSets.CodeLists.Commands.CreateCommand;
 using Presentation.Application.NodeSets.CodeLists.Commands.DeleteCommand;
+using Presentation.Application.NodeSets.CodeLists.Commands.UpdateCommand;
 
 namespace Presentation.WebApi.Controllers
 {
@@ -14,6 +15,15 @@ namespace Presentation.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> Create([FromBody] CreateCodeListCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Update([FromBody] UpdateCodeListCommand command, string language)
         {
             command.Language = language;
             return Ok(await Mediator.Send(command));
