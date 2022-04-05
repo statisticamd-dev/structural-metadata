@@ -41,6 +41,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                 {
                     statisticalClassification.RootItems.ForEach(ri => ri.Children = getChildren(ri.Id, request.Language));
                 }
+                statisticalClassification.RootItems = statisticalClassification.RootItems.OrderBy(ri => ri.Code).ToList();
 
                 var vm = new StatisticalClassificationVm
                 {
