@@ -58,6 +58,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                 var nodes = _context.Nodes.Where(n => n.ParentId == parentId)
                     .AsNoTrackingWithIdentityResolution()
                     .ProjectTo<StatisticalClassificationItemDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = language})
+                    .OrderBy(n => n.Code)
                     .ToList();
                 if(nodes != null && nodes.Count > 0)
                 {
