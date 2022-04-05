@@ -29,7 +29,7 @@ namespace Presentation.WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpPut("codeitems/add")]
+        [HttpPut("codeitems")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> AddCodeItem([FromBody] AddCodeItemCommand command, string language)
@@ -46,7 +46,7 @@ namespace Presentation.WebApi.Controllers
             return Ok(await Mediator.Send(new DeleteCodeListCommand { Id = id }));
         }
 
-        [HttpDelete("{codeListId}/codeitems/remove/{code}")]
+        [HttpDelete("{codeListId}/codeitems/{code}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> RemoveCodeItem(long codeListId, string code)

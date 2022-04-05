@@ -21,7 +21,7 @@ namespace Presentation.WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("levels/add")]
+        [Route("levels")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> AddLevel([FromBody] AddStatisticalClassificationLevelCommand command, string language)
@@ -50,7 +50,7 @@ namespace Presentation.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{statisticalClassificationId}/levels/remove/{levelId}")]
+        [Route("{statisticalClassificationId}/levels/{levelId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> RemoveLevel(long statisticalClassificationId, long levelId)
