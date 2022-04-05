@@ -58,28 +58,56 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 }
                 foreach(StatisticalClassificationItemCsvDto item in rootItems)
                 {
-                    MultilanguageString multilanguageString = new MultilanguageString() {
-                        En = item.ValueEn,
-                        Ro = item.ValueRo,
-                        Ru = item.ValueRu
-                    };
-                    Label label = await getOrCreateLabel(multilanguageString, cancellationToken);
+                    Label label = await getOrCreateLabel(item.label, cancellationToken);
                     item.LabelId = label.Id;
                     await addLabelsToCSV(item.Children, cancellationToken);
                 }
                 return Unit.Value;
             }
 
-            private async Task<Label> getOrCreateLabel(MultilanguageString multilanguageString, CancellationToken cancellationToken)
+            private async Task<Label> getOrCreateLabel(MultilanguageStringDto multilanguageStringDto, CancellationToken cancellationToken)
             {
-                Label label = await _context.Labels.Where(l => l.Value == multilanguageString).FirstOrDefaultAsync();
-                if(label == null) 
+                Label label = await _context.Labels.Where(l => l.Value.En == multilanguageStringDto.En 
+                                                                || l.Value.Ro == multilanguageStringDto.Ro
+                                                                || l.Value.Ru == multilanguageStringDto.Ru).FirstOrDefaultAsync();
+                if(label != null)
                 {
-                    label = new Label() {Value = multilanguageString};
-                    _context.Labels.Add(label);
-                    await _context.SaveChangesAsync(cancellationToken);
+                    if(UpdateLabelLingauges(label, multilanguageStringDto)) 
+                    {
+                        _context.Labels.Update(label);
+                        await _context.SaveChangesAsync(cancellationToken);
+                    }
+                    return label;
                 }
+                label = new Label() {Value = new MultilanguageString() {
+                    En = multilanguageStringDto.En,
+                    Ro = multilanguageStringDto.Ro,
+                    Ru = multilanguageStringDto.Ru
+                }};
+                _context.Labels.Add(label);
+                await _context.SaveChangesAsync(cancellationToken);
                 return label;
+            }
+
+            private bool UpdateLabelLingauges(Label label, MultilanguageStringDto multilanguageStringDto) 
+            {
+                bool isUpdated = false;
+                if(label.Value.En != multilanguageStringDto.En) 
+                {
+                   label.Value.En = multilanguageStringDto.En;
+                   isUpdated = true;
+                }
+                if(label.Value.Ro != multilanguageStringDto.Ro) 
+                {
+                   label.Value.Ro = multilanguageStringDto.Ro;
+                   isUpdated = true;
+                }
+                if(label.Value.Ru != multilanguageStringDto.Ru) 
+                {
+                   label.Value.Ru = multilanguageStringDto.Ru;
+                   isUpdated = true;
+                }
+                return isUpdated;
             }
 
             private List<Node> createNodeRecursivly(NodeSet statisticalClassification, List<StatisticalClassificationItemCsvDto> rootNodes, AggregationType aggregationType)
