@@ -8,7 +8,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
         public string Code { get; set; }
         public MultilanguageStringDto label { get; set; }
         public long? LabelId { get; set; }
-        public MultilanguageStringDto Description { get; set; }
+        public MultilanguageStringDto Desc { get; set; }
         public int? LevelNumber { get; set; }
         public List<StatisticalClassificationItemCsvDto> Children { get; set; }
     }

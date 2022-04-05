@@ -33,13 +33,19 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                           
                 //Check if provided statistical classification id exists
                 var statisticalClassification = await _context.NodeSets.Where((x) => x.Id == request.StatisticalClassificationId)
-                                                                        .FirstOrDefaultAsync();
+                                                                        .Include(ns => ns.Nodes)
+                                                                        .SingleOrDefaultAsync();
                 if(statisticalClassification == null) 
                 {
                     throw new NotFoundException(nameof(NodeSet), request.StatisticalClassificationId);
                 }
 
-                await addLabelsToCSV(request.RootItems, cancellationToken);
+                //delete previous nodes
+                if(statisticalClassification.Nodes.Count > 0) {
+                    _context.Nodes.RemoveRange(statisticalClassification.Nodes);
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
+                await addLabelsRecursivly(request.RootItems, cancellationToken);
 
                 createNodeRecursivly(statisticalClassification, request.RootItems, request.AggregationType);
 
@@ -50,7 +56,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 return Unit.Value;
             }
 
-            private async Task<Unit> addLabelsToCSV(List<StatisticalClassificationItemCsvDto> rootItems, CancellationToken cancellationToken)
+            private async Task<Unit> addLabelsRecursivly(List<StatisticalClassificationItemCsvDto> rootItems, CancellationToken cancellationToken)
             {
                 if(rootItems == null || rootItems.Count == 0) 
                 {
@@ -60,7 +66,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 {
                     Label label = await getOrCreateLabel(item.label, cancellationToken);
                     item.LabelId = label.Id;
-                    await addLabelsToCSV(item.Children, cancellationToken);
+                    await addLabelsRecursivly(item.Children, cancellationToken);
                 }
                 return Unit.Value;
             }
