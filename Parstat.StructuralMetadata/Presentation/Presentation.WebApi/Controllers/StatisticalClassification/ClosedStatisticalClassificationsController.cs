@@ -53,7 +53,7 @@ namespace Presentation.WebApi.Controllers
         [Route("{statisticalClassificationId}/levels/remove/{levelId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> RemoveLevel([FromBody] long statisticalClassificationId, long levelId)
+        public async Task<IActionResult> RemoveLevel(long statisticalClassificationId, long levelId)
         {
             return Ok(await Mediator.Send(new RemoveStatisticalClassificationLevelCommand 
                                                 { 
