@@ -49,7 +49,7 @@ namespace Presentation.WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpDelete]
+        [HttpPut]
         [Route("levels/remove")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]

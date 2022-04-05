@@ -46,10 +46,10 @@ namespace Presentation.WebApi.Controllers
             return Ok(await Mediator.Send(new DeleteCodeListCommand { Id = id }));
         }
 
-        [HttpDelete("codeitems/remove")]
+        [HttpPut("codeitems/remove")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Delete([FromBody] RemoveCodeItemCommand command)
+        public async Task<IActionResult> RemoveCodeItem([FromBody] RemoveCodeItemCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
