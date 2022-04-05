@@ -69,7 +69,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
             }
             private async Task<Label> getOrCreateLabelAsync(string value, Language language, CancellationToken cancellationToken)
             {
-                var label = await _context.Labels.FirstOrDefaultAsync(l => l.Value.Text(language) == value);
+                var label = await _context.Labels.FirstOrDefaultAsync(l => filterLabel(l, language, value));
                 if(label == null)
                 {
                     label = new Label() 
@@ -81,6 +81,20 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
                 }
                 return label;
             }
+
+            Func<Label, Language, string, bool> filterLabel = (Label label, Language language, string value) =>
+            {
+                switch (language)
+                {
+                    case Presentation.Common.Domain.StructuralMetadata.Enums.Language.RU:
+                        return label.Value.Ru == value;
+                    case Presentation.Common.Domain.StructuralMetadata.Enums.Language.RO:
+                        return label.Value.Ro == value;
+                    default:
+                        return label.Value.En == value;
+                }
+
+            };
 
         }
     }
