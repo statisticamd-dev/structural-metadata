@@ -39,7 +39,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
 
                 var statisticalClassifications = await _context.NodeSets.FirstOrDefaultAsync(ns => ns.Id == request.Id);
 
-                if (statisticalClassifications != null)
+                if (statisticalClassifications == null)
                 {
                     throw new NotFoundException(nameof(NodeSet), request.Id);
                 }
