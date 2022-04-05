@@ -46,12 +46,12 @@ namespace Presentation.WebApi.Controllers
             return Ok(await Mediator.Send(new DeleteCodeListCommand { Id = id }));
         }
 
-        [HttpPut("codeitems/remove")]
+        [HttpDelete("{codeListId}/codeitems/remove/{code}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> RemoveCodeItem([FromBody] RemoveCodeItemCommand command)
+        public async Task<IActionResult> RemoveCodeItem([FromBody] long codeListId, string code)
         {
-            return Ok(await Mediator.Send(command));
+            return Ok(await Mediator.Send(new RemoveCodeItemCommand { NodeSetId = codeListId, Code = code}));
         }
     }
 }

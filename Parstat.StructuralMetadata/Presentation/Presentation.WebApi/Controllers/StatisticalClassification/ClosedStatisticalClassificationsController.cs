@@ -49,14 +49,17 @@ namespace Presentation.WebApi.Controllers
             return Ok(await Mediator.Send(command));
         }
 
-        [HttpPut]
-        [Route("levels/remove")]
+        [HttpDelete]
+        [Route("{statisticalClassificationId}/levels/remove/{levelId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> RemoveLevel([FromBody] RemoveStatisticalClassificationLevelCommand command, string language)
+        public async Task<IActionResult> RemoveLevel([FromBody] long statisticalClassificationId, long levelId)
         {
-            command.Language = language;
-            return Ok(await Mediator.Send(command));
+            return Ok(await Mediator.Send(new RemoveStatisticalClassificationLevelCommand 
+                                                { 
+                                                    StatisticalClassificationId = statisticalClassificationId,
+                                                    LevelId = levelId
+                                                }));
         }
     }
 }
