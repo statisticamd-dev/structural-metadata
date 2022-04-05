@@ -34,6 +34,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 //Check if provided statistical classification id exists
                 var statisticalClassification = await _context.NodeSets.Where((x) => x.Id == request.StatisticalClassificationId)
                                                                         .Include(ns => ns.Nodes)
+                                                                        .Include(ns => ns.Levels)
                                                                         .SingleOrDefaultAsync();
                 if(statisticalClassification == null) 
                 {
