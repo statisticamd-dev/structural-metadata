@@ -27,16 +27,8 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
 
             public async Task<Unit> Handle(RemoveStatisticalClassificationLevelCommand request, CancellationToken cancellationToken)
             {               
-                var nodeSet = await _context.NodeSets.Where(ns => ns.Id == request.StatisticalClassificationId)
-                    .Include(ns => ns.Levels)
-                    .SingleOrDefaultAsync(cancellationToken);
-               
-                if(nodeSet == null)
-                {
-                   throw new NotFoundException(nameof(NodeSet), request.StatisticalClassificationId);
-                }
-
-                var level = nodeSet.Levels.FirstOrDefault(l => l.Id == request.LevelId);
+                var level = await _context.Levels.FirstOrDefaultAsync(l => l.NodeSetId == request.StatisticalClassificationId
+                                                                    && l.Id == request.LevelId);
                 _context.Levels.Remove(level);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;

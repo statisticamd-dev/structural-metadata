@@ -26,13 +26,8 @@ namespace Presentation.Application.NodeSets.CodeList.Commands.RemoveCodeItemComm
             public async Task<Unit> Handle(RemoveCodeItemCommand request, CancellationToken cancellationToken)
             {
                 //Check if nodeset exist
-                var nodeset = await _context.NodeSets.FirstOrDefaultAsync(ns => ns.Id == request.NodeSetId);
-                if(nodeset == null) 
-                {
-                    throw new NotFoundException(nameof(NodeSet), request.NodeSetId);
-                }
-                var node = nodeset.Nodes.FirstOrDefault(n => n.Code == request.Code);
-
+                var node = await _context.Nodes.FirstOrDefaultAsync(n => n.NodeSetId == request.NodeSetId
+                                                                     &&  n.Code == request.Code);
                 if (node != null)
                 {
                     _context.Nodes.Remove(node); 
