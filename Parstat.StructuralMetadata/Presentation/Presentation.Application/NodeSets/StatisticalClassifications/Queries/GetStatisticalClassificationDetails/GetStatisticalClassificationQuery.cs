@@ -32,7 +32,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
             {
                 StatisticalClassificationDetailsDto statisticalClassification = await _context.NodeSets
                     .Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION)
-                    .Include(ns => ns.Nodes.Where(n => n.Parent == null))
+                    .Include(ns => ns.Nodes.Where(n => n.Parent == null).OrderBy(n => n.Code))
                     .AsNoTrackingWithIdentityResolution()
                     .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     //.Where(sc => sc.Id == request.Id)
