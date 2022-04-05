@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Presentation.Application.Common.Exceptions;
 
-namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.AddStatisticalClassificationLevelCommand
+namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.AddLevelCommand
 {
     public class AddStatisticalClassificationLevelCommand : AbstractRequest, IRequest<long>
     {

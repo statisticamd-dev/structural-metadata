@@ -1,6 +1,6 @@
 using System;
 
-namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadStatisticalClassificationCommand
+namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand
 {
     public class MultilanguageStringDto
     {

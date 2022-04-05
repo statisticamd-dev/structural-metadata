@@ -1,7 +1,7 @@
 using System;
 using Presentation.Application.Common.Models.StructuralMetadata.Interfaces;
 
-namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadStatisticalClassificationCommand
+namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand
 {
     public class StatisticalClassificationItemCsv : IRecordCsv
     {

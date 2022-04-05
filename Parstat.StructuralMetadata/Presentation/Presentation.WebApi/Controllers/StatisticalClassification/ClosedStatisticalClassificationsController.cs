@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Application.NodeSets.StatisticalClassifications.Commands.AddStatisticalClassificationLevelCommand;
+using Presentation.Application.NodeSets.StatisticalClassifications.Commands.AddLevelCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.CreateCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UpdateCommand;
-using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadStatisticalClassificationCommand;
+using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand;
 
 namespace Presentation.WebApi.Controllers
 {

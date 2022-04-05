@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using System.Collections.Generic;
 
-namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadStatisticalClassificationCommand
+namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand
 {
     public class UploadStatisticalClassificationItemsCommand : AbstractRequest, IRequest<Unit>
     {

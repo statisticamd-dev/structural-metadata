@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.AddStatisticalClassificationLevelCommand
+namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.AddLevelCommand
 {
     public class AddStatisticalClassificationLevelValidator : AbstractValidator<AddStatisticalClassificationLevelCommand>
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadStatisticalClassificationCommand
+namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand
 {
     public class StatisticalClassificationItemCsvDto
     {
