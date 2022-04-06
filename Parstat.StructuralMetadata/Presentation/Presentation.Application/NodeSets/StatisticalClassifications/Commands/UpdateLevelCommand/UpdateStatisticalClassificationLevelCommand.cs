@@ -45,7 +45,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
 
                 var level =  statisticalClassification.Levels.Where(l => l.Id == request.LevelId).FirstOrDefault();
 
-                if(level != null)
+                if(level == null)
                 {
                     throw new NotFoundException(nameof(Level), request.LevelId);
                 }
