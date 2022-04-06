@@ -6,6 +6,7 @@ using Presentation.Application.NodeSets.StatisticalClassifications.Commands.Crea
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.DeleteCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.RemoveLevelCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UpdateCommand;
+using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UpdateLevelCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand;
 
 namespace Presentation.WebApi.Controllers
@@ -70,6 +71,16 @@ namespace Presentation.WebApi.Controllers
         public async Task<IActionResult> Delete(long id) 
         {
             return Ok(await Mediator.Send(new DeleteStatisticalClassificationCommand() {Id = id}));
+        }
+
+        [HttpPatch]
+        [Route("levels")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> UpdateLevel([FromBody] UpdateStatisticalClassificationLevelCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
         }
     }
 }

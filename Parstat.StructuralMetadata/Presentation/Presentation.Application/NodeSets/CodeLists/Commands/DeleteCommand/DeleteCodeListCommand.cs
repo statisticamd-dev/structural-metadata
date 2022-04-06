@@ -32,7 +32,6 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.DeleteCommand
                 }
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
-
                 return Unit.Value;
             }
         }

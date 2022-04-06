@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Presentation.Application.Common.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.AddLevelCommand
 {
@@ -37,14 +38,16 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
 
-                var statisticalClassification = _context.NodeSets.Where((x) => x.Id == request.StatisticalClassificationId).FirstOrDefault();
+                var statisticalClassification = await _context.NodeSets.Where(ns => ns.Id == request.StatisticalClassificationId)
+                                                                 .Include(ns => ns.Levels)
+                                                                 .SingleOrDefaultAsync();
                
                 if(statisticalClassification == null) 
                 {
                     throw new NotFoundException(nameof(NodeSet), request.StatisticalClassificationId);
                 }
 
-                var level =  statisticalClassification.Levels.Where((x) => x.LevelNumber == request.LevelNumber).FirstOrDefault();
+                var level =  statisticalClassification.Levels.Where(l => l.LevelNumber == request.LevelNumber).FirstOrDefault();
 
                 if(level != null)
                 {
