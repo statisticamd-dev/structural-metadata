@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
+using Presentation.Application.Common.Models.StructuralMetadata;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
@@ -17,7 +18,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
     {
         public long NodeSetId { get; set; }
         public string Code { get; set; }
-        public string Value{ get; set; }
+        public MultilanguageStringDto Value{ get; set; }
         public string Description { get; set; }
 
         public class Handler : IRequestHandler<AddCodeItemCommand, long>
@@ -41,7 +42,9 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
                 {
                     return codeList.Id;
                 }
+
                 var label = await getOrCreateLabelAsync(request.Value, language, cancellationToken);
+
                 codeItem = new Node
                 {
                     Code = request.Code,
@@ -68,7 +71,8 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
                 }
                 return codeList;
             }
-            private async Task<Label> getOrCreateLabelAsync(string value, Language language, CancellationToken cancellationToken)
+
+            private async Task<Label> getOrCreateLabelAsync(MultilanguageStringDto value, Language language, CancellationToken cancellationToken)
             {
                 Label label = await GetLabelAsync(value, language);
 
@@ -76,24 +80,25 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
                 {
                     label = new Label() 
                     {
-                        Value = MultilanguageString.Init(language, value)
+                        Value = value.asMUltilanguageString()
                     };
+
                     _context.Labels.Add(label);
                     await _context.SaveChangesAsync(cancellationToken);
                 }
                 return label;
             }
 
-            private async Task<Label> GetLabelAsync(string value, Language language)
+            private async Task<Label> GetLabelAsync(MultilanguageStringDto value, Language language)
             {
                 switch (language)
                 {
                     case Presentation.Common.Domain.StructuralMetadata.Enums.Language.RO:
-                        return  await _context.Labels.FirstOrDefaultAsync(l => l.Value.Ro == value);
+                        return  await _context.Labels.FirstOrDefaultAsync(l => l.Value.Ro == value.Ro);
                     case Presentation.Common.Domain.StructuralMetadata.Enums.Language.RU:
-                        return await _context.Labels.FirstOrDefaultAsync(l => l.Value.Ru == value);
+                        return await _context.Labels.FirstOrDefaultAsync(l => l.Value.Ru == value.Ru);
                     default:
-                        return await _context.Labels.FirstOrDefaultAsync(l => l.Value.En == value);
+                        return await _context.Labels.FirstOrDefaultAsync(l => l.Value.En == value.En);
                 }
             }
 

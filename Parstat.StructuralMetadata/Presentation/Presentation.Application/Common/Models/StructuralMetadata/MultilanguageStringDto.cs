@@ -1,6 +1,5 @@
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
-using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 
 namespace Presentation.Application.Common.Models.StructuralMetadata
@@ -12,8 +11,18 @@ namespace Presentation.Application.Common.Models.StructuralMetadata
        public string Ru { get; set; }
 
        public void Mapping(Profile profile)
-        {
+       {
             profile.CreateMap<MultilanguageString, MultilanguageStringDto>();
-        }
+       }
+
+       public MultilanguageString asMUltilanguageString() 
+       {
+           return new MultilanguageString() 
+           {
+               En = this.En,
+               Ro = this.Ro,
+               Ru = this.Ru
+           };
+       }
     }
 }
