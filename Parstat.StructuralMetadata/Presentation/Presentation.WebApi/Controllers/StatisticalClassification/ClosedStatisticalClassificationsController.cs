@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.AddLevelCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.CreateCommand;
+using Presentation.Application.NodeSets.StatisticalClassifications.Commands.DeleteCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.RemoveLevelCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UpdateCommand;
 using Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand;
@@ -60,6 +61,15 @@ namespace Presentation.WebApi.Controllers
                                                     StatisticalClassificationId = statisticalClassificationId,
                                                     LevelId = levelId
                                                 }));
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete(long id) 
+        {
+            return Ok(await Mediator.Send(new DeleteStatisticalClassificationCommand() {Id = id}));
         }
     }
 }

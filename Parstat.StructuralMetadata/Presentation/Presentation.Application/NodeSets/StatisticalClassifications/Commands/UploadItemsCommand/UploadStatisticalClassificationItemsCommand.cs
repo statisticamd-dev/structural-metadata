@@ -1,7 +1,6 @@
 using MediatR;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
-using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 using System.Threading;
 using System.Threading.Tasks;
