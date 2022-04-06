@@ -59,7 +59,9 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
 
             private async Task<NodeSet> getCodeListAsync(long codeListId)
             {
-                var codeList = await _context.NodeSets.FirstOrDefaultAsync(ns => ns.Id == codeListId);
+                var codeList = await _context.NodeSets.Where(ns => ns.Id == codeListId)
+                                                        .Include(ns => ns.Nodes)
+                                                        .SingleOrDefaultAsync();
                 if(codeList == null)
                 {
                     throw new NotFoundException(nameof(NodeSet), codeListId);
