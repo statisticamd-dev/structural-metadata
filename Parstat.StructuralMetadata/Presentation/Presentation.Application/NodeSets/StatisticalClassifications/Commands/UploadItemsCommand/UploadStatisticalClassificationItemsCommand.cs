@@ -10,6 +10,7 @@ using Presentation.Application.Common.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using System.Collections.Generic;
+using Presentation.Application.Common.Models.StructuralMetadata;
 
 namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand
 {
@@ -86,35 +87,35 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                     }
                     return label;
                 }
-                label = new Label() {Value = new MultilanguageString() {
-                    En = multilanguageStringDto.En,
-                    Ro = multilanguageStringDto.Ro,
-                    Ru = multilanguageStringDto.Ru
-                }};
+
+                label = new Label()
+                {
+                    Value = multilanguageStringDto.asMUltilanguageString()
+                };
                 _context.Labels.Add(label);
                 await _context.SaveChangesAsync(cancellationToken);
+
                 return label;
             }
 
             private bool UpdateLabelLingauges(Label label, MultilanguageStringDto multilanguageStringDto) 
             {
-                bool isUpdated = false;
                 if(label.Value.En != multilanguageStringDto.En) 
                 {
                    label.Value.En = multilanguageStringDto.En;
-                   isUpdated = true;
+                   return true;
                 }
                 if(label.Value.Ro != multilanguageStringDto.Ro) 
                 {
                    label.Value.Ro = multilanguageStringDto.Ro;
-                   isUpdated = true;
+                   return true;
                 }
                 if(label.Value.Ru != multilanguageStringDto.Ru) 
                 {
                    label.Value.Ru = multilanguageStringDto.Ru;
-                   isUpdated = true;
+                   return true;
                 }
-                return isUpdated;
+                return false;
             }
 
             private List<Node> createNodeRecursivly(NodeSet statisticalClassification, List<StatisticalClassificationItemCsvDto> rootNodes, AggregationType aggregationType)

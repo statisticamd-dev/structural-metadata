@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Presentation.Application.Common.Models.StructuralMetadata;
 
 namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand
 {
