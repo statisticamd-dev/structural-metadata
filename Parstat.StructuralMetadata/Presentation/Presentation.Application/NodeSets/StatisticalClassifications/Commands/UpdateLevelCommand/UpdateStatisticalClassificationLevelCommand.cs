@@ -52,6 +52,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
 
                 level.Name.AddText(language, request.Name);
                 level.Description.AddText(language, request.Description);
+                
                 _context.Levels.Update(level);
                 await _context.SaveChangesAsync(cancellationToken);
 
