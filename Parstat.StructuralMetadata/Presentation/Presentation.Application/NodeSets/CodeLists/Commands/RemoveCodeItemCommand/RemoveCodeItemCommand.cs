@@ -3,10 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
-using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.NodeSets.CodeList.Commands.RemoveCodeItemCommand
 {

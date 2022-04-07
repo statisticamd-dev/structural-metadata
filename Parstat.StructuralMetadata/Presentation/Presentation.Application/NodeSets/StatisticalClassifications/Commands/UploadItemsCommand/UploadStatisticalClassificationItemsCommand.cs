@@ -13,13 +13,13 @@ using Presentation.Application.Common.Models.StructuralMetadata;
 
 namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UploadItemsCommand
 {
-    public class UploadStatisticalClassificationItemsCommand : AbstractRequest, IRequest<Unit>
+    public class UploadStatisticalClassificationItemsCommand : AbstractRequest, IRequest<long>
     {
         public long StatisticalClassificationId  { get; set; }
         public AggregationType AggregationType { get; set; }
         public List<StatisticalClassificationItemCsvDto> RootItems { get; set; }        
 
-        public class Handler : IRequestHandler<UploadStatisticalClassificationItemsCommand, Unit>
+        public class Handler : IRequestHandler<UploadStatisticalClassificationItemsCommand, long>
         {
             private readonly IStructuralMetadataDbContext _context;
 
@@ -28,7 +28,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
                 _context = context;
             }
 
-            public async Task<Unit> Handle(UploadStatisticalClassificationItemsCommand request, CancellationToken cancellationToken)
+            public async Task<long> Handle(UploadStatisticalClassificationItemsCommand request, CancellationToken cancellationToken)
             {    
                           
                 //Check if provided statistical classification id exists
@@ -54,7 +54,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
 
                 await _context.SaveChangesAsync(cancellationToken);
 
-                return Unit.Value;
+                return statisticalClassification.Id;
             }
 
             private async Task<Unit> addLabelsRecursivly(List<StatisticalClassificationItemCsvDto> rootItems, CancellationToken cancellationToken)
