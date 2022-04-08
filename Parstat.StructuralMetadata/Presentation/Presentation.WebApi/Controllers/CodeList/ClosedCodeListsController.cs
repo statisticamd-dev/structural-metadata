@@ -41,7 +41,7 @@ namespace Presentation.WebApi.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Delete([FromBody] long id)
+        public async Task<IActionResult> Delete(long id)
         {            
             return Ok(await Mediator.Send(new DeleteCodeListCommand { Id = id }));
         }
