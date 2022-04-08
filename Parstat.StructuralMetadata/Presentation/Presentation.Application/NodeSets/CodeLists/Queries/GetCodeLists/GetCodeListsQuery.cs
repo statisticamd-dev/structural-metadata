@@ -32,10 +32,10 @@ namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeLists
                 var codeLists = await _context.NodeSets
                     .Where(ns => (ns.NodeSetType == NodeSetType.CODE_LIST 
                                             || ns.NodeSetType == NodeSetType.SENTINEL_CODE_LIST)
-                                            && (EF.Functions.ILike(ns.Name.En, request.Name)
-                                                  || EF.Functions.ILike(ns.Name.Ro, request.Name)
-                                                  || EF.Functions.ILike(ns.Name.Ru, request.Name)
-                                                  || EF.Functions.ILike(ns.LocalId, request.Name)))
+                                            && ( EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{request.Name.ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.Name.Ro.ToUpper(), $"%{request.Name.ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.Name.Ru.ToUpper(), $"%{request.Name.ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{request.Name.ToUpper()}%")))
                     .AsNoTracking()
                     .ProjectTo<CodeListDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .OrderBy(cl => cl.LocalId)
