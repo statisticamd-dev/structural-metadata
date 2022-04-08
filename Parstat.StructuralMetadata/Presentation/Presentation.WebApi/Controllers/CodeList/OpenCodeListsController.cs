@@ -10,7 +10,7 @@ namespace Presentation.WebApi.Controllers
     {
         [HttpGet]
         [ProducesResponseType(typeof(CodeListsVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<CodeListsVm>> GetAll(string language) => Ok(await Mediator.Send(new GetCodeListsQuery {Language = language}));
+        public async Task<ActionResult<CodeListsVm>> GetAll(string name, string language) => Ok(await Mediator.Send(new GetCodeListsQuery {Name = name, Language = language}));
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(CodeListVm), StatusCodes.Status200OK)]
