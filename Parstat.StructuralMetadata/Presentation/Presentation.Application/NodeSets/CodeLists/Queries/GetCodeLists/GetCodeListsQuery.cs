@@ -48,7 +48,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeLists
             {
 
                 IQueryable<NodeSet> nodeSetsQuery =  _context.NodeSets
-                    .Where(ns => ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION);
+                    .Where(ns => ns.NodeSetType == NodeSetType.CODE_LIST || ns.NodeSetType == NodeSetType.SENTINEL_CODE_LIST);
 
                 if (!String.IsNullOrEmpty(name))
                 {

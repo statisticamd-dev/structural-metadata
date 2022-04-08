@@ -54,8 +54,8 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                 {
                     if(language == "en")
                     {
-                        nodeSetsQuery = nodeSetsQuery.Where( ns => EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%")
-                                                  || EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{name.ToUpper()}%"));
+                        nodeSetsQuery = nodeSetsQuery.Where( ns => EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{name.Trim().ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.Trim().ToUpper()}%"));
                     }
                     if(language == "ro")
                     {
