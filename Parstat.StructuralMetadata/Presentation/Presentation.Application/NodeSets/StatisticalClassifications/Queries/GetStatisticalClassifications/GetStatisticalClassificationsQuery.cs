@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -29,7 +30,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
 
             public async Task<StatisticalClassificationsVm> Handle(GetStatisticalClassificationsQuery request, CancellationToken cancellationToken)
             {
-                var statisticalClassifications = await createQuery(request.Name)
+                var statisticalClassifications = await createQuery(request.Name, request.Language)
                     .AsNoTracking()
                     .ProjectTo<StatisticalClassificationDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .OrderBy(cl => cl.LocalId)
@@ -43,19 +44,32 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                 return vm;
             }
 
-            private IQueryable<NodeSet> createQuery(string name) 
+            private IQueryable<NodeSet> createQuery(string name, string language) 
             {
-                if (name != null)
-                {
-                    return _context.NodeSets
-                    .Where(ns => ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION 
-                                            && ( EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{name.ToUpper()}%")
-                                                  || EF.Functions.ILike(ns.Name.Ro.ToUpper(), $"%{name.ToUpper()}%")
-                                                  || EF.Functions.ILike(ns.Name.Ru.ToUpper(), $"%{name.ToUpper()}%")
-                                                  || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%")));
-                }
-                return _context.NodeSets
+
+                IQueryable<NodeSet> nodeSetsQuery =  _context.NodeSets
                     .Where(ns => ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION);
+
+                if (!String.IsNullOrEmpty(name))
+                {
+                    if(language == "en")
+                    {
+                        nodeSetsQuery = nodeSetsQuery.Where( ns => EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{name.ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%"));
+                    }
+                    if(language == "ro")
+                    {
+                        nodeSetsQuery = nodeSetsQuery.Where( ns => EF.Functions.ILike(ns.Name.Ro.ToUpper(), $"%{name.ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%"));
+                    }
+                    if(language == "ro")
+                    {
+                        nodeSetsQuery = nodeSetsQuery.Where( ns => EF.Functions.ILike(ns.Name.Ro.ToUpper(), $"%{name.ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%"));
+                    }
+                }
+
+                return nodeSetsQuery;
             }
         }
     }
