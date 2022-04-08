@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
+using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeLists
 {
@@ -29,14 +30,8 @@ namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeLists
 
             public async Task<CodeListsVm> Handle(GetCodeListsQuery request, CancellationToken cancellationToken)
             {
-                var codeLists = await _context.NodeSets
-                    .Where(ns => (ns.NodeSetType == NodeSetType.CODE_LIST 
-                                            || ns.NodeSetType == NodeSetType.SENTINEL_CODE_LIST)
-                                            && ( EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{request.Name.ToUpper()}%")
-                                                  || EF.Functions.ILike(ns.Name.Ro.ToUpper(), $"%{request.Name.ToUpper()}%")
-                                                  || EF.Functions.ILike(ns.Name.Ru.ToUpper(), $"%{request.Name.ToUpper()}%")
-                                                  || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{request.Name.ToUpper()}%")))
-                    .AsNoTracking()
+                IQueryable<NodeSet> codeListsQuery = createQuery(request.Name);
+                var codeLists = await codeListsQuery.AsNoTracking()
                     .ProjectTo<CodeListDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .OrderBy(cl => cl.LocalId)
                     .ToListAsync(cancellationToken);
@@ -47,6 +42,23 @@ namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeLists
                 };
 
                 return vm;
+            }
+
+            private IQueryable<NodeSet> createQuery(string name) 
+            {
+                if (name != null)
+                {
+                    return _context.NodeSets
+                    .Where(ns => (ns.NodeSetType == NodeSetType.CODE_LIST 
+                                            || ns.NodeSetType == NodeSetType.SENTINEL_CODE_LIST)
+                                            && ( EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{name.ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.Name.Ro.ToUpper(), $"%{name.ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.Name.Ru.ToUpper(), $"%{name.ToUpper()}%")
+                                                  || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%")));
+                }
+                return _context.NodeSets
+                    .Where(ns => (ns.NodeSetType == NodeSetType.CODE_LIST 
+                                            || ns.NodeSetType == NodeSetType.SENTINEL_CODE_LIST));
             }
         }
     }
