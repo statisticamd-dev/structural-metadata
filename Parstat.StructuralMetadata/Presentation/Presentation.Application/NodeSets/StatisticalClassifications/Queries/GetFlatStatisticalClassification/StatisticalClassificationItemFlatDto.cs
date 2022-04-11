@@ -27,7 +27,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.LevelNumber, opt => opt.MapFrom(s => s.Level != null ? s.Level.LevelNumber : (int?) null))
                 .ForMember(d => d.LevelName, opt => opt.MapFrom(s => s.Level != null && s.Level.Name != null ? s.Level.Name.Text(language) : String.Empty))
-                .ForMember(d => d.ParentCode, opt => opt.MapFrom(s => s.Parent.Code));
+                .ForMember(d => d.ParentCode, opt => opt.MapFrom(s => s.Parent.Code != null ? s.Parent.Code : String.Empty));
         }
     }
 }
