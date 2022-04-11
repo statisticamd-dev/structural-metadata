@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
-using Presentation.Application.Common.Models;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
