@@ -22,7 +22,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
             string language = "en";
             profile.CreateMap<Node, StatisticalClassificationItemFlatDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
-                .ForMember(d => d.Code, opt => opt.MapFrom(s => s.Level == null ? s.Code : s.Code.PadLeft(2 * s.Level.LevelNumber - 1 )))
+                .ForMember(d => d.Code, opt => opt.MapFrom(s => s.Level == null ? s.Code : s.Level.LevelNumber <= 2 ? s.Code.PadLeft(2 * s.Level.LevelNumber - 1 ) :  s.Code.PadLeft(2 * s.Level.LevelNumber)))
                 .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label != null ? s.Label.Value.Text(language) : String.Empty))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.LevelNumber, opt => opt.MapFrom(s => s.Level != null ? s.Level.LevelNumber : (int?) null))
