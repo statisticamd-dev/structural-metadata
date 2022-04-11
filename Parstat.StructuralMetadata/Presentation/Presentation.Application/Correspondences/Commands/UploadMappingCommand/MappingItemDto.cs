@@ -10,6 +10,6 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
     {
         public string SourceCode { get; set; }
 
-        public string TargetSource { get; set; }
+        public string TargetCode { get; set; }
     }
 }

@@ -40,12 +40,12 @@ namespace Presentation.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("mapping/remove")]
+        [Route("{correspondence}/mapping/{mapping}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> RemoveMapping([FromBody] RemoveMappingCommand command)
+        public async Task<IActionResult> RemoveMapping(long correspondence, long mapping)
         {
-            return Ok(await Mediator.Send(command));
+            return Ok(await Mediator.Send(new RemoveMappingCommand() {CorrespondenceId = correspondence, MappingId = mapping}));
         }
     }
 }

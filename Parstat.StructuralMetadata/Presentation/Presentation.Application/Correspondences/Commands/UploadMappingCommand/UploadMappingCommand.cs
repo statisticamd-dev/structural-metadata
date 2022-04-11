@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
@@ -27,24 +28,28 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
 
             public async Task<long> Handle(UploadMappingCommand request, CancellationToken cancellationToken)
             {
-                var correspondence = _context.Correspondences.FirstOrDefault((x) => x.Id == request.CorrespondenceId);
+                var correspondence =  await _context.Correspondences.Where(c => c.Id == request.CorrespondenceId)
+                                                        .Include(c => c.Source)
+                                                        .Include(c => c.Target)
+                                                        .Include(c => c.Source.Nodes)
+                                                        .Include(c => c.Target.Nodes)
+                                            .SingleOrDefaultAsync();
                 if (correspondence != null)
                 {
                     throw new NotFoundException(nameof(Correspondences), request.CorrespondenceId);
                 }
 
-                List<Mapping> newMaps = GetMappings(request.MappingCsv, correspondence);
-
-                var mappings = correspondence.Mappings;
-                if (mappings != null)
+                List<Mapping> mappings = GetMappings(request.MappingCsv, correspondence);
+                
+                //on upload always delete previous mappings, if any
+                if(correspondence.Mappings.Count() > 0) 
                 {
-                    _context.Mappings.RemoveRange(mappings);
+                    correspondence.Mappings.Clear();
                     await _context.SaveChangesAsync(cancellationToken);
                 }
-
                 //_context.Correspondences.Update(correspondenceFound);
 
-                _context.Mappings.AddRange(newMaps);
+                _context.Mappings.AddRange(mappings);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
@@ -54,31 +59,33 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
             }
         }
 
-        private static List<Mapping> GetMappings(List<MappingItemDto> mappingsData, Correspondence correspondence)
+        private static List<Mapping> GetMappings(List<MappingItemDto> mappingDtos, Correspondence correspondence)
         {
             List<Mapping> mappings = new();
-            foreach (var singleMapp in mappingsData)
+            foreach (var mapDto in mappingDtos)
             {
-                var sourceNode = correspondence.Source.Nodes.FirstOrDefault((n) => n.Code == singleMapp.SourceCode);
+                var sourceNode = correspondence.Source.Nodes.FirstOrDefault((n) => n.Code == mapDto.SourceCode);
+                
                 if (sourceNode == null)
                 {
-                    throw new NotFoundException(nameof(Node), singleMapp.SourceCode);
+                    throw new NotFoundException(nameof(Node), mapDto.SourceCode);
                 }
 
-                var targetNode = correspondence.Target.Nodes.FirstOrDefault((n) => n.Code == singleMapp.TargetSource);
+                var targetNode = correspondence.Target.Nodes.FirstOrDefault((n) => n.Code == mapDto.TargetCode);
+                
                 if (targetNode == null)
                 {
-                    throw new NotFoundException(nameof(Node), singleMapp.TargetSource);
+                    throw new NotFoundException(nameof(Node), mapDto.TargetCode);
                 }
 
-                var newMap = new Mapping
+                var map = new Mapping
                 {
                     Source = sourceNode,
                     Target = targetNode,
                     Correspondence = correspondence
                 };
-
-                mappings.Add(newMap);
+                correspondence.Mappings.Add(map);
+                mappings.Add(map);
 
                 //correspondenceFound.Mappings.Add(newMap);
             }

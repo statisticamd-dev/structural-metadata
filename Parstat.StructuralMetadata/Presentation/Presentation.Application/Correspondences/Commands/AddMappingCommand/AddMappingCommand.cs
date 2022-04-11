@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
@@ -28,28 +29,27 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
 
             public async Task<long> Handle(AddMappingCommand request, CancellationToken cancellationToken)
             {
-                var correspondence = _context.Correspondences.FirstOrDefault((x) => x.Id == request.CorrespondenceId);
+                 var correspondence =  await _context.Correspondences.Where(c => c.Id == request.CorrespondenceId)
+                                                                     .Include(c => c.Source)
+                                                                     .Include(c => c.Target)
+                                                                     .Include(c => c.Source.Nodes)
+                                                                     .Include(c => c.Target.Nodes)
+                                                                     .SingleOrDefaultAsync();
+                
                 if (correspondence == null) 
                 {
                     throw new NotFoundException(nameof(Correspondence), request.CorrespondenceId);
                 }
 
-                var sourceNode = correspondence.Source.Nodes.FirstOrDefault((x) => x.Id == request.SourceId);
-                if (sourceNode == null) 
-                {
-                    throw new NotFoundException(nameof(Node), request.SourceId);
-                }
+                var sourceNode = getSourceNode(correspondence, request);
+                var targetNode = getTargetNode(correspondence, request);
 
-                var targetNode = correspondence.Target.Nodes.FirstOrDefault((x) => x.Id == request.TargetId);
-                if (targetNode== null) 
-                {
-                    throw new NotFoundException(nameof(Node), request.TargetId);
-                }
-                
-                Mapping mapping = correspondence.Mappings.Where(m => m.Source == sourceNode && m.Target == targetNode).FirstOrDefault();
+                Mapping mapping = correspondence.Mappings.Where(m => m.Source == sourceNode 
+                                                                     && m.Target == targetNode).FirstOrDefault();
                 
                 if(mapping == null) 
                 {
+                    //save new mapping if not exist
                     mapping = new Mapping
                     {
                         Target = targetNode,
@@ -62,7 +62,32 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
                 }
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
-                return mapping.Id;
+                return correspondence.Id;
+            }
+
+            private Node getSourceNode( Correspondence correspondence, AddMappingCommand request)
+            {
+                
+                var sourceNode = correspondence.Source.Nodes.FirstOrDefault((x) => x.Id == request.SourceId);
+               
+                if (sourceNode == null) 
+                {
+                    throw new NotFoundException(nameof(Node), request.SourceId);
+                }
+
+                return sourceNode;
+            }
+
+            private Node getTargetNode(Correspondence correspondence, AddMappingCommand request) 
+            {
+                var targetNode = correspondence.Target.Nodes.FirstOrDefault((x) => x.Id == request.TargetId);
+                
+                if (targetNode== null) 
+                {
+                    throw new NotFoundException(nameof(Node), request.TargetId);
+                }
+
+                return targetNode;
             }
         }
     }
