@@ -17,7 +17,7 @@ namespace Presentation.WebApi.Controllers
         [ProducesResponseType(typeof(StatisticalClassificationVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<StatisticalClassificationVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetStatisticalClassificationQuery { Id = id, Language = language }));
 
-        [HttpGet("{id}/flat")]
+        [HttpGet("flat/{id}")]
         [ProducesResponseType(typeof(StatisticalClassificationFlatVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<StatisticalClassificationFlatVm>> GetFlat(long id, string language) => Ok(await Mediator.Send(new GetFlatStatisticalClassificationQuery { Id = id, Language = language }));
     }
