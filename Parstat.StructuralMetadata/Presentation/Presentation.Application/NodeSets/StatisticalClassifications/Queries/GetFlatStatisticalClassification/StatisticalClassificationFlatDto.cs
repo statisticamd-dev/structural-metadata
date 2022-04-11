@@ -10,7 +10,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
     public class StatisticalClassificationFlatDto : AbstractConceptDto, IMapFrom<NodeSet>
     {
         public List<LevelDetailsFlatDto> Levels { get; set; }
-        public string Code { get; set; }
+        public List<StatisticalClassificationItemFlatDto> Items { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -23,7 +23,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
                 .ForMember(d => d.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : String.Empty))
                 .ForMember(d => d.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : String.Empty))
-                .ForMember(d => d.Code, opt => opt.MapFrom(s => s.Nodes));
+                .ForMember(d => d.Items, opt => opt.MapFrom(s => s.Nodes));
         }
     }
 }

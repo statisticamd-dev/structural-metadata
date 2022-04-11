@@ -30,7 +30,9 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
             public async Task<StatisticalClassificationFlatVm> Handle(GetFlatStatisticalClassificationQuery request, CancellationToken cancellationToken)
             {
                 StatisticalClassificationFlatDto statisticalClassification = await _context.NodeSets
-                    .Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION && ns.Levels.Count > 0)
+                    .Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION)
+                    .Include(ns => ns.Levels)
+                    .Include(ns => ns.Nodes)
                     .AsNoTrackingWithIdentityResolution()
                     .ProjectTo<StatisticalClassificationFlatDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> { ["language"] = request.Language })
                     .SingleOrDefaultAsync(cancellationToken);
