@@ -26,17 +26,11 @@ namespace Presentation.Application.Correspondences.Commands.RemoveMappingCommand
 
             public async Task<Unit> Handle(RemoveMappingCommand request, CancellationToken cancellationToken)
             {
-                var correspondenceFound = _context.Correspondences.FirstOrDefault((x) => x.Id == request.CorrespondenceId);
-                if (correspondenceFound == null)
+                var mapping = _context.Mappings.FirstOrDefault(m => m.Id == request.MappingId 
+                                                                    && m.CorrespondenceId == request.CorrespondenceId);
+                if (mapping != null)
                 {
-                    throw new NotFoundException(nameof(Correspondence), request.CorrespondenceId);
-                }
-
-                var mappingFound = correspondenceFound.Mappings.FirstOrDefault((x) => x.Id == request.MappingId);
-
-                if (mappingFound != null)
-                {
-                    _context.Mappings.Remove(mappingFound);
+                    _context.Mappings.Remove(mapping);
                     await _context.SaveChangesAsync(cancellationToken);
                 }
 
