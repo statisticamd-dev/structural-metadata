@@ -34,7 +34,7 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
                                                         .Include(c => c.Source.Nodes)
                                                         .Include(c => c.Target.Nodes)
                                             .SingleOrDefaultAsync();
-                if (correspondence != null)
+                if (correspondence == null)
                 {
                     throw new NotFoundException(nameof(Correspondences), request.CorrespondenceId);
                 }
