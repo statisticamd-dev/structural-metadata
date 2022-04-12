@@ -18,6 +18,10 @@ namespace Presentation.Infrastructure.Configurations
                 .IsRequired();
             builder.HasIndex(c => new {c.SourceId, c.TargetId})
                 .IsUnique();
+            builder.HasMany(c => c.Mappings)
+                .WithOne(m => m.Correspondence)
+                .HasForeignKey(m => m.CorrespondenceId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
