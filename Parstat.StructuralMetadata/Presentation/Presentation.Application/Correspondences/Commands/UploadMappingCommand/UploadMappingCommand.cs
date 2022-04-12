@@ -33,6 +33,7 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
                                                         .Include(c => c.Target)
                                                         .Include(c => c.Source.Nodes)
                                                         .Include(c => c.Target.Nodes)
+                                                        .Include(c => c.Mappings)
                                             .SingleOrDefaultAsync();
                 if (correspondence == null)
                 {
@@ -44,7 +45,6 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
                 //on upload always delete previous mappings, if any
                 if(correspondence.Mappings.Count() > 0) 
                 {
-                    _context.Mappings.RemoveRange(correspondence.Mappings);
                     correspondence.Mappings.Clear();
                     await _context.SaveChangesAsync(cancellationToken);
                 }
