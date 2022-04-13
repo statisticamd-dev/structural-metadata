@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Common.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
+using Presentation.Domain.StructuralMetadata.Entities.Tags;
 
 namespace Presentation.Persistence
 {
@@ -94,6 +95,14 @@ namespace Presentation.Persistence
             modelBuilder
                 .Entity<Correspondence>() 
                 .Property(c => c.Relationship)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<Tag>()
+                .Property(t => t.Type)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<EntityTag>()
+                .Property(t => t.EntityType)
                 .HasConversion<string>();
             modelBuilder
                 .ApplyConfigurationsFromAssembly(typeof(StructuralMetadataDbContext).Assembly);
