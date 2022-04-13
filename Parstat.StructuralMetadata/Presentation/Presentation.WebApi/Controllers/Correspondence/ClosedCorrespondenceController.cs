@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.Correspondences.Commands.AddMappingCommand;
 using Presentation.Application.Correspondences.Commands.CreateCommand;
+using Presentation.Application.Correspondences.Commands.DeleteCommand;
 using Presentation.Application.Correspondences.Commands.RemoveMappingCommand;
 using Presentation.Application.Correspondences.Commands.UploadMappingCommand;
 
@@ -47,5 +48,15 @@ namespace Presentation.WebApi.Controllers
         {
             return Ok(await Mediator.Send(new RemoveMappingCommand() {CorrespondenceId = correspondence, MappingId = mapping}));
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Delete(long id)
+        {
+            return Ok(await Mediator.Send(new DeleteCorrespondenceCommand() {Id = id}));
+        }
+
     }
 }

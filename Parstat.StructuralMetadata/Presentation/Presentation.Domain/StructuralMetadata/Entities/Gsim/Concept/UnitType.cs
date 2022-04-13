@@ -1,7 +1,6 @@
 ﻿using Presentation.Common.Domain.StructuralMetadata.Abstracts.Gsim;
-using System;
+using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
 {
@@ -9,7 +8,9 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
     {
         public UnitType() {
             Variables = new List<Variable>();
+            Records = new List<LogicalRecord>();
         }
         public IList<Variable> Variables { get; set; }
+        public IList<LogicalRecord> Records { get; set; }
     }
 }

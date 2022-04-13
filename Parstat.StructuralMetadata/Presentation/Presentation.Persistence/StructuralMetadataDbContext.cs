@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Common.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
+using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using Presentation.Domain.StructuralMetadata.Entities.Tags;
 
 namespace Presentation.Persistence
@@ -43,6 +44,12 @@ namespace Presentation.Persistence
         public DbSet<UnitType> UnitTypes { get; set; }
         public DbSet<ValueDomain> ValueDomains { get; set; }
         public DbSet<Variable> Variables { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<EntityTag> EntityTags { get; set; }
+        public DbSet<DataSet> DataSets { get; set; }
+        public DbSet<DataStructure> DataStructures { get; set; }
+        public DbSet<LogicalRecord> LogicalRecords { get; set; }
+        public DbSet<Component> Components { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -103,6 +110,18 @@ namespace Presentation.Persistence
             modelBuilder
                 .Entity<EntityTag>()
                 .Property(t => t.EntityType)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<DataSet>()
+                .Property(d => d.Type)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<DataStructure>()
+                .Property(d => d.Type)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<Component>()
+                .Property(c => c.Type)
                 .HasConversion<string>();
             modelBuilder
                 .ApplyConfigurationsFromAssembly(typeof(StructuralMetadataDbContext).Assembly);
