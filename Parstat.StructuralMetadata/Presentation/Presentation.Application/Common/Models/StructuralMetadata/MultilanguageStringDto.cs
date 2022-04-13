@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Domain;
@@ -19,9 +20,9 @@ namespace Presentation.Application.Common.Models.StructuralMetadata
        {
            return new MultilanguageString() 
            {
-               En = this.En,
-               Ro = this.Ro,
-               Ru = this.Ru
+               En = !String.IsNullOrEmpty(this.En) ? this.En : null,
+               Ro = !String.IsNullOrEmpty(this.Ro) ? this.Ro : null,
+               Ru = !String.IsNullOrEmpty(this.Ru) ? this.Ru : null
            };
        }
     }

@@ -1,3 +1,4 @@
+using System;
 using MediatR;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
@@ -74,46 +75,75 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
 
             private async Task<Label> getOrCreateLabel(MultilanguageStringDto multilanguageStringDto, CancellationToken cancellationToken)
             {
-                Label label = await _context.Labels.Where(l => l.Value.En == multilanguageStringDto.En 
-                                                                || l.Value.Ro == multilanguageStringDto.Ro
-                                                                || l.Value.Ru == multilanguageStringDto.Ru).FirstOrDefaultAsync();
-                if(label != null)
+                IQueryable<Label> query = queryLabels(multilanguageStringDto);
+                if(query != null)
                 {
-                    if(UpdateLabelLingauges(label, multilanguageStringDto)) 
+                    Label label = await query.FirstOrDefaultAsync(cancellationToken);
+                    if(label != null)
                     {
-                        _context.Labels.Update(label);
-                        await _context.SaveChangesAsync(cancellationToken);
+                        if(UpdateLabelLingauges(label, multilanguageStringDto)) 
+                        {
+                            _context.Labels.Update(label);
+                            await _context.SaveChangesAsync(cancellationToken);
+                        }
+                        return label;
                     }
+
+                    label = new Label()
+                    {
+                        Value = multilanguageStringDto.asMUltilanguageString()
+                    };
+                    _context.Labels.Add(label);
+                    await _context.SaveChangesAsync(cancellationToken);
+
                     return label;
                 }
-
-                label = new Label()
-                {
-                    Value = multilanguageStringDto.asMUltilanguageString()
-                };
-                _context.Labels.Add(label);
-                await _context.SaveChangesAsync(cancellationToken);
-
-                return label;
+                throw new Exception("CSV file content is not correct");
+                
             }
 
+            private IQueryable<Label> queryLabels(MultilanguageStringDto multilanguageStringDto)
+            {
+                if(!String.IsNullOrEmpty(multilanguageStringDto.En))
+                {
+                    return _context.Labels.Where(l => l.Value.En == multilanguageStringDto.En);
+                }
+                if(!String.IsNullOrEmpty(multilanguageStringDto.Ro))
+                {
+                    return _context.Labels.Where(l => l.Value.Ro == multilanguageStringDto.Ro);
+                }
+                if(!String.IsNullOrEmpty(multilanguageStringDto.Ru))
+                {
+                    return _context.Labels.Where(l => l.Value.Ru == multilanguageStringDto.Ru);
+                }
+                return null;
+            }
             private bool UpdateLabelLingauges(Label label, MultilanguageStringDto multilanguageStringDto) 
             {
-                if(label.Value.En != multilanguageStringDto.En) 
+                if(!String.IsNullOrEmpty(multilanguageStringDto.En)
+                        && String.IsNullOrEmpty(label.Value.En) 
+                        && label.Value.En != multilanguageStringDto.En) 
                 {
                    label.Value.En = multilanguageStringDto.En;
                    return true;
                 }
-                if(label.Value.Ro != multilanguageStringDto.Ro) 
+
+                if(!String.IsNullOrEmpty(multilanguageStringDto.Ro) 
+                       && String.IsNullOrEmpty(label.Value.En)
+                       &&label.Value.Ro != multilanguageStringDto.Ro) 
                 {
                    label.Value.Ro = multilanguageStringDto.Ro;
                    return true;
                 }
-                if(label.Value.Ru != multilanguageStringDto.Ru) 
+
+                if(!String.IsNullOrEmpty(multilanguageStringDto.Ru)
+                       && String.IsNullOrEmpty(label.Value.En) 
+                       && label.Value.Ru != multilanguageStringDto.Ru) 
                 {
                    label.Value.Ru = multilanguageStringDto.Ru;
                    return true;
                 }
+
                 return false;
             }
 

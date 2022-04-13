@@ -11,9 +11,7 @@ namespace Presentation.Infrastructure.Configurations
             builder.Property(l => l.Id)
                 .ValueGeneratedOnAdd();
             builder.OwnsOne(l => l.Value, multiLang => {
-                multiLang.HasIndex(m => m.En).IsUnique();
-                multiLang.HasIndex(m => m.Ro).IsUnique();
-                multiLang.HasIndex(m => m.Ru).IsUnique();
+                multiLang.HasIndex(m => new { m.En, m.Ro, m.Ru }).IsUnique();
             });
         }
     }
