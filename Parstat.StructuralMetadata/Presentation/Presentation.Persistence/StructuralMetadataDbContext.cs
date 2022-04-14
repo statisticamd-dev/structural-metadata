@@ -116,6 +116,14 @@ namespace Presentation.Persistence
                 .Property(d => d.Type)
                 .HasConversion<string>();
             modelBuilder
+                .Entity<DataSet>()
+                .Property(d => d.ExchangeChannel)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<DataSet>()
+                .Property(d => d.ExchangeDirection)
+                .HasConversion<string>();
+            modelBuilder
                 .Entity<DataStructure>()
                 .Property(d => d.Type)
                 .HasConversion<string>();
