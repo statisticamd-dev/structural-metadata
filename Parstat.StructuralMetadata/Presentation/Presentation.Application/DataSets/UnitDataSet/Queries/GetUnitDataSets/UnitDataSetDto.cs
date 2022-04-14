@@ -5,9 +5,9 @@ using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
-namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetDataSets
+namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSets
 {
-    public class DataSetDto : AbstractIdentifiableArtefactDto, IMapFrom<DataSet>
+    public class UnitDataSetDto : AbstractIdentifiableArtefactDto, IMapFrom<DataSet>
     {
         public string FilterExpression { get; set; }
         public DateTime ReportingBegin { get; set; }
@@ -23,7 +23,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetDataSets
             //language parameter from  request
             //default english
             string language = "en";
-            profile.CreateMap<DataSet, DataSetDto>()
+            profile.CreateMap<DataSet, UnitDataSetDto>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.StatisticalProgramLink, otp => otp.MapFrom(s => "/metadata/referntial/view/" + s.StatisticalProgramId));

@@ -10,12 +10,12 @@ using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 
-namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetDataSets
+namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSets
 {
-    public class GetDataSetsQuery : AbstractRequest, IRequest<DataSetsVm>
+    public class GetUnitDataSetsQuery : AbstractRequest, IRequest<UnitDataSetsVm>
     {
         
-        public class GetLabelsQueryHandler : IRequestHandler<GetDataSetsQuery, DataSetsVm>
+        public class GetLabelsQueryHandler : IRequestHandler<GetUnitDataSetsQuery, UnitDataSetsVm>
         {
             private readonly IStructuralMetadataDbContext _context;
             private readonly IMapper _mapper;
@@ -26,18 +26,18 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetDataSets
                 _mapper = mapper;
             }
 
-            public async Task<DataSetsVm> Handle(GetDataSetsQuery request, CancellationToken cancellationToken)
+            public async Task<UnitDataSetsVm> Handle(GetUnitDataSetsQuery request, CancellationToken cancellationToken)
             {
                 
                 var datasets = await _context.DataSets.Where(ds => ds.Type == DataSetType.UNIT)
                     .AsNoTracking()
-                    .ProjectTo<DataSetDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
+                    .ProjectTo<UnitDataSetDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .OrderBy(mu => mu.Id)
                     .ToListAsync(cancellationToken);
 
-                var vm = new DataSetsVm
+                var vm = new UnitDataSetsVm
                 {
-                    DataSets = datasets
+                    UnitDataSets = datasets
                 };
 
                 return vm;
