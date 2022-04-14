@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Presentation.Persistence;
@@ -9,9 +10,10 @@ using Presentation.Persistence;
 namespace Presentation.Persistence.Migrations
 {
     [DbContext(typeof(StructuralMetadataDbContext))]
-    partial class StructuralMetadataDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220414112836_v2.8")]
+    partial class v28
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -888,11 +890,13 @@ namespace Presentation.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DataStructureId");
+
                     b.HasIndex("ParentId");
 
                     b.HasIndex("UnitTypeId");
 
-                    b.HasIndex("DataStructureId", "LocalId", "Version")
+                    b.HasIndex("LocalId", "Version")
                         .IsUnique();
 
                     b.ToTable("LogicalRecords");

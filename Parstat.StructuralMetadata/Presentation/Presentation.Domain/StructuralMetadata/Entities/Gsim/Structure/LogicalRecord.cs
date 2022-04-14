@@ -6,7 +6,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure
 {
     public class LogicalRecord : AbstractIdentifiableArtefact
     {
-        public long ParentId { get; set; }
+        public long? ParentId { get; set; }
         public LogicalRecord Parent { get; set; }
         public long UnitTypeId { get; set; }
         public UnitType UnitType { get; set; }

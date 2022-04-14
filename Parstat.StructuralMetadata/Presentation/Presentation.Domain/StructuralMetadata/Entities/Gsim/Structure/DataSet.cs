@@ -6,7 +6,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure
 {
     public class DataSet : AbstractIdentifiableArtefact
     {
-        public DatasetType Type { get; set; }
+        public DataSetType Type { get; set; }
         public ExchangeChannel ExchangeChannel { get; set; }
         public ExchangeDirection ExchangeDirection { get; set; }
         public DateTime? ReportingBegin { get; set; }

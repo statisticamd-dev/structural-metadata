@@ -7,7 +7,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure
 {
     public class DataStructure : AbstractIdentifiableArtefact
     {
-        public DatasetType Type { get; set; }
+        public DataSetType Type { get; set; }
         public string Group { get; set; }
         public IList<LogicalRecord> LogicalRecords { get; set; }
         public IList<Component> Components { get; set; }

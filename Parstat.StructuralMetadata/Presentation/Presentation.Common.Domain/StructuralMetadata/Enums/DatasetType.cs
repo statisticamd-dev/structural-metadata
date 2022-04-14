@@ -2,7 +2,7 @@ using System;
 
 namespace Presentation.Common.Domain.StructuralMetadata.Enums
 {
-    public enum DatasetType
+    public enum DataSetType
     {
         DIMENSIONAL,
         UNIT

@@ -17,7 +17,7 @@ namespace Presentation.Persistence.Configurations
             builder.Property(c => c.LocalId)
                 .IsRequired()
                 .HasMaxLength(50);
-            builder.HasIndex(c => new { c.LocalId, c.Version })
+            builder.HasIndex(c => new { c.DataStructureId, c.LocalId, c.Version })
                 .IsUnique();
             builder.Property(c => c.VersionDate)
                 .IsRequired();

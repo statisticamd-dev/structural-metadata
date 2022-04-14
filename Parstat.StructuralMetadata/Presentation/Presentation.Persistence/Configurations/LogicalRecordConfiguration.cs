@@ -9,21 +9,21 @@ namespace Presentation.Persistence.Configurations
     {
          public void Configure(EntityTypeBuilder<LogicalRecord> builder)
         {
-            builder.Property(ds => ds.Id)
+            builder.Property(lr => lr.Id)
                 .ValueGeneratedOnAdd();
-            builder.Property(ds => ds.Version)
+            builder.Property(lr => lr.Version)
                 .IsRequired(true)
                 .HasMaxLength(50);
-            builder.Property(ds => ds.LocalId)
+            builder.Property(lr => lr.LocalId)
                 .IsRequired()
                 .HasMaxLength(50);
-            builder.HasIndex(ds => new { ds.LocalId, ds.Version })
+            builder.HasIndex(lr => new { lr.DataStructureId, lr.LocalId, lr.Version })
                 .IsUnique();
-            builder.Property(l => l.VersionDate)
+            builder.Property(lr => lr.VersionDate)
                 .IsRequired();
-            builder.OwnsOne(ds => ds.Name);
-            builder.OwnsOne(ds => ds.Description);
-            builder.OwnsOne(ds => ds.VersionRationale);
+            builder.OwnsOne(lr => lr.Name);
+            builder.OwnsOne(lr => lr.Description);
+            builder.OwnsOne(lr => lr.VersionRationale);
         }
         
     }

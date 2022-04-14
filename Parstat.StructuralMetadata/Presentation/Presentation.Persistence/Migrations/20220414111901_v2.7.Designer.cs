@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Presentation.Persistence;
@@ -9,9 +10,10 @@ using Presentation.Persistence;
 namespace Presentation.Persistence.Migrations
 {
     [DbContext(typeof(StructuralMetadataDbContext))]
-    partial class StructuralMetadataDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220414111901_v2.7")]
+    partial class v27
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -872,7 +874,7 @@ namespace Presentation.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<long?>("ParentId")
+                    b.Property<long>("ParentId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("UnitTypeId")
@@ -888,11 +890,13 @@ namespace Presentation.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DataStructureId");
+
                     b.HasIndex("ParentId");
 
                     b.HasIndex("UnitTypeId");
 
-                    b.HasIndex("DataStructureId", "LocalId", "Version")
+                    b.HasIndex("LocalId", "Version")
                         .IsUnique();
 
                     b.ToTable("LogicalRecords");
@@ -2588,7 +2592,9 @@ namespace Presentation.Persistence.Migrations
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure.LogicalRecord", "Parent")
                         .WithMany()
-                        .HasForeignKey("ParentId");
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept.UnitType", "UnitType")
                         .WithMany("Records")

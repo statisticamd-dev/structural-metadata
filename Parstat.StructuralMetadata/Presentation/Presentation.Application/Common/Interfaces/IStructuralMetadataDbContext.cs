@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Presentation.Common.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
+using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
+using Presentation.Domain.StructuralMetadata.Entities.Tags;
 
 namespace Presentation.Application.Common.Interfaces
 {
@@ -23,6 +25,13 @@ namespace Presentation.Application.Common.Interfaces
          DbSet<UnitType> UnitTypes {get; set;}
          DbSet<ValueDomain> ValueDomains {get; set;}
          DbSet<Variable> Variables {get; set;}
+
+         DbSet<Tag> Tags { get; set; }
+         DbSet<EntityTag> EntityTags { get; set; }
+         DbSet<DataSet> DataSets { get; set; }
+         DbSet<DataStructure> DataStructures { get; set; }
+         DbSet<LogicalRecord> LogicalRecords { get; set ; }
+         DbSet<Component> Components { get; set; }
          Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
         EntityEntry Entry(AuditableEntity entity);
