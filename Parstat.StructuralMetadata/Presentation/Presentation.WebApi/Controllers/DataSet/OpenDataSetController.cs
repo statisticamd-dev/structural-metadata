@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Application.DataSets.Queries.GetDataSets;
+using Presentation.Application.DataSets.UnitDataSet.Queries.GetDataSets;
 
 namespace Presentation.WebApi.Controllers.DataSet
 {

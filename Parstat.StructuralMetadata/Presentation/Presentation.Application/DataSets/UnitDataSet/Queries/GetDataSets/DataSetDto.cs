@@ -5,7 +5,7 @@ using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
-namespace Presentation.Application.DataSets.Queries.GetDataSets
+namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetDataSets
 {
     public class DataSetDto : AbstractIdentifiableArtefactDto, IMapFrom<DataSet>
     {

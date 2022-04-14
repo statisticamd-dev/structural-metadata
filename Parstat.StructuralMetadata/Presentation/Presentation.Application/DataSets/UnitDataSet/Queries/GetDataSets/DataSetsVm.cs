@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Presentation.Application.DataSets.Queries.GetDataSets
+namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetDataSets
 {
     public class DataSetsVm
     {
