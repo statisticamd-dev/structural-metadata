@@ -16,9 +16,8 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
             //default to english
             string language = "en";
             profile.CreateMap<Node, ValueItemMiniDto>()
-                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Code, opt => opt.MapFrom(s => s.Code))
-                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label.Value != null ? s.Label.Value.Text(language) : String.Empty));
+                .ForMember(d => d.Value, opt => opt.MapFrom(s => s.Label != null && s.Label.Value != null ? s.Label.Value.Text(language) : String.Empty));
         } 
     }
 }
