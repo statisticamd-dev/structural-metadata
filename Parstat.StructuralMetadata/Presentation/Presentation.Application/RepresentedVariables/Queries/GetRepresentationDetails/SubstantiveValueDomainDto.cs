@@ -25,7 +25,6 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
             //language parameter from request
             //default english
             string language = "en";
-            bool isLeveled = false;
             profile.CreateMap<ValueDomain, SubstantiveValueDomainDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
@@ -35,7 +34,7 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
-                    opt.MapFrom(s => isLeveled ? s.Level.Nodes.OrderBy(n => n.Code) : s.NodeSet.Nodes.OrderBy(n => n.Code));
+                    opt.MapFrom(s => s.NodeSet.Nodes.Where(n => n.Level == null || n.Level.Id == s.Level.Id).OrderBy(n => n.Code));
                     opt.NullSubstitute(new List<ValueItemDto>());
                 });
                 

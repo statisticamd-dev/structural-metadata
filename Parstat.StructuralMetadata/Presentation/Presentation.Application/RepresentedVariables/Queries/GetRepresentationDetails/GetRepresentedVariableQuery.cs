@@ -28,18 +28,12 @@ namespace Presentation.Application.RepresentedVariables.Queries.GetRepresentatio
 
             public async Task<RepresentedVariableVm> Handle(GetRepresentedVariableQuery request, CancellationToken cancellationToken)
             {
-                var isLevel = _context.RepresentedVariables
-                        .Where(rv => rv.Id == request.Id)
-                        .Select(rv => rv.SubstantiveValueDomain)
-                        .Select(svd => svd.Level != null)
-                        .SingleOrDefault();
-
+               
                 var representedVariable = await _context.RepresentedVariables
                         .Where(rv => rv.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<RepresentedVariableDetailsDto>(_mapper.ConfigurationProvider, 
-                                                                 new Dictionary<string, object> {["language"] = request.Language,
-                                                                                                 ["isLeveled"] = isLevel})
+                                                                 new Dictionary<string, object> {["language"] = request.Language})
                         .SingleOrDefaultAsync(cancellationToken);
                 var vm = new RepresentedVariableVm
                 {
