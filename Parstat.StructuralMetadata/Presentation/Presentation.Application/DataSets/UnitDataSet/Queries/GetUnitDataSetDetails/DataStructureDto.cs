@@ -20,7 +20,11 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
-                .ForMember(d => d.LogicalRecords, opt => opt.MapFrom(s => s.LogicalRecords));
+                .ForMember(d => d.LogicalRecords, opt => {
+                    opt.PreCondition(s => s.LogicalRecords.Count > 0);
+                    opt.MapFrom(s => s.LogicalRecords);
+                    opt.NullSubstitute(new List<LogicalRecordDto>());
+                } );
         
         }
     }
