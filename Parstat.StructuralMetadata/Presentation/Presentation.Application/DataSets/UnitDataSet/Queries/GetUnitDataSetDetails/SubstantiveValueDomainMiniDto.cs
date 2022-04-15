@@ -34,7 +34,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                 .ForMember(d => d.IsLeveled, opt => opt.MapFrom(s => s.LevelId.HasValue))
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
-                    opt.MapFrom((s,d) => d.IsLeveled ? s.Level.Nodes.OrderBy(n => n.Code) : s.NodeSet.Nodes.OrderBy(n => n.Code));
+                    opt.MapFrom(s => s.NodeSet.Nodes.OrderBy(n => n.Code));
                     opt.NullSubstitute(new List<ValueItemMiniDto>());
                 });
                 
