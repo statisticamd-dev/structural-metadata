@@ -7,7 +7,7 @@ using Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSets;
 
 namespace Presentation.WebApi.Controllers.UnitDataSet
 {
-    public class OpenUnitDataSetController : BaseController
+    public class OpenUnitDataSetsController : BaseController
     {
         [HttpGet]
         [ProducesResponseType(typeof(UnitDataSetsVm), StatusCodes.Status200OK)]
