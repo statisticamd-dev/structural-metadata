@@ -33,8 +33,8 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 .ForMember(d => d.ValueSet, opt => {
-                    opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED && includeValueset);
-                    opt.MapFrom(s => s.NodeSet.Nodes.OrderBy(n => n.Code));
+                    opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
+                    opt.MapFrom(s => includeValueset ? s.NodeSet.Nodes.OrderBy(n => n.Code) : null);
                     opt.NullSubstitute(new List<ValueItemMiniDto>());
                 });
                 
