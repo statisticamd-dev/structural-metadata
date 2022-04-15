@@ -9,8 +9,8 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
     public class RepresentationMiniDto : AbstractBaseDto, IMapFrom<RepresentedVariable>
     {
         public string Variable { get; set; }
-        public SentinelValueDomainMiniDto SentinelValueDomain { get; set; }
-        public SubstantiveValueDomainMiniDto SubstantiveValueDomain { get; set; }
+        //public SentinelValueDomainMiniDto SentinelValueDomain { get; set; }
+        //public SubstantiveValueDomainMiniDto SubstantiveValueDomain { get; set; }
 
          public void Mapping(Profile profile)
         {
@@ -19,7 +19,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
             string language = "en";
             
             profile.CreateMap<RepresentedVariable, RepresentationMiniDto>()
-                .ForMember(d => d.Variable, opt => opt.MapFrom(s => s.Variable.Name != null ? s.Variable.Name.Text(language) : String.Empty))
+                .ForMember(d => d.Variable, opt => opt.MapFrom(s => s.Variable != null && s.Variable.Name != null ? s.Variable.Name.Text(language) : String.Empty))
                /*  .ForMember(d => d.SubstantiveValueDomain, opt => opt.MapFrom(s => s.SubstantiveValueDomain != null ? s.SubstantiveValueDomain : null))
                 .ForMember(d => d.SentinelValueDomain, opt => opt.MapFrom(s => s.SentinelValueDomain != null ? s.SentinelValueDomain : null)) */;
         }
