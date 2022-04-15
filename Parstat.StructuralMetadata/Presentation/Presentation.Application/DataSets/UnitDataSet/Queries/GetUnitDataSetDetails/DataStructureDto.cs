@@ -9,7 +9,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
 {
     public class DataStructureDto : AbstractIdentifiableArtefactDto, IMapFrom<DataStructure>
     {
-        public List<LogicalRecordDto> LogicalRecords { get; set; }
+        //public List<LogicalRecordDto> LogicalRecords { get; set; }
 
         public void Mapping(Profile profile)
         {
