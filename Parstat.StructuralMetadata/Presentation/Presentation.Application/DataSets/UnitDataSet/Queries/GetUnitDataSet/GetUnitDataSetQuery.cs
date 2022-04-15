@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -9,32 +10,32 @@ using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 
-namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDetails
+namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
 {
-    public class GetUnitDataSetDetailsQuery : AbstractRequest, IRequest<UnitDataSetDetailsVm>
+    public class GetUnitDataSetQuery : AbstractRequest, IRequest<UnitDataSetVm>
     {
         public long Id { get; set; }
 
-        public class GetUnitDataSetDetailsQueryHandler : IRequestHandler<GetUnitDataSetDetailsQuery, UnitDataSetDetailsVm>
+        public class GetUnitDataSetQueryHandler : IRequestHandler<GetUnitDataSetQuery, UnitDataSetVm>
         {
             private readonly IStructuralMetadataDbContext _context;
             private readonly IMapper _mapper;
 
-            public GetUnitDataSetDetailsQueryHandler(IStructuralMetadataDbContext context, IMapper mapper) 
+            public GetUnitDataSetQueryHandler(IStructuralMetadataDbContext context, IMapper mapper) 
             {
                 _context = context;
                 _mapper = mapper;
             }
 
-            public async Task<UnitDataSetDetailsVm> Handle(GetUnitDataSetDetailsQuery request, CancellationToken cancellationToken)
+            public async Task<UnitDataSetVm> Handle(GetUnitDataSetQuery request, CancellationToken cancellationToken)
             {
                 var unitDataSet = await _context.DataSets
                         .Where(ds => ds.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
-                        .ProjectTo<UnitDataSetDetailsDto>(_mapper.ConfigurationProvider,
+                        .ProjectTo<UnitDataSetDto>(_mapper.ConfigurationProvider,
                                                                  new Dictionary<string, object> { ["language"] = request.Language })
                         .SingleOrDefaultAsync(cancellationToken);
-                var vm = new UnitDataSetDetailsVm
+                var vm = new UnitDataSetVm
                 {
                     UnitDataSet = unitDataSet
                 };
