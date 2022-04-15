@@ -31,7 +31,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSets
                 
                 var datasets = await _context.DataSets.Where(ds => ds.Type == DataSetType.UNIT)
                     .AsNoTracking()
-                    .ProjectTo<UnitDataSetDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
+                    .ProjectTo<UnitDataSetMiniDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     .OrderBy(mu => mu.Id)
                     .ToListAsync(cancellationToken);
 

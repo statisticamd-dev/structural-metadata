@@ -5,6 +5,6 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSets
 {
     public class UnitDataSetsVm
     {
-        public List<UnitDataSetDto>  UnitDataSets { get; set; }
+        public List<UnitDataSetMiniDto>  UnitDataSets { get; set; }
     }
 }
