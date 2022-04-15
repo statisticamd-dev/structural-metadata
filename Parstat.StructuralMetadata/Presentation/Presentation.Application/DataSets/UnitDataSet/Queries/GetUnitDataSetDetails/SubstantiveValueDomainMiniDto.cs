@@ -23,7 +23,6 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
             //language parameter from request
             //default english
             string language = "en";
-            bool includeValueset = false;
             profile.CreateMap<ValueDomain, SubstantiveValueDomainMiniDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
@@ -33,7 +32,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
-                    opt.MapFrom(s => s.NodeSet.Nodes.Where(n => n.Level == null || n.Level.Id == s.Level.Id && includeValueset).OrderBy(n => n.Code));
+                    opt.MapFrom(s => s.NodeSet.Nodes.Where(n => n.Level == null || n.Level.Id == s.Level.Id).OrderBy(n => n.Code));
                     opt.NullSubstitute(new List<ValueItemMiniDto>());
                 });
                 
