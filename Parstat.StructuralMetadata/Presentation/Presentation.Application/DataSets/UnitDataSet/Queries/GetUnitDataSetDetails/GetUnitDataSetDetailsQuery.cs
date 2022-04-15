@@ -31,7 +31,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                 var unitDataSet = await _context.DataSets
                         .Where(ds => ds.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
-                        .ProjectTo<UnitDataSetDetailsDto>(_mapper.ConfigurationProvider, 
+                        .ProjectTo<UnitDataSetDetailsDto>(_mapper.ConfigurationProvider,
                                                                  new Dictionary<string, object> { ["language"] = request.Language })
                         .SingleOrDefaultAsync(cancellationToken);
                 var vm = new UnitDataSetVm

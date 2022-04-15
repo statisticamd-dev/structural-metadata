@@ -12,7 +12,6 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
     public class SubstantiveValueDomainMiniDto : AbstractBaseDto, IMapFrom<ValueDomain>
     {
         public string Name { get; set; }
-        public bool IsLeveled { get; set; } = false;
         public ValueDomainType Type { get; set; }
         public string Expression { get; set; }
         public DataType DataType { get; set; }
@@ -31,10 +30,9 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                 .ForMember(d => d.Type, opt => opt.MapFrom(s => s.Type))
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
-                .ForMember(d => d.IsLeveled, opt => opt.MapFrom(s => s.LevelId.HasValue))
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
-                    opt.MapFrom(s => s.NodeSet.Nodes.OrderBy(n => n.Code));
+                    opt.MapFrom(s => s.NodeSet.Nodes.Where(n => n.Level == s.Level).OrderBy(n => n.Code));
                     opt.NullSubstitute(new List<ValueItemMiniDto>());
                 });
                 

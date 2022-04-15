@@ -17,7 +17,6 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
             //language parameter from request
             //default english
             string language = "en";
-            
             profile.CreateMap<RepresentedVariable, RepresentationMiniDto>()
                 .ForMember(d => d.Variable, opt => opt.MapFrom(s => s.Variable != null && s.Variable.Name != null ? s.Variable.Name.Text(language) : String.Empty))
                 .ForMember(d => d.SubstantiveValueDomain, opt => opt.MapFrom(s => s.SubstantiveValueDomain != null ? s.SubstantiveValueDomain : null))
