@@ -19,7 +19,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
             string language = "en";
             
             profile.CreateMap<RepresentedVariable, RepresentationMiniDto>()
-                .ForMember(d => d.Variable, opt => opt.MapFrom(s => s.Variable.Name.Text(language)))
+                .ForMember(d => d.Variable, opt => opt.MapFrom(s => s.Variable.Name != null ? s.Variable.Name.Text(language) : String.Empty))
                 .ForMember(d => d.SubstantiveValueDomain, opt => opt.MapFrom(s => s.SubstantiveValueDomain != null ? s.SubstantiveValueDomain : null))
                 .ForMember(d => d.SentinelValueDomain, opt => opt.MapFrom(s => s.SentinelValueDomain != null ? s.SentinelValueDomain : null));
         }

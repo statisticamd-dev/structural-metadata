@@ -25,7 +25,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
             string language = "en";
             profile.CreateMap<ValueDomain, SentinelValueDomainMiniDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s=> s.Name.Text(language)))
+                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.MeasurementUnit, opt => opt.MapFrom(s => s.MeasurementUnit != null ? s.MeasurementUnit.Abbreviation : String.Empty))
                 .ForMember(d => d.Type, opt => opt.MapFrom(s => s.Type))
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
