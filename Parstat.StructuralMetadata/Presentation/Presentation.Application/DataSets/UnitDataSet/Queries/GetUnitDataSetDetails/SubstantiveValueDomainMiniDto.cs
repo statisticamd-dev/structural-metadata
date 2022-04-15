@@ -16,7 +16,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
         public string Expression { get; set; }
         public DataType DataType { get; set; }
         public string MeasurementUnit { get; set; }
-        //public List<ValueItemMiniDto> ValueSet { get; set; }
+        public List<ValueItemMiniDto> ValueSet { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -30,11 +30,11 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                 .ForMember(d => d.Type, opt => opt.MapFrom(s => s.Type))
                 .ForMember(d => d.Expression, opt => opt.MapFrom(s => s.Expression))
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
-               /*  .ForMember(d => d.ValueSet, opt => {
+                .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
                     opt.MapFrom(s => s.LevelId.HasValue ? s.Level.Nodes.OrderBy(n => n.Code) : s.NodeSet.Nodes.OrderBy(n => n.Code));
                     opt.NullSubstitute(new List<ValueItemMiniDto>());
-                }) */;
+                });
                 
                 //.ForMember(d => d.NoteSetLevel, opt => opt.MapFrom(s => s.Level != null ? s.Level : null));
         } 
