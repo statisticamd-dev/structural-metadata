@@ -16,8 +16,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
         public string Expression { get; set; }
         public DataType DataType { get; set; }
         public string MeasurementUnit { get; set; }
-        //public LevelDto NoteSetLevel { get; set; }
-        public List<ValueItemMiniDto> ValueSet { get; set; }
+        //public List<ValueItemMiniDto> ValueSet { get; set; }
 
         public void Mapping(Profile profile)
         {
