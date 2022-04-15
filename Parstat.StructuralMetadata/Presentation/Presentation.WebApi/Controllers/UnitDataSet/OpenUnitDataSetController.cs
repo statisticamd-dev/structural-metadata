@@ -15,6 +15,6 @@ namespace Presentation.WebApi.Controllers.UnitDataSet
         [HttpGet]
         [Route("{id}")]
         [ProducesResponseType(typeof(UnitDataSetVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<UnitDataSetVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetUnitDataSetDetailsQuery { Id = id, Language = language }));
+        public async Task<ActionResult<UnitDataSetVm>> Get(long id, bool valueset, string language) => Ok(await Mediator.Send(new GetUnitDataSetDetailsQuery { Id = id, IncludeValueset = valueset, Language = language }));
     }
 }

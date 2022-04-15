@@ -14,6 +14,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
     public class GetUnitDataSetDetailsQuery : AbstractRequest, IRequest<UnitDataSetVm>
     {
         public long Id { get; set; }
+        public bool IncludeValueset { get; set; } = false;
 
         public class GetUnitDataSetDetailsQueryHandler : IRequestHandler<GetUnitDataSetDetailsQuery, UnitDataSetVm>
         {
@@ -32,7 +33,8 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                         .Where(ds => ds.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<UnitDataSetDetailsDto>(_mapper.ConfigurationProvider,
-                                                                 new Dictionary<string, object> { ["language"] = request.Language })
+                                                                 new Dictionary<string, object> { ["language"] = request.Language, 
+                                                                                                  ["includeValueset"] = request.IncludeValueset })
                         .SingleOrDefaultAsync(cancellationToken);
                 var vm = new UnitDataSetVm
                 {
