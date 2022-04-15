@@ -10,7 +10,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
     public class ComponentDto : AbstractIdentifiableArtefactDto, IMapFrom<Component>
     {
         public ComponentType Type { get; set; }
-        public RepresentedVariableMiniDto Representation { get; set; }
+        public RepresentationMiniDto Representation { get; set; }
 
         public void Mapping(Profile profile)
         {
