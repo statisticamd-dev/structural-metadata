@@ -19,7 +19,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
             profile.CreateMap<LogicalRecord, LogicalRecordDto>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
-                .ForMember(d => d.Components, opt => opt.MapFrom(s => s.Components));
+                /* .ForMember(d => d.Components, opt => opt.MapFrom(s => s.Components)) */;
         }
     }
 }

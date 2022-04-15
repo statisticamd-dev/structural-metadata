@@ -20,7 +20,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
             profile.CreateMap<Component, ComponentDto>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
-                .ForMember(d => d.Representation, opt => opt.MapFrom(s => s.RepresentedVariable));
+               /*  .ForMember(d => d.Representation, opt => opt.MapFrom(s => s.RepresentedVariable)) */;
         }
     }
 }
