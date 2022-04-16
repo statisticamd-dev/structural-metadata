@@ -8,13 +8,13 @@ namespace Presentation.WebApi.Controllers
 {
     public class OpenCodeListsController : BaseController
     {
-        [HttpGet]
+        [HttpGet("{name}")]
         [ProducesResponseType(typeof(CodeListsVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<CodeListsVm>> GetAll(string name, string language) => Ok(await Mediator.Send(new GetCodeListsQuery {Name = name, Language = language}));
+        public async Task<ActionResult<CodeListsVm>> GetAll(string name, string language) => Ok(await Mediator.Send(new GetCodeListsQuery { Name = name, Language = language }));
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(CodeListVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<CodeListVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetCodeListDetailsQuery {Id = id, Language = language}));
+        public async Task<ActionResult<CodeListVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetCodeListDetailsQuery { Id = id, Language = language }));
 
     }
 }

@@ -57,9 +57,9 @@ namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeLists
                         nodeSetsQuery = nodeSetsQuery.Where( ns => EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{name.ToUpper()}%")
                                                   || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%"));
                     }
-                    if(language == "ro")
+                    if(language == "ru")
                     {
-                        nodeSetsQuery = nodeSetsQuery.Where( ns => EF.Functions.ILike(ns.Name.Ro.ToUpper(), $"%{name.ToUpper()}%")
+                        nodeSetsQuery = nodeSetsQuery.Where( ns => EF.Functions.ILike(ns.Name.Ru.ToUpper(), $"%{name.ToUpper()}%")
                                                   || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%"));
                     }
                     if(language == "ro")
