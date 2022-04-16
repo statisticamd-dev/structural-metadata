@@ -18,7 +18,7 @@ namespace Presentation.WebApi.Controllers.ValueDomain
 
         [HttpGet("{name}")]
         [ProducesResponseType(typeof(ValueDomainListVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ValueDomainListVm>> GetAll(string name, string language) => Ok(await Mediator.Send(new GetValueDomainsQuery { Name = name, Language = language }));
+        public async Task<ActionResult<ValueDomainListVm>> GetByName(string name, string language) => Ok(await Mediator.Send(new GetValueDomainsQuery { Name = name, Language = language }));
 
     }
 }
