@@ -8,7 +8,7 @@ namespace Presentation.WebApi.Controllers
 {
     public class OpenCodeListsController : BaseController
     {
-        [HttpGet("{name}")]
+        [HttpGet]
         [ProducesResponseType(typeof(CodeListsVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<CodeListsVm>> GetAll(string name, string language) => Ok(await Mediator.Send(new GetCodeListsQuery { Name = name, Language = language }));
 
