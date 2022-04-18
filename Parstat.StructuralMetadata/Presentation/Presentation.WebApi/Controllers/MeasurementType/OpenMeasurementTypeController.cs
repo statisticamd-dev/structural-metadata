@@ -11,14 +11,10 @@ namespace Presentation.WebApi.Controllers
     {
         [HttpGet]
         [ProducesResponseType(typeof(MeasurementTypesVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<MeasurementTypesVm>> GetAll(string language) => Ok(await Mediator.Send(new GetMeasurementTypesQuery { Language = language }));
+        public async Task<ActionResult<MeasurementTypesVm>> GetAll(string name, string language) => Ok(await Mediator.Send(new GetMeasurementTypesQuery { Name = name, Language = language }));
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(MeasurementTypeVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<MeasurementTypeVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetMeasurementTypeQuery { Id = id, Language = language }));
-
-        [HttpGet("{name}")]
-        [ProducesResponseType(typeof(MeasurementTypesVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<MeasurementTypesVm>> GetByName(string name, string language) => Ok(await Mediator.Send(new GetMeasurementTypesQuery { Name = name, Language = language }));
     }
 }

@@ -10,15 +10,11 @@ namespace Presentation.WebApi.Controllers.ValueDomain
     {
         [HttpGet]
         [ProducesResponseType(typeof(ValueDomainListVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ValueDomainListVm>> GetAll(string language) => Ok(await Mediator.Send(new GetValueDomainsQuery { Language = language }));
+        public async Task<ActionResult<ValueDomainListVm>> GetAll(string name, string language) => Ok(await Mediator.Send(new GetValueDomainsQuery { Name = name, Language = language }));
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ValueDomainVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<ValueDomainVm>> GetById(long id, string language) => Ok(await Mediator.Send(new GetValueDomainQuery { Id = id, Language = language }));
-
-        [HttpGet("{name}")]
-        [ProducesResponseType(typeof(ValueDomainListVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<ValueDomainListVm>> GetByName(string name, string language) => Ok(await Mediator.Send(new GetValueDomainsQuery { Name = name, Language = language }));
 
     }
 }

@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Application.Variables.Commands.CreteVariable;
 using Presentation.Application.Variables.Queries.GetVariableDetails;
 using Presentation.Application.Variables.Queries.GetVariableList;
 
@@ -11,7 +10,7 @@ namespace Presentation.WebApi.Controllers
     {
         [HttpGet]
         [ProducesResponseType(typeof(VariableListVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<VariableListVm>> GetAll(string language) => Ok(await Mediator.Send(new GetVariableListQuery { Language = language }));
+        public async Task<ActionResult<VariableListVm>> GetAll(string name, string language) => Ok(await Mediator.Send(new GetVariableListQuery {Name = name, Language = language }));
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(VariableVm), StatusCodes.Status200OK)]
