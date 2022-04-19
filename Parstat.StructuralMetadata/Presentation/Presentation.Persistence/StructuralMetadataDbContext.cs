@@ -124,10 +124,6 @@ namespace Presentation.Persistence
                 .Property(d => d.ExchangeDirection)
                 .HasConversion<string>();
             modelBuilder
-                .Entity<DataStructure>()
-                .Property(d => d.Type)
-                .HasConversion<string>();
-            modelBuilder
                 .Entity<Component>()
                 .Property(c => c.Type)
                 .HasConversion<string>();

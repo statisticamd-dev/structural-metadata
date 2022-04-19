@@ -16,8 +16,5 @@ namespace Presentation.WebApi.Controllers
         [ProducesResponseType(typeof(VariableVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<VariableVm>> Get(long id) => Ok(await Mediator.Send(new GetVariableQuery { Id = id }));
 
-        [HttpGet("{name}")]
-        [ProducesResponseType(typeof(VariableListVm), StatusCodes.Status200OK)]
-        public async Task<ActionResult<VariableListVm>> GetByName(string name, string language) => Ok(await Mediator.Send(new GetVariableListQuery { Name = name, Language = language }));
     }
 }
