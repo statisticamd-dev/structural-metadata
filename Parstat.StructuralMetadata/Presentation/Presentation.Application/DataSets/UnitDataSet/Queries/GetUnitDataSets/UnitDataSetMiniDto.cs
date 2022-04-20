@@ -26,7 +26,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSets
             profile.CreateMap<DataSet, UnitDataSetMiniDto>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
-                .ForMember(d => d.StatisticalProgramLink, otp => otp.MapFrom(s => "/metadata/referntial/view/" + s.StatisticalProgramId));
+                .ForMember(d => d.StatisticalProgramLink, otp => otp.MapFrom(s => "/metadata/referential/view/" + s.StatisticalProgramId));
         }
 
     }
