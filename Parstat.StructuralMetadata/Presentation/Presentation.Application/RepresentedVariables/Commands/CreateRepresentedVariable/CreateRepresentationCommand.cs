@@ -35,22 +35,32 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
                 var variable = await _context.Variables
-                    .FirstOrDefaultAsync(v => v.Id == request.VariableId);
+                                    .FirstOrDefaultAsync(v => v.Id == request.VariableId);
 
-                if(variable == null)                 
+                if(variable == null)         
+                {        
                      throw new NotFoundException(nameof(Variable), request.VariableId);
+                }
 
                 //In case SentinelValueDomainId is provided, check if this id corresponds to a valid ValueDomain
                 if(request.SentinelValueDomainId != null)
+                {
+                    var sentinelValueDomainFound = await _context.ValueDomains
+                                    .FirstOrDefaultAsync(v => v.Id == request.SentinelValueDomainId);
+                    if (sentinelValueDomainFound == null) 
                     {
-                        var sentinelValueDomainFound = await _context.ValueDomains.FirstOrDefaultAsync(v => v.Id == request.SentinelValueDomainId);
-                        if (sentinelValueDomainFound == null)  throw new NotFoundException(nameof(ValueDomain), request.SentinelValueDomainId); 
+                         throw new NotFoundException(nameof(ValueDomain), request.SentinelValueDomainId); 
                     }
+                }
 
-                var substantiveValueDomainFound = await _context.ValueDomains.FirstOrDefaultAsync(v => v.Id == request.SubstantiveValueDomainId);
-                if (substantiveValueDomainFound == null)  throw new NotFoundException(nameof(ValueDomain), request.SubstantiveValueDomainId); 
+                var substantiveValueDomainFound = await _context.ValueDomains
+                                    .FirstOrDefaultAsync(v => v.Id == request.SubstantiveValueDomainId);
+                if(substantiveValueDomainFound == null) 
+                {
+                    throw new NotFoundException(nameof(ValueDomain), request.SubstantiveValueDomainId); 
+                } 
 
-                var newRepresentedVariableData = new RepresentedVariable 
+                var representedVariable = new RepresentedVariable 
                 {
                     VariableId = request.VariableId,
                     LocalId = request.LocalId,
@@ -60,13 +70,13 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
                     Description = MultilanguageString.Init(language, request.Description)
                 };
                 
-                _context.RepresentedVariables.Add(newRepresentedVariableData);
+                _context.RepresentedVariables.Add(representedVariable);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
-                return newRepresentedVariableData.Id;
+                return variable.Id;
             }
         }
     }
