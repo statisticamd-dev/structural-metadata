@@ -9,7 +9,6 @@ namespace Presentation.Application.Variables.Commands.CreteVariable
         {
             RuleFor(x => x.SubstantiveValueDomainId).NotEmpty();
             RuleFor(x => x.LocalId).Length(1, 100).NotEmpty();
-            RuleFor(x => x.Description).Length(5, 255);
             RuleFor(x => x.VariableId).NotEmpty();
             RuleFor(x => x.LocalId).NotEmpty();
             RuleFor(x => x.Name).NotEmpty();
