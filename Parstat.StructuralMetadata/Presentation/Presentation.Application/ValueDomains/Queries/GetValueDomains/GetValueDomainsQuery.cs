@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,6 +9,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
+using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.ValueDomains.Queries.GetValueDomains
@@ -15,6 +17,7 @@ namespace Presentation.Application.ValueDomains.Queries.GetValueDomains
     public class GetValueDomainsQuery : AbstractRequest, IRequest<ValueDomainListVm>
     {
         public string Name { get; set; }
+        public string Scope { get; set; }
         public class GetValueDomainsQueryHandler : IRequestHandler<GetValueDomainsQuery, ValueDomainListVm>
         {
             private readonly IStructuralMetadataDbContext _context;
@@ -29,6 +32,13 @@ namespace Presentation.Application.ValueDomains.Queries.GetValueDomains
             public async Task<ValueDomainListVm> Handle(GetValueDomainsQuery request, CancellationToken cancellationToken)
             {
                 var valueDomainQuery = CreateQuery(request.Name, request.Language);
+                
+                if(!String.IsNullOrEmpty(request.Scope)) 
+                {
+                    var scope = Enum.Parse<ValueDomainScope>(request.Scope, true);
+                    valueDomainQuery = valueDomainQuery.Where(vd => vd.Scope == scope);
+                }
+
                 var valueDomains = await valueDomainQuery
                     .AsNoTracking()
                     .ProjectTo<ValueDomainDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> { ["language"] = request.Language })
@@ -49,9 +59,12 @@ namespace Presentation.Application.ValueDomains.Queries.GetValueDomains
 
                 return language switch
                 {
-                    "en" => _context.ValueDomains.Where(ns => EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{name.ToUpper()}%") || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%")),
-                    "ru" => _context.ValueDomains.Where(ns => EF.Functions.ILike(ns.Name.Ru.ToUpper(), $"%{name.ToUpper()}%") || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%")),
-                    "ro" => _context.ValueDomains.Where(ns => EF.Functions.ILike(ns.Name.Ro.ToUpper(), $"%{name.ToUpper()}%") || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%")),
+                    "en" => _context.ValueDomains.Where(ns => EF.Functions.ILike(ns.Name.En.ToUpper(), $"%{name.ToUpper()}%") 
+                                                           || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%")),
+                    "ru" => _context.ValueDomains.Where(ns => EF.Functions.ILike(ns.Name.Ru.ToUpper(), $"%{name.ToUpper()}%") 
+                                                           || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%")),
+                    "ro" => _context.ValueDomains.Where(ns => EF.Functions.ILike(ns.Name.Ro.ToUpper(), $"%{name.ToUpper()}%") 
+                                                           || EF.Functions.ILike(ns.LocalId.ToUpper(), $"%{name.ToUpper()}%")),
                     _ => _context.ValueDomains,
                 };
             }
