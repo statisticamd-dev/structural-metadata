@@ -18,6 +18,10 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
         public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Version { get; set; } = "1.0";
+        public DateTime VersionDate { get; set; } = DateTime.Now;
+        public string VersionRationale { get; set; } = "First Version";
+        public string Definition { get; set; }
         public long? SentinelValueDomainId { get; set; }
         public long SubstantiveValueDomainId { get; set; }
 
@@ -67,6 +71,10 @@ namespace Presentation.Application.RepresentedVariables.Commands.CreateRepresent
                     Name =  MultilanguageString.Init(language, request.Name),
                     SubstantiveValueDomainId = request.SubstantiveValueDomainId,
                     SentinelValueDomainId = request.SentinelValueDomainId,
+                    Version = request.Version,
+                    VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
+                    VersionDate = request.VersionDate,
+                    Definition = MultilanguageString.Init(language, request.Definition),
                     Description = MultilanguageString.Init(language, request.Description)
                 };
                 
