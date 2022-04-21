@@ -33,14 +33,15 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                 StatisticalClassificationDetailsDto statisticalClassification = await _context.NodeSets
                     .Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION)
                     .Include(ns => ns.Nodes.Where(n => n.Parent == null).OrderBy(n => n.Code))
+                    .ThenInclude(n => n.Children)
                     .AsNoTrackingWithIdentityResolution()
                     .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     //.Where(sc => sc.Id == request.Id)
                     .SingleOrDefaultAsync(cancellationToken);
-                if(statisticalClassification != null && statisticalClassification.RootItems != null) 
+                /* if(statisticalClassification != null && statisticalClassification.RootItems != null) 
                 {
                     statisticalClassification.RootItems.ForEach(ri => ri.Children = getChildren(ri.Id, request.Language));
-                }
+                } */
                 statisticalClassification.RootItems = statisticalClassification.RootItems.OrderBy(ri => ri.Code).ToList();
 
                 var vm = new StatisticalClassificationVm
