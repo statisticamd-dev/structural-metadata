@@ -23,7 +23,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
-                .ForMember(d => d.UnitType, opt => opt.MapFrom(s => s.UnitType))
+               // .ForMember(d => d.UnitType, opt => opt.MapFrom(s => s.UnitType ))
                 .ForMember(d => d.ParentRecord, opt => opt.MapFrom(s => s.Parent != null && s.Parent.Name != null ? s.Parent.Name.Text(language) : String.Empty))
                 .ForMember(d => d.Components, opt => {
                     opt.PreCondition(s => s.Components.Count > 0);
