@@ -11,7 +11,6 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
     public class LogicalRecordMiniDto : AbstractIdentifiableArtefactDto, IMapFrom<LogicalRecord>
     {
         public String UnitType { get; set; }
-        public List<LogicalRecordMiniDto> Children { get; set; }
         public List<ComponentMiniDto> Components { get; set; }
 
         public void Mapping(Profile profile)
@@ -24,7 +23,6 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
                 .ForMember(d => d.UnitType, opt => opt.MapFrom(s => s.UnitType != null && s.UnitType.Name != null ? s.UnitType.Name.Text(language) : String.Empty))
-                .ForMember(d => d.Children, opt => opt.MapFrom(s => s.Children))
                 //.ForMember(d => d.ParentRecord, opt => opt.MapFrom(s => s.Parent != null && s.Parent.Name != null ? s.Parent.Name.Text(language) : String.Empty))
                 .ForMember(d => d.Components, opt => {
                     opt.PreCondition(s => s.Components.Count > 0);
