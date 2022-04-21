@@ -73,13 +73,12 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
             }
             private IQueryable<NodeSet> getQueryIteration(int levels,  GetStatisticalClassificationQuery request) 
             {
-
-
                 IIncludableQueryable<NodeSet , IEnumerable<Node>> includes = _context.NodeSets
                     .Include(ns => ns.Nodes.Where(n => n.Parent == null));
+                    
                 for (int i = 0; i < levels - 1; i++)
                 {
-                    includes.ThenInclude(n => n.Children);
+                    includes = includes.ThenInclude(n => n.Children);
                 }
                 return includes.Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION);
             }
