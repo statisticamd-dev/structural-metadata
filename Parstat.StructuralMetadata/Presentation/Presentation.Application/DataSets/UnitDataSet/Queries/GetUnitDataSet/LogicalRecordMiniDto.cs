@@ -10,7 +10,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
 {
     public class LogicalRecordMiniDto : AbstractIdentifiableArtefactDto, IMapFrom<LogicalRecord>
     {
-        public UnitType UnitType { get; set; }
+        public String UnitType { get; set; }
         public List<LogicalRecordMiniDto> Children { get; set; }
         public List<ComponentMiniDto> Components { get; set; }
 
