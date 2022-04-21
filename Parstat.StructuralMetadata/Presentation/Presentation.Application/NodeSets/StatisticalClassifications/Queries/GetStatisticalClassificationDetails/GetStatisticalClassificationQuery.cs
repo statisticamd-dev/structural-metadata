@@ -32,11 +32,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
 
             public async Task<StatisticalClassificationVm> Handle(GetStatisticalClassificationQuery request, CancellationToken cancellationToken)
             {
-                 StatisticalClassificationDetailsDto statisticalClassification = new StatisticalClassificationDetailsDto();
-                var levels = await _context.Levels.Where(l => l.NodeSetId== request.Id).CountAsync();
-                if(levels == 0)
-                {
-                    statisticalClassification = await _context.NodeSets
+                StatisticalClassificationDetailsDto statisticalClassification = await _context.NodeSets
                         .Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION)
                         .Include(ns => ns.Nodes.Where(n => n.Parent == null).OrderBy(n => n.Code))
                         .ThenInclude(n => n.Children)
@@ -44,17 +40,8 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                         .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                         //.Where(sc => sc.Id == request.Id)
                         .SingleOrDefaultAsync(cancellationToken);
-                }
-                else
-                {
-                   statisticalClassification = await getQueryIteration(levels, request)
-                        .AsNoTrackingWithIdentityResolution()
-                        .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
-                        //.Where(sc => sc.Id == request.Id)
-                        .SingleOrDefaultAsync(cancellationToken);
-                }
 
-               /*  if(statisticalClassification != null && statisticalClassification.RootItems != null) 
+                if(statisticalClassification != null && statisticalClassification.RootItems != null) 
                 {
                     statisticalClassification.RootItems.ForEach(ri => { 
                                 if(ri.Children != null && ri.Children.Count > 0)
@@ -62,7 +49,8 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                                     ri.Children.ForEach(ch => ch.Children = getChildren(ch.Id, request.Language));
                                 }          
                     });
-                } */
+                } 
+                
                 statisticalClassification.RootItems = statisticalClassification.RootItems.OrderBy(ri => ri.Code).ToList();
 
                 var vm = new StatisticalClassificationVm
@@ -71,17 +59,6 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                 };
 
                 return vm;
-            }
-            private IQueryable<NodeSet> getQueryIteration(int levels,  GetStatisticalClassificationQuery request) 
-            {
-                IIncludableQueryable<NodeSet , IEnumerable<Node>> includes = _context.NodeSets
-                    .Include(ns => ns.Nodes.Where(n => n.Parent == null));
-
-                for (int i = 0; i < levels - 1; i++)
-                {
-                    includes = includes.ThenInclude(n => n.Children);
-                }
-                return includes.Where(ns => ns.Id == request.Id && ns.NodeSetType == NodeSetType.STATISTICAL_CLASSIFICATION);
             }
 
             //Recursive filling of child items
