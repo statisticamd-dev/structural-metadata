@@ -40,8 +40,12 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                     .SingleOrDefaultAsync(cancellationToken);
                 if(statisticalClassification != null && statisticalClassification.RootItems != null) 
                 {
-                    statisticalClassification.RootItems.ForEach(ri => 
-                                ri.Children.ForEach(ch => ch.Children = getChildren(ch.Id, request.Language)));
+                    statisticalClassification.RootItems.ForEach(ri => { 
+                                if(ri.Children != null && ri.Children.Count > 0)
+                                {
+                                    ri.Children.ForEach(ch => ch.Children = getChildren(ch.Id, request.Language));
+                                }          
+                    });
                 }
                 statisticalClassification.RootItems = statisticalClassification.RootItems.OrderBy(ri => ri.Code).ToList();
 
