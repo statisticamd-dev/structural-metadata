@@ -13,10 +13,12 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure
         public long DataStructureId { get; set; }
         public DataStructure DataStructure { get; set; }
         public IList<Component> Components { get; set; }
+        public IList<LogicalRecord> Children { get; set; }
 
         public LogicalRecord()
         {
             this.Components = new List<Component>();
+            this.Children = new List<LogicalRecord>();
         }
     }
 }
