@@ -33,6 +33,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
                         .Where(ds => ds.Id == request.Id)
                         .Include(ds => ds.Structure)
                         .ThenInclude(s => s.LogicalRecords.Where(lr => lr.Parent == null))
+                        .ThenInclude(lr => lr.Children)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<UnitDataSetDto>(_mapper.ConfigurationProvider,
                                                                  new Dictionary<string, object> { ["language"] = request.Language })

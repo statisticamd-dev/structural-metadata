@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Presentation.Persistence;
@@ -9,9 +10,10 @@ using Presentation.Persistence;
 namespace Presentation.Persistence.Migrations
 {
     [DbContext(typeof(StructuralMetadataDbContext))]
-    partial class StructuralMetadataDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220421121014_v3.1")]
+    partial class v31
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
