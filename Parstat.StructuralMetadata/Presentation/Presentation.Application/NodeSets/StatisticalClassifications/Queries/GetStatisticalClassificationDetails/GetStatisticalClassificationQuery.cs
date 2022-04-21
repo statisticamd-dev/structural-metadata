@@ -38,10 +38,11 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                     .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                     //.Where(sc => sc.Id == request.Id)
                     .SingleOrDefaultAsync(cancellationToken);
-                /* if(statisticalClassification != null && statisticalClassification.RootItems != null) 
+                if(statisticalClassification != null && statisticalClassification.RootItems != null) 
                 {
-                    statisticalClassification.RootItems.ForEach(ri => ri.Children = getChildren(ri.Id, request.Language));
-                } */
+                    statisticalClassification.RootItems.ForEach(ri => 
+                                ri.Children.ForEach(ch => ch.Children = getChildren(ch.Id, request.Language)));
+                }
                 statisticalClassification.RootItems = statisticalClassification.RootItems.OrderBy(ri => ri.Code).ToList();
 
                 var vm = new StatisticalClassificationVm
