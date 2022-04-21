@@ -48,6 +48,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
                 else
                 {
                    statisticalClassification = await getQueryIteration(levels, request)
+                        .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<StatisticalClassificationDetailsDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> {["language"] = request.Language})
                         //.Where(sc => sc.Id == request.Id)
                         .SingleOrDefaultAsync(cancellationToken);
@@ -75,7 +76,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
             {
                 IIncludableQueryable<NodeSet , IEnumerable<Node>> includes = _context.NodeSets
                     .Include(ns => ns.Nodes.Where(n => n.Parent == null));
-                    
+
                 for (int i = 0; i < levels - 1; i++)
                 {
                     includes = includes.ThenInclude(n => n.Children);
