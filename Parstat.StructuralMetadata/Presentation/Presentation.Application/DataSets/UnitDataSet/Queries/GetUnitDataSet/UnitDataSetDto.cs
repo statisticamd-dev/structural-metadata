@@ -11,7 +11,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
     {
         public string FilterExpression { get; set; }
         public DateTime ReportingBegin { get; set; }
-        public DateTime ReporitngEnd { get; set; }
+        public DateTime ReportingEnd { get; set; }
         public string Connection { get; set; }
         public DataSetType Type { get; set; }
         public ExchangeChannel ExchangeChannel { get; set; }
