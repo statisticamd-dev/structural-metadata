@@ -31,7 +31,8 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
             {
                 var unitDataSet = await _context.DataSets
                         .Where(ds => ds.Id == request.Id)
-                        .Include(ds => ds.Structure.LogicalRecords.Where(lr => lr.Parent == null))
+                        .Include(ds => ds.Structure)
+                        .ThenInclude(s => s.LogicalRecords.Where(lr => lr.Parent == null))
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<UnitDataSetDto>(_mapper.ConfigurationProvider,
                                                                  new Dictionary<string, object> { ["language"] = request.Language })
