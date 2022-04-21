@@ -30,10 +30,10 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
             public async Task<UnitDataSetVm> Handle(GetUnitDataSetQuery request, CancellationToken cancellationToken)
             {
                 var unitDataSet = await _context.DataSets
-                        .Where(ds => ds.Id == request.Id)
                         .Include(ds => ds.Structure)
                         .ThenInclude(s => s.LogicalRecords.Where(lr => lr.Parent == null))
                         .ThenInclude(lr => lr.Children)
+                        .Where(ds => ds.Id == request.Id)
                         .AsNoTrackingWithIdentityResolution()
                         .ProjectTo<UnitDataSetDto>(_mapper.ConfigurationProvider,
                                                                  new Dictionary<string, object> { ["language"] = request.Language })

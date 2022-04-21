@@ -8,13 +8,13 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure
     {
         public long? ParentId { get; set; }
         public LogicalRecord Parent { get; set; }
+        public IList<LogicalRecord> Children { get; set; }
         public long UnitTypeId { get; set; }
         public UnitType UnitType { get; set; }
         public long DataStructureId { get; set; }
         public DataStructure DataStructure { get; set; }
         public IList<Component> Components { get; set; }
-        public IList<LogicalRecord> Children { get; set; }
-
+        
         public LogicalRecord()
         {
             this.Components = new List<Component>();
