@@ -16,7 +16,6 @@ namespace Presentation.Application.RepresentedVariables.Commands.UpdateRepresent
     {    
         public long Id { get; set; }
         public long VariableId { get; set; }
-        public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public long? SentinelValueDomainId { get; set; }
