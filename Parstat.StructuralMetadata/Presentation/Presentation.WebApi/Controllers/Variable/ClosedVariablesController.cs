@@ -32,9 +32,7 @@ namespace Presentation.WebApi.Controllers
         public async Task<IActionResult> Update([FromBody] UpdateVariableCommand command, string language)
         {
             command.Language = language;
-            var id =  await Mediator.Send(command);
-
-            return Ok(id);
+            return Ok(await Mediator.Send(command));
         }      
     }
 }

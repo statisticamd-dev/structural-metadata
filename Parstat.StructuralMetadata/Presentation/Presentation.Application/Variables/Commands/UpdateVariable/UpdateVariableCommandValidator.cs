@@ -1,3 +1,4 @@
+using System;
 using FluentValidation;
 
 namespace Presentation.Application.Variables.Commands.UpdateVariable
@@ -7,9 +8,8 @@ namespace Presentation.Application.Variables.Commands.UpdateVariable
         public UpdateVariableCommandValidator()
         {
             RuleFor(x => x.Id).NotEmpty().NotNull();
-            RuleFor(x => x.Description).Length(5, 255);
-            RuleFor(x => x.Definition).Length(5, 255);
-            RuleFor(x => x.MeasuresId).NotEmpty();
+            RuleFor(x => x.Name).MinimumLength(3).When(x => !String.IsNullOrEmpty(x.Description));
+            RuleFor(x => x.Description).MinimumLength(5).When(x => !String.IsNullOrEmpty(x.Description));
         }
     }
 }
