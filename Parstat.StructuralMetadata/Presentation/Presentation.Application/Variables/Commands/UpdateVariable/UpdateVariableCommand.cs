@@ -12,7 +12,7 @@ namespace Presentation.Application.Variables.Commands.UpdateVariable
 {
     public class UpdateVariableCommand : AbstractRequest, IRequest<Unit>
     {
-        public string LocalId { get; set; }
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Version { get; set; }
@@ -35,11 +35,11 @@ namespace Presentation.Application.Variables.Commands.UpdateVariable
                 Language language;
                 Enum.TryParse<Language>(request.Language, true, out language);
                
-                var entity = await _context.Variables.SingleOrDefaultAsync(ns => ns.LocalId == request.LocalId);
+                var entity = await _context.Variables.SingleOrDefaultAsync(ns => ns.Id == request.Id);
                
                 if(entity == null) 
                 {
-                    throw new NotFoundException(nameof(Variables), request.LocalId);
+                    throw new NotFoundException(nameof(Variables), request.Id);
                 }
 
                 entity.Name.AddText(language, request.Name);
