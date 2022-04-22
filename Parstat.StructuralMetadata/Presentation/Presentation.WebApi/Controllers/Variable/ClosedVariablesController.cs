@@ -29,7 +29,7 @@ namespace Presentation.WebApi.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> Create([FromBody]UpdateVariableCommand command, string language)
+        public async Task<IActionResult> Update(UpdateVariableCommand command, string language)
         {
             command.Language = language;
             var id =  await Mediator.Send(command);
