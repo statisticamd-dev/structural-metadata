@@ -1,16 +1,20 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
-using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Presentation.Application.DataSets.UnitDataSet.Commands.CreateCommand
+namespace Presentation.Application.DataSets.UnitDataSet.Commands.UpdateCommand
 {
-    public class CreateUnitDataSetCommand : AbstractRequest, IRequest<Unit>
+    public class UpdateUnitDataSetCommand : AbstractRequest, IRequest
     {
         public string LocalId { get; set; }
         public long StructureId { get; set; }
@@ -27,37 +31,41 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.CreateCommand
         public string Connection { get; set; }
         public string FilterExpression { get; set; }
 
-        public class Handler : IRequestHandler<CreateUnitDataSetCommand, Unit>
+        public class Handler : IRequestHandler<UpdateUnitDataSetCommand>
         {
             private readonly IStructuralMetadataDbContext _context;
+
             public Handler(IStructuralMetadataDbContext context)
             {
                 _context = context;
             }
 
-            public async Task<Unit> Handle(CreateUnitDataSetCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(UpdateUnitDataSetCommand request, CancellationToken cancellationToken)
             {
                 Enum.TryParse<Language>(request.Language, true, out Language language);
 
-                var unitDataSetEntity = new DataSet
+                var entity = await _context.DataSets.SingleOrDefaultAsync(ns => ns.StatisticalProgramId == request.StatisticalProgramId);
+                if (entity == null)
                 {
-                    Connection = request.Connection,
-                    ExchangeChannel = request.ExchangeChannel,
-                    FilterExpression = request.FilterExpression,
-                    Description = MultilanguageString.Init(language, request.Description),
-                    ExchangeDirection = request.ExchangeDirection,
-                    LocalId = request.LocalId,
-                    Name = MultilanguageString.Init(language, request.Name),
-                    ReportingBegin = request.ReportingBegin,
-                    ReportingEnd = request.ReportingEnd,
-                    StructureId = request.StructureId,
-                    Version = request.Version,
-                    StatisticalProgramId = request.StatisticalProgramId,
-                    VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
-                    VersionDate = request.VersionDate
-                };
+                    throw new NotFoundException(nameof(DataSet), request.StructureId);
+                }
 
-                _context.DataSets.Add(unitDataSetEntity);
+                entity.Name.AddText(language, request.Name);
+                entity.Description.AddText(language, request.Description);
+                entity.VersionRationale.AddText(language, request.VersionRationale);
+                if (!string.IsNullOrWhiteSpace(request.Version))
+                {
+                    entity.Version = request.Version;
+                }
+                entity.VersionDate = request.VersionDate;
+
+                entity.ExchangeChannel = request.ExchangeChannel;
+                entity.ExchangeDirection = request.ExchangeDirection;
+                entity.ReportingBegin = request.ReportingBegin;
+                entity.ReportingEnd = request.ReportingEnd;
+                entity.Connection = request.Connection;
+                entity.FilterExpression = request.FilterExpression;
+
 
                 await _context.SaveChangesAsync(cancellationToken);
 
