@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Presentation.Application.DataSets.DataStructures.Commands
+namespace Presentation.Application.DataSets.DataStructures.Commands.CreateCommand
 {
     public class CreateDataStructureCommand : AbstractRequest, IRequest<long>
     {
@@ -15,7 +15,7 @@ namespace Presentation.Application.DataSets.DataStructures.Commands
         public string Name { get; set; }
         public string Description { get; set; }
         public string Version { get; set; } = "1.0";
-        public DateTime VersionDate { get; set; } = DateTime.Now;
+        public DateTime? VersionDate { get; set; } = DateTime.Now;
         public string VersionRationale { get; set; } = "First Version";
         public string Group { get; set; }
 
@@ -36,7 +36,7 @@ namespace Presentation.Application.DataSets.DataStructures.Commands
                     Name = MultilanguageString.Init(language, request.Name),
                     Description = MultilanguageString.Init(language, request.Description),
                     Version = request.Version,
-                    VersionDate = request.VersionDate,
+                    VersionDate = request.VersionDate.Value,
                     VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
                     Group = request.Group
                 };

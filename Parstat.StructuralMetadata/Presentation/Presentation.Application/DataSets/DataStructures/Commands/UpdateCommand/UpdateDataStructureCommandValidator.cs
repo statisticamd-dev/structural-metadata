@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Presentation.Application.DataSets.DataStructures.Commands.CreateCommand
+namespace Presentation.Application.DataSets.DataStructures.Commands.UpdateCommand
 {
-    public class CreateDataStructureCommandValidator : AbstractValidator<CreateDataStructureCommand>
+    public class UpdateDataStructureCommandValidator : AbstractValidator<UpdateDataStructureCommand>
     {
-        public CreateDataStructureCommandValidator()
+        public UpdateDataStructureCommandValidator()
         {
             RuleFor(x => x.LocalId).MinimumLength(1).NotEmpty().NotNull();
             RuleFor(x => x.Name).MinimumLength(3).NotEmpty().NotNull();

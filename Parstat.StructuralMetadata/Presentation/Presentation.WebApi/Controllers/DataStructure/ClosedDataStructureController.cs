@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Application.DataSets.DataStructures.Commands;
+using Presentation.Application.DataSets.DataStructures.Commands.CreateCommand;
+using Presentation.Application.DataSets.DataStructures.Commands.UpdateCommand;
 using System.Threading.Tasks;
 
 namespace Presentation.WebApi.Controllers
@@ -15,6 +16,14 @@ namespace Presentation.WebApi.Controllers
             command.Language = language;
             return Ok(await Mediator.Send(command));
         }
-      
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Update([FromBody] UpdateDataStructureCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
     }
 }

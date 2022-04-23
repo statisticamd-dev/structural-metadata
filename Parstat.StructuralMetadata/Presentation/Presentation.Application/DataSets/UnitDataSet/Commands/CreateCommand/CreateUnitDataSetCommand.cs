@@ -22,8 +22,8 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.CreateCommand
         public string VersionRationale { get; set; } = "First Version";
         public ExchangeChannel ExchangeChannel { get; set; }
         public ExchangeDirection ExchangeDirection { get; set; }
-        public DateTime ReportingBegin { get; set; } = DateTime.MinValue;
-        public DateTime ReportingEnd { get; set; } = DateTime.MinValue;
+        public DateTime? ReportingBegin { get; set; } = DateTime.MinValue;
+        public DateTime? ReportingEnd { get; set; } = DateTime.MinValue;
         public string Connection { get; set; }
         public string FilterExpression { get; set; }
 
