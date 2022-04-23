@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Presentation.Application.DataSets.UnitDataSet.Commands.CreateCommand
 {
-    public class CreateUnitDataSetCommand : AbstractRequest, IRequest<Unit>
+    public class CreateUnitDataSetCommand : AbstractRequest, IRequest<long>
     {
         public string LocalId { get; set; }
         public long StructureId { get; set; }
@@ -27,7 +27,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.CreateCommand
         public string Connection { get; set; }
         public string FilterExpression { get; set; }
 
-        public class Handler : IRequestHandler<CreateUnitDataSetCommand, Unit>
+        public class Handler : IRequestHandler<CreateUnitDataSetCommand, long>
         {
             private readonly IStructuralMetadataDbContext _context;
             public Handler(IStructuralMetadataDbContext context)
@@ -35,9 +35,9 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.CreateCommand
                 _context = context;
             }
 
-            public async Task<Unit> Handle(CreateUnitDataSetCommand request, CancellationToken cancellationToken)
+            public async Task<long> Handle(CreateUnitDataSetCommand request, CancellationToken cancellationToken)
             {
-                Enum.TryParse<Language>(request.Language, true, out Language language);
+                Enum.TryParse(request.Language, true, out Language language);
 
                 var unitDataSetEntity = new DataSet
                 {
@@ -63,7 +63,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.CreateCommand
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
-                return Unit.Value;
+                return unitDataSetEntity.Id;
             }
         }
     }

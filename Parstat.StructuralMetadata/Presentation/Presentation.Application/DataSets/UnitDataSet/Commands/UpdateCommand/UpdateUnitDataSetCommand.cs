@@ -16,6 +16,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.UpdateCommand
 {
     public class UpdateUnitDataSetCommand : AbstractRequest, IRequest
     {
+        public long Id { get; set; }
         public string LocalId { get; set; }
         public long StructureId { get; set; }
         public long StatisticalProgramId { get; set; }
@@ -42,9 +43,9 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.UpdateCommand
 
             public async Task<Unit> Handle(UpdateUnitDataSetCommand request, CancellationToken cancellationToken)
             {
-                Enum.TryParse<Language>(request.Language, true, out Language language);
+                Enum.TryParse(request.Language, true, out Language language);
 
-                var entity = await _context.DataSets.SingleOrDefaultAsync(ns => ns.StatisticalProgramId == request.StatisticalProgramId);
+                var entity = await _context.DataSets.SingleOrDefaultAsync(ds => ds.Id == request.Id);
                 if (entity == null)
                 {
                     throw new NotFoundException(nameof(DataSet), request.StructureId);
@@ -58,14 +59,13 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.UpdateCommand
                     entity.Version = request.Version;
                 }
                 entity.VersionDate = request.VersionDate;
-
                 entity.ExchangeChannel = request.ExchangeChannel;
                 entity.ExchangeDirection = request.ExchangeDirection;
                 entity.ReportingBegin = request.ReportingBegin;
                 entity.ReportingEnd = request.ReportingEnd;
                 entity.Connection = request.Connection;
                 entity.FilterExpression = request.FilterExpression;
-
+                entity.StatisticalProgramId = request.StatisticalProgramId;
 
                 await _context.SaveChangesAsync(cancellationToken);
 
