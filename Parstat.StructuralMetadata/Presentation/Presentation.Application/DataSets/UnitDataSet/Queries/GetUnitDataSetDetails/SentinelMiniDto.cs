@@ -9,13 +9,14 @@ using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDetails
 {
-    public class SubstantiveValueDomainMiniDto : AbstractBaseDto, IMapFrom<ValueDomain>
+    public class SentinelMiniDto : AbstractBaseDto, IMapFrom<ValueDomain>
     {
         public string Name { get; set; }
         public ValueDomainType Type { get; set; }
         public string Expression { get; set; }
         public DataType DataType { get; set; }
         public string MeasurementUnit { get; set; }
+        //public LevelDto NoteSetLevel { get; set; }
         public List<ValueItemMiniDto> ValueSet { get; set; }
 
         public void Mapping(Profile profile)
@@ -23,7 +24,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
             //language parameter from request
             //default english
             string language = "en";
-            profile.CreateMap<ValueDomain, SubstantiveValueDomainMiniDto>()
+            profile.CreateMap<ValueDomain, SentinelMiniDto>()
                 .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.MeasurementUnit, opt => opt.MapFrom(s => s.MeasurementUnit != null ? s.MeasurementUnit.Abbreviation : String.Empty))
@@ -32,7 +33,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                 .ForMember(d => d.DataType, opt => opt.MapFrom(s => s.DataType))
                 .ForMember(d => d.ValueSet, opt => {
                     opt.PreCondition(s => s.Type == ValueDomainType.ENUMERATED);
-                    opt.MapFrom(s => s.NodeSet.Nodes.Where(n => n.Level == null || n.Level.Id == s.Level.Id).OrderBy(n => n.Code));
+                    opt.MapFrom(s => s.NodeSet.Nodes.OrderBy(n => n.Code));
                     opt.NullSubstitute(new List<ValueItemMiniDto>());
                 });
                 

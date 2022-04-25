@@ -10,8 +10,8 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
     {
         public string Variable { get; set; }
         public string Link { get; set; }
-        public SentinelValueDomainMiniDto SentinelValueDomain { get; set; }
-        public SubstantiveValueDomainMiniDto SubstantiveValueDomain { get; set; }
+        public SentinelMiniDto SentinelValueDomain { get; set; }
+        public SubstantiveMiniDto SubstantiveValueDomain { get; set; }
 
          public void Mapping(Profile profile)
         {
