@@ -39,9 +39,10 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.CreateCommand
             {
                 Enum.TryParse(request.Language, true, out Language language);
 
-                var unitDataSetEntity = new DataSet
+                var unitDataSet = new DataSet
                 {
                     Connection = request.Connection,
+                    Type = DataSetType.UNIT,
                     ExchangeChannel = request.ExchangeChannel,
                     FilterExpression = request.FilterExpression,
                     Description = MultilanguageString.Init(language, request.Description),
@@ -57,13 +58,13 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.CreateCommand
                     VersionDate = request.VersionDate
                 };
 
-                _context.DataSets.Add(unitDataSetEntity);
+                _context.DataSets.Add(unitDataSet);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
-                return unitDataSetEntity.Id;
+                return unitDataSet.Id;
             }
         }
     }
