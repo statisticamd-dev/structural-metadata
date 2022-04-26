@@ -32,7 +32,7 @@ namespace Presentation.Application.DataStructures.Queries.GetDataStructures
                 var dataStructuresQuery = CreateQuery(request.Name, request.Language);
                 var dataStructures = await dataStructuresQuery
                     .AsNoTracking()
-                    .ProjectTo<DataStructureDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> { ["language"] = request.Language })
+                    .ProjectTo<DataStructureMiniDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> { ["language"] = request.Language })
                     .OrderBy(v => v.LocalId)
                     .ToListAsync(cancellationToken);
 
