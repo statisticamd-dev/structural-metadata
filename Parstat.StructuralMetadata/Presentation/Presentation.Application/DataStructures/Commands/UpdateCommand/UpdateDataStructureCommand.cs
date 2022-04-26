@@ -13,7 +13,7 @@ namespace Presentation.Application.DataStructures.Commands.UpdateCommand
 {
     public class UpdateDataStructureCommand : AbstractRequest, IRequest
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -42,7 +42,6 @@ namespace Presentation.Application.DataStructures.Commands.UpdateCommand
                     throw new NotFoundException(nameof(DataStructure), request.Id);
                 }
 
-                entity.LocalId = request.LocalId;
                 entity.Name.AddText(language, request.Name);
                 entity.Description.AddText(language, request.Description);
                 entity.VersionRationale.AddText(language, request.VersionRationale);
