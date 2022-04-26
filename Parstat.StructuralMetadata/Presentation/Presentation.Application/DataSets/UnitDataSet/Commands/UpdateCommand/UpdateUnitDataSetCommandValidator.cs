@@ -6,7 +6,6 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.UpdateCommand
     {
         public UpdateUnitDataSetCommandValidator()
         {
-            RuleFor(x => x.LocalId).MinimumLength(1).NotEmpty().NotNull();
             RuleFor(x => x.StatisticalProgramId).NotNull().GreaterThan(0);
             RuleFor(x => x.StructureId).NotNull().GreaterThan(0);
             RuleFor(x => x.ExchangeChannel).NotNull().NotEmpty();

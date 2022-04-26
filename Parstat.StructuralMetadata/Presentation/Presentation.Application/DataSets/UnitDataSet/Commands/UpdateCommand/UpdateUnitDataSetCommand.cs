@@ -6,9 +6,6 @@ using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,7 +14,6 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.UpdateCommand
     public class UpdateUnitDataSetCommand : AbstractRequest, IRequest
     {
         public long Id { get; set; }
-        public string LocalId { get; set; }
         public long StructureId { get; set; }
         public long StatisticalProgramId { get; set; }
         public string Name { get; set; }
