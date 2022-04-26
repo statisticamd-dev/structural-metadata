@@ -15,7 +15,7 @@ namespace Presentation.Application.DataStructures.Commands.CreateCommand
         public string Name { get; set; }
         public string Description { get; set; }
         public string Version { get; set; } = "1.0";
-        public DateTime? VersionDate { get; set; } = DateTime.Now;
+        public DateTime VersionDate { get; set; } = DateTime.Now;
         public string VersionRationale { get; set; } = "First Version";
         public string Group { get; set; }
 
@@ -30,24 +30,24 @@ namespace Presentation.Application.DataStructures.Commands.CreateCommand
             {
                 Enum.TryParse(request.Language, true, out Language language);
 
-                var dataStructureEntity = new Domain.StructuralMetadata.Entities.Gsim.Structure.DataStructure()
+                var dataStructure = new Domain.StructuralMetadata.Entities.Gsim.Structure.DataStructure()
                 {                    
                     LocalId = request.LocalId,
                     Name = MultilanguageString.Init(language, request.Name),
                     Description = MultilanguageString.Init(language, request.Description),
                     Version = request.Version,
-                    VersionDate = request.VersionDate.Value,
+                    VersionDate = request.VersionDate,
                     VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
                     Group = request.Group
                 };
 
-                _context.DataStructures.Add(dataStructureEntity);
+                _context.DataStructures.Add(dataStructure);
 
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
-                return dataStructureEntity.Id;
+                return dataStructure.Id;
             }
         }
     }
