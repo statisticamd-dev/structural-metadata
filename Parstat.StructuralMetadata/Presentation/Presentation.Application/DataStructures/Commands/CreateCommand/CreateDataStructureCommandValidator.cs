@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Presentation.Application.DataSets.DataStructures.Commands.CreateCommand
+namespace Presentation.Application.DataStructures.Commands.CreateCommand
 {
     public class CreateDataStructureCommandValidator : AbstractValidator<CreateDataStructureCommand>
     {

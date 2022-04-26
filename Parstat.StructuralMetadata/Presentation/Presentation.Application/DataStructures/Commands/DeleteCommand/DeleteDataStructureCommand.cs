@@ -5,7 +5,7 @@ using Presentation.Application.Common.Requests;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Presentation.Application.DataSets.DataStructures.Commands.DeleteCommand
+namespace Presentation.Application.DataStructures.Commands.DeleteCommand
 {
     public class DeleteDataStructureCommand : AbstractRequest, IRequest
     {

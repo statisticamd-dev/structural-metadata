@@ -9,7 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Presentation.Application.DataSets.DataStructures.Commands.UpdateCommand
+namespace Presentation.Application.DataStructures.Commands.UpdateCommand
 {
     public class UpdateDataStructureCommand : AbstractRequest, IRequest
     {

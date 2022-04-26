@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Application.DataSets.DataStructures.Commands.CreateCommand;
-using Presentation.Application.DataSets.DataStructures.Commands.DeleteCommand;
-using Presentation.Application.DataSets.DataStructures.Commands.UpdateCommand;
+using Presentation.Application.DataStructures.Commands.CreateCommand;
+using Presentation.Application.DataStructures.Commands.DeleteCommand;
+using Presentation.Application.DataStructures.Commands.UpdateCommand;
 using System.Threading.Tasks;
 
 namespace Presentation.WebApi.Controllers
 {
-    public class ClosedDataStructureController : BaseController
+    public class ClosedDataStructuresController : BaseController
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]

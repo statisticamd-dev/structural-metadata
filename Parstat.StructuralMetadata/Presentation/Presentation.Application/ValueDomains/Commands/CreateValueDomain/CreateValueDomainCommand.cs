@@ -89,6 +89,7 @@ namespace Presentation.Application.ValueDomains.Commands.CreteValueDomain
                     Description = MultilanguageString.Init(language, request.Description),
                     Version = request.Version,
                     VersionDate = request.VersionDate,
+                    VersionRationale = MultilanguageString.Init(language, request.VersionRationale)
                 };
 
                 var response = _context.ValueDomains.Add(newValueDomain);

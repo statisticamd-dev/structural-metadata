@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Presentation.Application.DataSets.DataStructures.Commands.UpdateCommand
+namespace Presentation.Application.DataStructures.Commands.UpdateCommand
 {
     public class UpdateDataStructureCommandValidator : AbstractValidator<UpdateDataStructureCommand>
     {

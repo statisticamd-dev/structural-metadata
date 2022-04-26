@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Presentation.Application.DataSets.DataStructures.Commands.DeleteCommand
+namespace Presentation.Application.DataStructures.Commands.DeleteCommand
 {
     class DeleteDataStructureCommandValidator : AbstractValidator<DeleteDataStructureCommand>
     {

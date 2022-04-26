@@ -7,7 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Presentation.Application.DataSets.DataStructures.Commands.CreateCommand
+namespace Presentation.Application.DataStructures.Commands.CreateCommand
 {
     public class CreateDataStructureCommand : AbstractRequest, IRequest<long>
     {
