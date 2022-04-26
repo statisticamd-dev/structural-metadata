@@ -4,6 +4,6 @@ namespace Presentation.Application.DataStructures.Queries.GetDataStructures
 {
     public class DataStructuresVm
     {
-        public List<DataStrucutreDto> DataStructures { get; set; }
+        public List<DataStructureDto> DataStructures { get; set; }
     }
 }
