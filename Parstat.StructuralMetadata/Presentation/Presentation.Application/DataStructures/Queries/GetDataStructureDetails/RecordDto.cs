@@ -4,22 +4,23 @@ using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
-namespace Presentation.Application.DataStructures.Queries.GetDataStructures
+namespace Presentation.Application.DataStructures.Queries.GetDataStructureDetails
 {
-    public class DataStructureTinyDto : AbstractIdentifiableArtefactDto, IMapFrom<DataStructure>
+    public class RecordDto : AbstractIdentifiableArtefactDto, IMapFrom<LogicalRecord>
     {
-        public string Group { get; set; }
-
+        public RecordTinyDto Parent { get; set; }
+        public UnitTypeTinyDto UnitType { get; set; }
         public void Mapping(Profile profile)
         {
             //language parameter from  request
             //default english
             string language = "en";
-            profile.CreateMap<DataStructure, DataStructureTinyDto>()
+            profile.CreateMap<LogicalRecord, RecordDto>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
-                .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty)
-                );
+                .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
+                .ForMember(d => d.Parent, opt => opt.MapFrom(s => s.Parent))
+                .ForMember(d => d.UnitType, opt => opt.MapFrom(s => s.UnitType));
         }
     }
 }
