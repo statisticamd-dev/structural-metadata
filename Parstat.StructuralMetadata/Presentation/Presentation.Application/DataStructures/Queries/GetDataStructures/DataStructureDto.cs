@@ -1,12 +1,12 @@
 using System;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
-using Presentation.Common.Domain.StructuralMetadata.Abstracts.Gsim;
+using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
 namespace Presentation.Application.DataStructures.Queries.GetDataStructures
 {
-    public class DataStructureDto : AbstractIdentifiableArtefact, IMapFrom<DataStructure>
+    public class DataStructureDto : AbstractIdentifiableArtefactDto, IMapFrom<DataStructure>
     {
         public string Group { get; set; }
 
