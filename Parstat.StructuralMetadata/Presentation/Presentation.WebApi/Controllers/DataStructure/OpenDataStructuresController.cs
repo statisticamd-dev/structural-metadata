@@ -15,7 +15,7 @@ namespace Presentation.WebApi.Controllers.DataStructure
         public async Task<ActionResult<DataStructuresVm>> GetAll(string name, string language) => Ok(await Mediator.Send(new GetDataStructuresQuery {Name = name, Language = language }));
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(DataStructuresVm), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(DataStructureVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<DataStructuresVm>> Get(long id, string language) => Ok(await Mediator.Send(new GetDataStructureQuery {Id = id, Language = language }));
     }
 }
