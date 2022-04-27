@@ -23,6 +23,7 @@ namespace Presentation.Application.DataStructures.Queries.GetDataStructureDetail
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
+                .ForMember(d => d.Representation, opt => opt.MapFrom(s => s.RepresentedVariable))
                 .ForMember(d => d.Records, opt => opt.MapFrom(s => s.Records));
         }
     }
