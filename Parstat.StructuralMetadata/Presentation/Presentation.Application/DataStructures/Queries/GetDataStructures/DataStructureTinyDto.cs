@@ -19,7 +19,7 @@ namespace Presentation.Application.DataStructures.Queries.GetDataStructures
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name != null ? s.Name.Text(language) : String.Empty))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
-                .ForMember(d => d.Group, opt => opt.MapFrom(s => s.Group != null ? s.Group : ""));
+                .ForMember(d => d.Group, opt => opt.MapFrom(s => s.Group != null ? s.Group : String.Empty));
         }
     }
 }
