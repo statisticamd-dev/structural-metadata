@@ -5,6 +5,7 @@ using Presentation.Application.DataStructures.Commands.CreateCommand;
 using Presentation.Application.DataStructures.Commands.DeleteCommand;
 using Presentation.Application.DataStructures.Commands.RemoveRecord;
 using Presentation.Application.DataStructures.Commands.UpdateCommand;
+using Presentation.Application.DataStructures.Commands.UpdateRecord;
 using System.Threading.Tasks;
 
 namespace Presentation.WebApi.Controllers
@@ -54,6 +55,16 @@ namespace Presentation.WebApi.Controllers
         public async Task<IActionResult> DeleteLogicalRecord(long dataStructureId, long recordId)
         {
             return Ok(await Mediator.Send(new RemoveRecordCommand { DataStructureId = dataStructureId, RecordId = recordId }));
+        }
+
+        [HttpPatch]
+        [Route("records")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> PatchLogicalRecord([FromBody] UpdateRecordCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
         }
     }
 }
