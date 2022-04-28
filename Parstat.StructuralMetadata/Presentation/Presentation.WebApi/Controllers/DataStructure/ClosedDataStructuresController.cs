@@ -4,6 +4,7 @@ using Presentation.Application.DataStructures.Commands.AddComponent;
 using Presentation.Application.DataStructures.Commands.AddRecord;
 using Presentation.Application.DataStructures.Commands.CreateCommand;
 using Presentation.Application.DataStructures.Commands.DeleteCommand;
+using Presentation.Application.DataStructures.Commands.RemoveComponent;
 using Presentation.Application.DataStructures.Commands.RemoveRecord;
 using Presentation.Application.DataStructures.Commands.UpdateCommand;
 using Presentation.Application.DataStructures.Commands.UpdateComponent;
@@ -87,6 +88,15 @@ namespace Presentation.WebApi.Controllers
         {
             command.Language = language;
             return Ok(await Mediator.Send(command));
+        }
+
+        [HttpDelete]
+        [Route("{DataStructureId}/records/{componentId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> DeleteComponent(long dataStructureId, long componentId)
+        {
+            return Ok(await Mediator.Send(new RemoveComponentCommand { DataStructureId = dataStructureId, ComponentId = componentId }));
         }
     }
 }
