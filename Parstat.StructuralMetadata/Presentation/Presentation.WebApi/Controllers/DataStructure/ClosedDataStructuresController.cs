@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Application.DataStructures.Commands.AddComponent;
 using Presentation.Application.DataStructures.Commands.AddRecord;
 using Presentation.Application.DataStructures.Commands.CreateCommand;
 using Presentation.Application.DataStructures.Commands.DeleteCommand;
@@ -62,6 +63,16 @@ namespace Presentation.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> PatchLogicalRecord([FromBody] UpdateRecordCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpPut]
+        [Route("components")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> AddComponent([FromBody] AddComponentCommand command, string language)
         {
             command.Language = language;
             return Ok(await Mediator.Send(command));
