@@ -6,6 +6,7 @@ using Presentation.Application.DataStructures.Commands.CreateCommand;
 using Presentation.Application.DataStructures.Commands.DeleteCommand;
 using Presentation.Application.DataStructures.Commands.RemoveRecord;
 using Presentation.Application.DataStructures.Commands.UpdateCommand;
+using Presentation.Application.DataStructures.Commands.UpdateComponent;
 using Presentation.Application.DataStructures.Commands.UpdateRecord;
 using System.Threading.Tasks;
 
@@ -73,6 +74,16 @@ namespace Presentation.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> AddComponent([FromBody] AddComponentCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpPatch]
+        [Route("components")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> PatchLogicalRecord([FromBody] UpdateComponentCommand command, string language)
         {
             command.Language = language;
             return Ok(await Mediator.Send(command));
