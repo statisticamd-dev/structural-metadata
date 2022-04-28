@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.DataStructures.Commands.AddRecord;
 using Presentation.Application.DataStructures.Commands.CreateCommand;
 using Presentation.Application.DataStructures.Commands.DeleteCommand;
+using Presentation.Application.DataStructures.Commands.RemoveRecord;
 using Presentation.Application.DataStructures.Commands.UpdateCommand;
 using System.Threading.Tasks;
 
@@ -44,6 +45,15 @@ namespace Presentation.WebApi.Controllers
         {
             command.Language = language;
             return Ok(await Mediator.Send(command));
+        }
+
+        [HttpDelete]
+        [Route("{dataStructureId}/records/{recordId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> DeleteLogicalRecord(long dataStructureId, long recordId)
+        {
+            return Ok(await Mediator.Send(new RemoveRecordCommand { DataStructureId = dataStructureId, RecordId = recordId }));
         }
     }
 }
