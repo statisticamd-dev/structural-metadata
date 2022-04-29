@@ -14,7 +14,6 @@ namespace Presentation.Application.DataStructures.Commands.UpdateRecord
     public class UpdateRecordCommand : AbstractRequest, IRequest<Unit>
     {
         public int RecordId { get; set; }
-        public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Version { get; set; }
@@ -35,14 +34,13 @@ namespace Presentation.Application.DataStructures.Commands.UpdateRecord
             {
                 Enum.TryParse(request.Language, true, out Language language);
 
-                var entity = await _context.LogicalRecords.SingleOrDefaultAsync(lr => lr.Id == request.RecordId);
+                var entity = await _context.LogicalRecords.SingleOrDefaultAsync(lr => lr.Id == request.RecordId && lr.DataStructureId == request.DataStructureId);
 
                 if (entity == null)
                 {
                     throw new NotFoundException(nameof(LogicalRecord), request.RecordId );
                 }
 
-                entity.LocalId = request.LocalId;
                 entity.Name.AddText(language, request.Name);
                 entity.Description.AddText(language, request.Description);
                 entity.VersionRationale.AddText(language, request.VersionRationale);
@@ -57,7 +55,6 @@ namespace Presentation.Application.DataStructures.Commands.UpdateRecord
                     entity.VersionDate = request.VersionDate.Value;
                 }
 
-                entity.DataStructureId = request.DataStructureId;
                 entity.ParentId = request.ParentId;                
 
                 await _context.SaveChangesAsync(cancellationToken);

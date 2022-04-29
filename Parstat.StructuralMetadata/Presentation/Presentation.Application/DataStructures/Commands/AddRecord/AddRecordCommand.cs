@@ -1,11 +1,13 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,9 +35,18 @@ namespace Presentation.Application.DataStructures.Commands.AddRecord
             public async Task<long> Handle(AddRecordCommand request, CancellationToken cancellationToken)
             {
                 Enum.TryParse(request.Language, true, out Language language);
+                //ensure that Datastructure exists
+                var dataStructure = await _context.DataStructures.FindAsync(request.DataStructureId, cancellationToken);
+                
+                if(dataStructure == null)
+                {
+                    throw new NotFoundException(nameof(DataStructure), request.DataStructureId);
+                }
+
                 //to ensure idempotence of PUT method: don't add a new record if already exist
-                var logicalRecord = await _context.LogicalRecords
-                            .FirstOrDefaultAsync(lr => lr.LocalId == request.LocalId && lr.Version == request.Version);
+                var logicalRecord = dataStructure.LogicalRecords
+                            .Where(lr => lr.LocalId == request.LocalId && lr.Version == request.Version)
+                            .FirstOrDefault();
 
                 if(logicalRecord == null)
                 {
