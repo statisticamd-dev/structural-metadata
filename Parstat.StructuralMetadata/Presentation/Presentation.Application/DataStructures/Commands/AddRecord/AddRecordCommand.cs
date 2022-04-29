@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
@@ -32,23 +33,28 @@ namespace Presentation.Application.DataStructures.Commands.AddRecord
             public async Task<long> Handle(AddRecordCommand request, CancellationToken cancellationToken)
             {
                 Enum.TryParse(request.Language, true, out Language language);
+                //to ensure idempotence of PUT method: don't add a new record if already exist
+                var logicalRecord = await _context.LogicalRecords
+                            .FirstOrDefaultAsync(lr => lr.LocalId == request.LocalId && lr.Version == request.Version);
 
-                var logicalRecord = new LogicalRecord
+                if(logicalRecord == null)
                 {
-                    LocalId = request.LocalId,
-                    DataStructureId = request.DataStructureId,
-                    ParentId = request.ParentId,
-                    Name = MultilanguageString.Init(language, request.Name),
-                    Description = MultilanguageString.Init(language, request.Description),
-                    Version = request.Version,
-                    VersionDate = request.VersionDate,
-                    VersionRationale = MultilanguageString.Init(language, request.VersionRationale)
-                };
+                    logicalRecord = new LogicalRecord
+                    {
+                        LocalId = request.LocalId,
+                        DataStructureId = request.DataStructureId,
+                        ParentId = request.ParentId,
+                        Name = MultilanguageString.Init(language, request.Name),
+                        Description = MultilanguageString.Init(language, request.Description),
+                        Version = request.Version,
+                        VersionDate = request.VersionDate,
+                        VersionRationale = MultilanguageString.Init(language, request.VersionRationale)
+                    };
 
-                 _context.LogicalRecords.Add(logicalRecord);
+                    _context.LogicalRecords.Add(logicalRecord);
 
-                await _context.SaveChangesAsync(cancellationToken);
-
+                    await _context.SaveChangesAsync(cancellationToken);
+                }
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
 
                 return logicalRecord.Id;
