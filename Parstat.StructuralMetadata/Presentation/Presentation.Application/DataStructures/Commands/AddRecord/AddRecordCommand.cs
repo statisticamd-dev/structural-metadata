@@ -36,7 +36,10 @@ namespace Presentation.Application.DataStructures.Commands.AddRecord
             {
                 Enum.TryParse(request.Language, true, out Language language);
                 //ensure that Datastructure exists
-                var dataStructure = await _context.DataStructures.FindAsync(request.DataStructureId, cancellationToken);
+                var dataStructure = await _context.DataStructures
+                                .Where(ds => ds.Id == request.DataStructureId)
+                                .Include(ds => ds.LogicalRecords)
+                                .FirstOrDefaultAsync();
                 
                 if(dataStructure == null)
                 {

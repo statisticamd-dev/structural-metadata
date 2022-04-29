@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Presentation.Application.DataStructures.Commands.AddComponent
 {
@@ -32,14 +33,19 @@ namespace Presentation.Application.DataStructures.Commands.AddComponent
             public async Task<long> Handle(AddComponentCommand request, CancellationToken cancellationToken)
             {
                 Enum.TryParse(request.Language, true, out Language language);
-                var dataStructure = await _context.DataStructures.FindAsync(request.DataStructureId, cancellationToken);
+                
+                var dataStructure =  await _context.DataStructures
+                                        .Where(ds => ds.Id == request.DataStructureId)
+                                        .Include(ds => ds.LogicalRecords)
+                                        .FirstOrDefaultAsync();
+                
                 if(dataStructure == null)
                 {
                     throw new NotFoundException(nameof(DataStructure), request.DataStructureId);
                 }
                 var records = dataStructure.LogicalRecords
                         .Where(lr =>request.Records.Contains(lr.Id) ).ToList();
-                        
+
                 var component = new Component 
                 {
                     LocalId = request.LocalId,
