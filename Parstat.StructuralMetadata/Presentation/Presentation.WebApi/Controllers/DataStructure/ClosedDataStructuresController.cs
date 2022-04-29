@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Application.DataStructures.Commands.AddComponent;
+using Presentation.Application.DataStructures.Commands.AddRecord;
 using Presentation.Application.DataStructures.Commands.CreateCommand;
 using Presentation.Application.DataStructures.Commands.DeleteCommand;
+using Presentation.Application.DataStructures.Commands.RemoveComponent;
+using Presentation.Application.DataStructures.Commands.RemoveRecord;
 using Presentation.Application.DataStructures.Commands.UpdateCommand;
+using Presentation.Application.DataStructures.Commands.UpdateComponent;
+using Presentation.Application.DataStructures.Commands.UpdateRecord;
 using System.Threading.Tasks;
 
 namespace Presentation.WebApi.Controllers
@@ -33,6 +39,64 @@ namespace Presentation.WebApi.Controllers
         public async Task<IActionResult> Delete(long id)
         {
             return Ok(await Mediator.Send(new DeleteDataStructureCommand { Id = id }));
+        }
+
+        [HttpPut]
+        [Route("records")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> AddLogicalRecord([FromBody] AddRecordCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpDelete]
+        [Route("{dataStructureId}/records/{recordId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> DeleteLogicalRecord(long dataStructureId, long recordId)
+        {
+            return Ok(await Mediator.Send(new RemoveRecordCommand { DataStructureId = dataStructureId, RecordId = recordId }));
+        }
+
+        [HttpPatch]
+        [Route("records")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> PatchLogicalRecord([FromBody] UpdateRecordCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpPut]
+        [Route("components")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> AddComponent([FromBody] AddComponentCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpPatch]
+        [Route("components")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> PatchLogicalRecord([FromBody] UpdateComponentCommand command, string language)
+        {
+            command.Language = language;
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpDelete]
+        [Route("{DataStructureId}/records/{componentId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> DeleteComponent(long dataStructureId, long componentId)
+        {
+            return Ok(await Mediator.Send(new RemoveComponentCommand { DataStructureId = dataStructureId, ComponentId = componentId }));
         }
     }
 }
