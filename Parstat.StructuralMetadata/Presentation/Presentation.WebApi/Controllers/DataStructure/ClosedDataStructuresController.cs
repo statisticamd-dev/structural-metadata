@@ -91,7 +91,7 @@ namespace Presentation.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("{DataStructureId}/records/{componentId}")]
+        [Route("{dataStructureId}/records/{componentId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> DeleteComponent(long dataStructureId, long componentId)
