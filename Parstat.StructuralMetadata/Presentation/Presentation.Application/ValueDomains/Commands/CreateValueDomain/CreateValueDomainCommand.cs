@@ -80,8 +80,11 @@ namespace Presentation.Application.ValueDomains.Commands.CreteValueDomain
                 
                 var newValueDomain = new ValueDomain()
                 {
+                    LocalId = request.LocalId,
                     LevelId = request.LevelId,
                     NodeSetId = request.NodesetId,
+                    DataType = request.DataType,
+                    Expression = request.Expression,
                     Type = request.Type,
                     Name = MultilanguageString.Init(language, request.Name),
                     Scope = request.Scope,
