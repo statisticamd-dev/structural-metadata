@@ -18,7 +18,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Queries.G
     {
         public long Id { get; set; }
 
-         public class GetStatisticalClassificationQueryHandler : IRequestHandler<GetStatisticalClassificationQuery, StatisticalClassificationVm>
+        public class GetStatisticalClassificationQueryHandler : IRequestHandler<GetStatisticalClassificationQuery, StatisticalClassificationVm>
         {
             private readonly IStructuralMetadataDbContext _context;
             private readonly IMapper _mapper;

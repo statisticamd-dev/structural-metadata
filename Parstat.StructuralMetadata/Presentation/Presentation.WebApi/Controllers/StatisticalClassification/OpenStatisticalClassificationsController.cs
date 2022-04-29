@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Application.NodeSets.StatisticalClassifications.Queries.GetFlatStatisticalClassification;
 using Presentation.Application.NodeSets.StatisticalClassifications.Queries.GetStatisticalClassificationDetails;
+using Presentation.Application.NodeSets.StatisticalClassifications.Queries.GetStatisticalClassificationLevels;
 using Presentation.Application.NodeSets.StatisticalClassifications.Queries.GetStatisticalClassifications;
 
 namespace Presentation.WebApi.Controllers
@@ -20,5 +21,9 @@ namespace Presentation.WebApi.Controllers
         [HttpGet("flat/{id}")]
         [ProducesResponseType(typeof(StatisticalClassificationFlatVm), StatusCodes.Status200OK)]
         public async Task<ActionResult<StatisticalClassificationFlatVm>> GetFlat(long id, string language) => Ok(await Mediator.Send(new GetFlatStatisticalClassificationQuery { Id = id, Language = language }));
+
+        [HttpGet("{id}/levels")]
+        [ProducesResponseType(typeof(StatisticalClassificationLevelsVm), StatusCodes.Status200OK)]
+        public async Task<ActionResult<StatisticalClassificationLevelsVm>> GetLevels(long id, string language) => Ok(await Mediator.Send(new GetStatisticalClassificationLevelsQuery {Id = id, Language = language}));
     }
 }
