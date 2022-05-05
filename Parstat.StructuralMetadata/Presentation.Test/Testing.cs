@@ -48,7 +48,7 @@ namespace Presentation.Test
             _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
         }
 
-        public static async Task AddAsync<TEntity>(TEntity entity)
+        public static async Task<TEntity> AddAsync<TEntity>(TEntity entity)
             where TEntity : class
         {
             using var scope = _scopeFactory.CreateScope();
@@ -59,6 +59,7 @@ namespace Presentation.Test
             context.Add(entity);
 
             await context.SaveChangesAsync();
+            return entity;
         }
 
         public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)

@@ -32,13 +32,15 @@ namespace Presentation.Test.Variables.Queries.GetVariableDetails
                     Definition = MultilanguageString.Init(Language.EN, "Measures 1 definition"),
                 }
             };
-            await AddAsync(variable);
+            Variable returnedVariable = await AddAsync(variable);
 
             // Arrange
             var query = new GetVariableQuery();
+            query.Id = returnedVariable.Id;
             VariableVm result = await SendAsync(query);
 
             // Act
+            result.Variable.Id.Should().Be(returnedVariable.Id);
             result.Should().NotBeNull();
         }
     }
