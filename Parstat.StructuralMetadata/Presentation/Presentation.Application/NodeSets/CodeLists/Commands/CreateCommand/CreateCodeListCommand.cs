@@ -19,7 +19,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.CreateCommand
         public DateTime VersionDate { get; set; } = DateTime.Now;
         public string VersionRationale { get; set; } = "First Version";
         public bool IsSentinel { get; set; } = false;
-        //test
+        
         public class Handler : IRequestHandler<CreateCodeListCommand, long>
         {
             private readonly IStructuralMetadataDbContext _context;
