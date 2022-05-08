@@ -10,7 +10,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.UpdateCommand
             RuleFor(x => x.StatisticalProgramId).NotNull().GreaterThan(0);
             RuleFor(x => x.StructureId).NotNull().GreaterThan(0);
             RuleFor(x => x.ExchangeChannel).NotNull().NotEmpty();
-            //RuleFor(x => x.ExchangeDirection).NotNull().NotEmpty();
+            RuleFor(x => x.ExchangeDirection).NotNull().NotEmpty();
             RuleFor(x => x.Name).MinimumLength(3).NotEmpty().NotNull();
         }
     }
