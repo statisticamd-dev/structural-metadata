@@ -4,6 +4,7 @@ using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
+using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System;
 using System.Threading;
@@ -48,8 +49,14 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.UpdateCommand
                 }
 
                 entity.Name.AddText(language, request.Name);
-                entity.Description.AddText(language, request.Description);
-                entity.VersionRationale.AddText(language, request.VersionRationale);
+                if(entity.Description != null) 
+                {
+                    entity.Description.AddText(language, request.Description);
+                }
+                else 
+                {
+                    entity.Description = MultilanguageString.Init(language, request.Description);
+                }
 
                 if (!string.IsNullOrWhiteSpace(request.Version))
                 {
