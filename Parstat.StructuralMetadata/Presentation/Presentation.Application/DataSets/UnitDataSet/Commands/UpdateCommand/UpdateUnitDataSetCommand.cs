@@ -67,7 +67,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.UpdateCommand
                 entity.Connection = request.Connection;
                 entity.FilterExpression = request.FilterExpression;
                 entity.StatisticalProgramId = request.StatisticalProgramId;
-
+                _context.DataSets.Update(entity);
                 await _context.SaveChangesAsync(cancellationToken);
 
                 //await _mediator.Publish(new VariableCreated {Id = entity.Id}, cancellationToken);
