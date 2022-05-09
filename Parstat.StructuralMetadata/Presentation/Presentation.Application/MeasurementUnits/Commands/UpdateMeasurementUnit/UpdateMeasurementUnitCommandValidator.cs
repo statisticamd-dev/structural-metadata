@@ -6,7 +6,7 @@ namespace Presentation.Application.MeasurementUnits.Commands.UpdateMeasurementUn
     public class UpdateMeasurementUnitCommandValidator : AbstractValidator<UpdateMeasurementUnitCommand>
     {
         public UpdateMeasurementUnitCommandValidator() {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
     }
 }

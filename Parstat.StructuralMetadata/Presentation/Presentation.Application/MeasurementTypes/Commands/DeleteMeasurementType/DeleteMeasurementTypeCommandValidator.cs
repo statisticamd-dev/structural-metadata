@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace Presentation.Application.MeasurementTypes.Commands.DeleteMeasurementType
@@ -8,7 +7,7 @@ namespace Presentation.Application.MeasurementTypes.Commands.DeleteMeasurementTy
         
         public DeleteMeasurementTypeCommandValidator() 
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
     }
 }

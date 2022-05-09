@@ -5,8 +5,8 @@ namespace Presentation.Application.Correspondences.Commands.CreateCommand
     {
         public CreateCorrespondenceValidator()
         {
-            RuleFor(x => x.SourceId).GreaterThan(0);
-            RuleFor(x => x.TargetId).GreaterThan(0);
+            RuleFor(x => x.SourceId).NotEmpty();
+            RuleFor(x => x.TargetId).NotEmpty();
             RuleFor(x => x.Relationship).IsInEnum();
         }
     }

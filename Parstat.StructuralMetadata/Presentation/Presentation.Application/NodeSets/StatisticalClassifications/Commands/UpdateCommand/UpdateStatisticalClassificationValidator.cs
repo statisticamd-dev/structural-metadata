@@ -6,7 +6,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
     {
         public UpdateStatisticalClassificationValidator()
         {
-            RuleFor(x => x.Id).NotNull();
+            RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.Description).Length(5, 255).Unless(s => string.IsNullOrEmpty(s.Description));
             RuleFor(x => x.Name).Length(5, 255);
         }

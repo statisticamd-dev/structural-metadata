@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
@@ -7,7 +6,7 @@ namespace Presentation.Application.UnitTypes.Commands.UpdateUnitType
     {
          public UpdateUnitTypeCommandValidator() 
         {
-            RuleFor(x => x.Id).NotNull();
+            RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.Name).Length(3, 100);
         }
     }

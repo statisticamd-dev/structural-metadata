@@ -6,7 +6,7 @@ namespace Presentation.Application.DataStructures.Commands.DeleteCommand
     {
         public DeleteDataStructureCommandValidator()
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
     }
 }

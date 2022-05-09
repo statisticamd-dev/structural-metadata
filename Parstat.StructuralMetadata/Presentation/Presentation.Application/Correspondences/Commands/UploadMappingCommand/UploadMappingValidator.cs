@@ -5,7 +5,7 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
     {
         public UploadMappingValidator()
         {
-            RuleFor(x => x.MappingCsv).NotNull();
+            RuleFor(x => x.MappingCsv).NotEmpty();
         }
     }
 }

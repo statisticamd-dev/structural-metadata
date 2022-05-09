@@ -6,7 +6,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Commands.DeleteCommand
     {
         public DeleteUnitDataSetCommandValidator()
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
     }
 }

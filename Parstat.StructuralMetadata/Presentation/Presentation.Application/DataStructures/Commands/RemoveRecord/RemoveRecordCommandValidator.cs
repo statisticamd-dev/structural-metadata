@@ -6,8 +6,8 @@ namespace Presentation.Application.DataStructures.Commands.RemoveRecord
     {
         public RemoveRecordCommandValidator()
         {
-            RuleFor(x => x.DataStructureId).GreaterThan(0);
-            RuleFor(x => x.RecordId).GreaterThan(0);
+            RuleFor(x => x.DataStructureId).NotEmpty();
+            RuleFor(x => x.RecordId).NotEmpty();
         }
     }
 }

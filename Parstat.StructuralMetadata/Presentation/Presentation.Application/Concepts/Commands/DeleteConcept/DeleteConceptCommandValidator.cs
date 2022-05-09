@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace Presentation.Application.Concepts.Commands.DeleteConcept
@@ -7,7 +6,7 @@ namespace Presentation.Application.Concepts.Commands.DeleteConcept
     {
         public DeleteConceptCommandValidator() 
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Presentation.Application.MeasurementUnits.Commands.DeleteMeasurementUn
     public class DeleteMeasurementUnitCommandValidator : AbstractValidator<DeleteMeasurementUnitCommand>
     {
         public DeleteMeasurementUnitCommandValidator() {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
     }
 }

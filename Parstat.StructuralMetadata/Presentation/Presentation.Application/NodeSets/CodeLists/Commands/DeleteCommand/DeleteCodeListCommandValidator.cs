@@ -7,7 +7,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.DeleteCommand
     {
         public DeleteCodeListCommandValidator()
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
     }
 }

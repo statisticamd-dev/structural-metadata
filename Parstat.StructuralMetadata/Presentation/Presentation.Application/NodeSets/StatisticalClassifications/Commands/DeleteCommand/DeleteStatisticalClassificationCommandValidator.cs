@@ -7,7 +7,7 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
     {
         public DeleteStatisticalClassificationCommandValidator() 
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
     }
 }

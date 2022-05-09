@@ -7,8 +7,8 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
     {
         public RemoveStatisticalClassificationLevelCommandValidator() 
         {
-            RuleFor(x => x.StatisticalClassificationId).NotEmpty().NotNull();
-            RuleFor(x => x.LevelId).NotEmpty().NotNull();
+            RuleFor(x => x.StatisticalClassificationId).NotEmpty();
+            RuleFor(x => x.LevelId).NotEmpty();
         }
     }
 }

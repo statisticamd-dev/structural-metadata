@@ -6,8 +6,8 @@ namespace Presentation.Application.DataStructures.Commands.UpdateComponent
     {
         public UpdateComponentCommandValidator()
         {
-            RuleFor(x => x.Name).MinimumLength(3).NotEmpty().NotNull();
-            RuleFor(x => x.DataStructureId).GreaterThan(0);
+            RuleFor(x => x.Name).MinimumLength(3).NotEmpty();
+            RuleFor(x => x.DataStructureId).NotEmpty();
         }
     }
 }

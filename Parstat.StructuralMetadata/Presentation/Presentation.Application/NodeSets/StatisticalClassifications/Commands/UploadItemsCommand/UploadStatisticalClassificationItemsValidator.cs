@@ -6,8 +6,8 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
     {
         public UploadStatisticalClassificationItemsValidator()
         {
-            RuleFor(x => x.StatisticalClassificationId).NotEmpty().NotNull();
-            RuleFor(x => x.RootItems).NotEmpty().NotNull();          
+            RuleFor(x => x.StatisticalClassificationId).NotEmpty();
+            RuleFor(x => x.RootItems).NotEmpty();          
         }
     }
 }

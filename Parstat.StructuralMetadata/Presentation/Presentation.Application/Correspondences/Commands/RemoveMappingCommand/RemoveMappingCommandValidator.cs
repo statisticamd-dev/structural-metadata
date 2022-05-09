@@ -5,8 +5,8 @@ namespace Presentation.Application.Correspondences.Commands.RemoveMappingCommand
     {
         public RemoveMappingCommandValidator()
         {
-            RuleFor(x => x.CorrespondenceId).GreaterThan(0);
-            RuleFor(x => x.MappingId).GreaterThan(0);
+            RuleFor(x => x.CorrespondenceId).NotEmpty();
+            RuleFor(x => x.MappingId).NotEmpty();
         }
     }
 }

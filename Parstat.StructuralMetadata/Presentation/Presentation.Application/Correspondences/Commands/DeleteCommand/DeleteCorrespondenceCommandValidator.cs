@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace Presentation.Application.Correspondences.Commands.DeleteCommand
@@ -7,7 +6,7 @@ namespace Presentation.Application.Correspondences.Commands.DeleteCommand
     {
         public DeleteCorrespondenceCommandValidator() 
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
         
     }

@@ -1,4 +1,3 @@
-using System;
 using FluentValidation;
 
 namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.UpdateLevelCommand
@@ -7,8 +6,8 @@ namespace Presentation.Application.NodeSets.StatisticalClassifications.Commands.
     {
         public UpdateStatisticalClassificationLevelCommandValidator() 
         {
-            RuleFor(x => x.StatisticalClassificationId).NotEmpty().NotNull();
-            RuleFor(x => x.LevelId).NotEmpty().NotNull();
+            RuleFor(x => x.StatisticalClassificationId).NotEmpty();
+            RuleFor(x => x.LevelId).NotEmpty();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Presentation.Application.RepresentedVariables.Commands.DeleteCommand
     {
         public DeleteRepresentedVariableCommandValidator()
         {
-            RuleFor(x => x.Id).NotNull();
+            RuleFor(x => x.Id).NotEmpty();
         }
     }
 }

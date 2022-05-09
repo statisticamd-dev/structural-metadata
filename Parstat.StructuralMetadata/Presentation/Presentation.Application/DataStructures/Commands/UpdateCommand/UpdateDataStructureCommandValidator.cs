@@ -6,8 +6,8 @@ namespace Presentation.Application.DataStructures.Commands.UpdateCommand
     {
         public UpdateDataStructureCommandValidator()
         {
-            RuleFor(x => x.Id).NotEmpty().NotNull();
-            RuleFor(x => x.Name).MinimumLength(3).NotEmpty().NotNull();
+            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.Name).MinimumLength(3).NotEmpty();
         }
     }
 }

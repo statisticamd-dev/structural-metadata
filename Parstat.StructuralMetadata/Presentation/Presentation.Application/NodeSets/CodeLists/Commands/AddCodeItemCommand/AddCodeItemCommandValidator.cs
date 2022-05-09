@@ -6,8 +6,8 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.AddCodeItemComman
     {
         public AddCodeItemCommandValidator() 
         {
-            RuleFor(x => x.NodeSetId).NotNull();
-            RuleFor(x => x.Code).Length(1, 50).NotEmpty().NotNull();
+            RuleFor(x => x.NodeSetId).NotEmpty();
+            RuleFor(x => x.Code).Length(1, 50).NotEmpty();
             RuleFor(x => x.Value).NotNull();
         }
     }

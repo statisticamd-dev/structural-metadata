@@ -7,7 +7,7 @@ namespace Presentation.Application.Variables.Commands.CreteVariable
     {
         public DeleteVariableCommandValidator()
         {            
-            RuleFor(x => x.Id).NotNull();           
+            RuleFor(x => x.Id).NotEmpty();           
         }
     }
 }

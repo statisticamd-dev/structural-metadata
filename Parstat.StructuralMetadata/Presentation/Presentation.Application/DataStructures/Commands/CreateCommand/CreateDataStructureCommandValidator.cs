@@ -6,8 +6,8 @@ namespace Presentation.Application.DataStructures.Commands.CreateCommand
     {
         public CreateDataStructureCommandValidator()
         {
-            RuleFor(x => x.LocalId).MinimumLength(1).NotEmpty().NotNull();
-            RuleFor(x => x.Name).MinimumLength(3).NotEmpty().NotNull();
+            RuleFor(x => x.LocalId).MinimumLength(1).NotEmpty();
+            RuleFor(x => x.Name).MinimumLength(3).NotEmpty();
         }
     }
 }

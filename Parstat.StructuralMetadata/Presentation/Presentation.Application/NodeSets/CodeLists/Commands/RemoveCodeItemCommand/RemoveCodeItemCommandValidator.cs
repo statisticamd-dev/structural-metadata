@@ -6,8 +6,8 @@ namespace Presentation.Application.NodeSets.CodeList.Commands.RemoveCodeItemComm
     {
         public RemoveCodeItemCommandValidator()
         {
-            RuleFor(x => x.NodeSetId).NotNull();
-            RuleFor(x => x.Code).NotNull().NotEmpty();
+            RuleFor(x => x.NodeSetId).NotEmpty();
+            RuleFor(x => x.Code).NotEmpty();
         }
     }
 }
