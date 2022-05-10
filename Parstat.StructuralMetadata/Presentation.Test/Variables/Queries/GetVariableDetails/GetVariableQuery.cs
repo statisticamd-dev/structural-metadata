@@ -34,12 +34,12 @@ namespace Presentation.Test.Variables.Queries.GetVariableDetails
             };
             Variable returnedVariable = await AddAsync(variable);
 
-            // Arrange
+            // Act
             var query = new GetVariableQuery();
             query.Id = returnedVariable.Id;
             VariableVm result = await SendAsync(query);
 
-            // Act
+            // Assert
             result.Variable.Id.Should().Be(returnedVariable.Id);
             result.Should().NotBeNull();
         }
