@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 
-namespace Presentation.Application.DataSets.DimansionalDataSet.Queries.GetDimensionalDataSet
+namespace Presentation.Application.DataSets.DimensionalDataSet.Queries.GetDimensionalDataSet
 {
     public class GetDimensionalDataSetQuery : AbstractRequest, IRequest<DimensionalDataSetVm>
     {

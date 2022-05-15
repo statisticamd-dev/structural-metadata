@@ -17,7 +17,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
         public ExchangeChannel ExchangeChannel { get; set; }
         public ExchangeDirection ExchangeDirection { get; set; }
         public string StatisticalProgramLink { get; set; }
-        public DataStructureMiniDto Structure { get; set; }
+        public UnitDataStructureMiniDto Structure { get; set; }
 
         public void Mapping(Profile profile)
         {

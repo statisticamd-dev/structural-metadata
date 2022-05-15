@@ -10,18 +10,18 @@ using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 
-namespace Presentation.Application.DataSets.DimansionalDataSet.Queries.GetDimensionalDataSetDetails
+namespace Presentation.Application.DataSets.DimensionalDataSet.Queries.GetDimensionalDataSetDetails
 {
     public class GetDimensionalDataSetDetailsQuery : AbstractRequest, IRequest<DimensionalDataSetDetailsVm>
     {
          public long Id { get; set; }
 
-        public class GetUnitDataSetDetailsQueryHandler : IRequestHandler<GetDimensionalDataSetDetailsQuery, DimensionalDataSetDetailsVm>
+        public class GetDimensionalDataSetDetailsQueryHandler : IRequestHandler<GetDimensionalDataSetDetailsQuery, DimensionalDataSetDetailsVm>
         {
             private readonly IStructuralMetadataDbContext _context;
             private readonly IMapper _mapper;
 
-            public GetUnitDataSetDetailsQueryHandler(IStructuralMetadataDbContext context, IMapper mapper) 
+            public GetDimensionalDataSetDetailsQueryHandler(IStructuralMetadataDbContext context, IMapper mapper) 
             {
                 _context = context;
                 _mapper = mapper;

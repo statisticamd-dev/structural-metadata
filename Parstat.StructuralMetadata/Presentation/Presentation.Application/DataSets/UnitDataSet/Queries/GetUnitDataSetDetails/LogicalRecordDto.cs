@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
-using Presentation.Application.DataSets.Common;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
 namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDetails
 {
     public class LogicalRecordDto : AbstractIdentifiableArtefactDto, IMapFrom<LogicalRecord>
     {
-        public List<ComponentDto> Components { get; set; }
+        public List<UnitComponentDto> Components { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -24,7 +23,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDe
                 .ForMember(d => d.Components, opt => {
                     opt.PreCondition(s => s.Components.Count > 0);
                     opt.MapFrom(s => s.Components);
-                    opt.NullSubstitute( new List<ComponentDto>());
+                    opt.NullSubstitute( new List<UnitComponentDto>());
                 });
         }
     }

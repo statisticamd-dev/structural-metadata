@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Application.DataSets.DimansionalDataSet.Queries.GetDimensionalDataSet;
-using Presentation.Application.DataSets.DimansionalDataSet.Queries.GetDimensionalDataSetDetails;
+using Presentation.Application.DataSets.DimensionalDataSet.Queries.GetDimensionalDataSet;
+using Presentation.Application.DataSets.DimensionalDataSet.Queries.GetDimensionalDataSetDetails;
 using Presentation.Application.DataSets.DimensionalDataSet.Queries.GetDimensionalDataSets;
 
 namespace Presentation.WebApi.Controllers.DimensionalDataSet

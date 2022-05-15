@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
-using Presentation.Application.DataSets.Common;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
 namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
@@ -12,7 +11,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
     {
         public string UnitType { get; set; }
         public string ParentRecord { get; set; }
-        public List<ComponentMiniDto> Components { get; set; }
+        public List<UnitComponentMiniDto> Components { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -28,7 +27,7 @@ namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSet
                 .ForMember(d => d.Components, opt => {
                     opt.PreCondition(s => s.Components.Count > 0);
                     opt.MapFrom(s => s.Components);
-                    opt.NullSubstitute( new List<ComponentMiniDto>());
+                    opt.NullSubstitute( new List<UnitComponentMiniDto>());
                 });
         }
     }

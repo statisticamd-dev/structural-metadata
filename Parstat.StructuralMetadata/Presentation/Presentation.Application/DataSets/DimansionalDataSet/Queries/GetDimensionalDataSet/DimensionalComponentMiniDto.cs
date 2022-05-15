@@ -7,30 +7,29 @@ using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
 namespace Presentation.Application.DataSets.DimensionalDataSet.Queries.GetDimensionalDataSet
 {
-    public class DimensionalDataSetDto : AbstractIdentifiableArtefactDto, IMapFrom<DataSet>
+    public class DimensionalComponentMiniDto : AbstractIdentifiableArtefactDto, IMapFrom<Component>
     {
-        public string FilterExpression { get; set; }
-        public DateTime ReportingBegin { get; set; }
-        public DateTime ReportingEnd { get; set; }
-        public string Connection { get; set; }
-        public DataSetType Type { get; set; }
-        public ExchangeChannel ExchangeChannel { get; set; }
-        public ExchangeDirection ExchangeDirection { get; set; }
-        public string StatisticalProgramLink { get; set; }
-        public DimensionalDataStructureMiniDto Structure { get; set; }
+
+        public ComponentType Type { get; set; }
+        public Boolean? IsIdentifierUnique { get; set; }
+        public Boolean? IsIdentifierComposite { get; set; }
+        public IdentifierRole? IdentifierRole { get; set; }
+        public Boolean? IsAttributeMandatory { get; set; }
+        public AttributeAttachmentLevel? AttributeAttachmentLevel { get; set; }
+        public long RepresentationId { get; set; }
+        public string RepresentationLink { get; set; }
 
         public void Mapping(Profile profile)
         {
             //language parameter from  request
             //default english
             string language = "en";
-            profile.CreateMap<DataSet, DimensionalDataSetDto>()
+            profile.CreateMap<Component, DimensionalComponentMiniDto>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
-                .ForMember(d => d.StatisticalProgramLink, otp => otp.MapFrom(s => "/metadata/referntial/view/" + s.StatisticalProgramId))
-                .ForMember(d => d.Structure, opt => opt.MapFrom(s => s.Structure != null ? s.Structure : null));
+                .ForMember(d => d.RepresentationId, opt => opt.MapFrom(s => s.RepresentedVariableId))
+                .ForMember(d => d.RepresentationLink, opt => opt.MapFrom(s => "/metadata/structural/variables/representations/view/" + s.RepresentedVariable.Id));
         }
-
     }
 }

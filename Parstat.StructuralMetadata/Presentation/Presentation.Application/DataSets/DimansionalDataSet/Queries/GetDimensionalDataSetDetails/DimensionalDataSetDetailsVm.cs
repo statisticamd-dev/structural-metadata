@@ -1,4 +1,4 @@
-namespace Presentation.Application.DataSets.DimansionalDataSet.Queries.GetDimensionalDataSetDetails
+namespace Presentation.Application.DataSets.DimensionalDataSet.Queries.GetDimensionalDataSetDetails
 {
     public class DimensionalDataSetDetailsVm
     {

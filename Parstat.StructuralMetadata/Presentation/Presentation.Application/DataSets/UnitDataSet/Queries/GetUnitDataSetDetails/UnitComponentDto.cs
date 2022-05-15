@@ -2,12 +2,13 @@ using System;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
+using Presentation.Application.DataSets.Common;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
-namespace Presentation.Application.DataSets.Common
+namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDetails
 {
-    public class ComponentDto : AbstractIdentifiableArtefactDto, IMapFrom<Component>
+    public class UnitComponentDto : AbstractIdentifiableArtefactDto, IMapFrom<Component>
     {
         public ComponentType Type { get; set; }
         public Boolean? IsIdentifierUnique { get; set; }
@@ -22,7 +23,7 @@ namespace Presentation.Application.DataSets.Common
             //language parameter from  request
             //default english
             string language = "en";
-            profile.CreateMap<Component, ComponentDto>()
+            profile.CreateMap<Component, UnitComponentDto>()
                 .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name == null ? String.Empty : s.Name.Text(language)))
                 .ForMember(d => d.Description, opt => opt.MapFrom(s => s.Description != null ? s.Description.Text(language) : String.Empty))
                 .ForMember(d => d.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
