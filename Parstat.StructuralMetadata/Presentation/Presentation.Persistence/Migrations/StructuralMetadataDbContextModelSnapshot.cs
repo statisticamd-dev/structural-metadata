@@ -840,6 +840,10 @@ namespace Presentation.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Version")
                         .IsRequired()
                         .HasMaxLength(50)

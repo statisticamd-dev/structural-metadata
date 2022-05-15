@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
+using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
 namespace Presentation.Application.DataStructures.Queries.GetDataStructureDetails
 {
     public class DataStructureDetailsDto : AbstractIdentifiableArtefactDto, IMapFrom<DataStructure>
     {
+        public DataSetType Type { get; set; }
         public List<RecordDto> Records { get; set; }
         public List<ComponentsDetailsDto> Components { get; set; }
 

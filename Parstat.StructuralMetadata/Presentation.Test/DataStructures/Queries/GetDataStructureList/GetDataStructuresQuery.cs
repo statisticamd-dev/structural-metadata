@@ -24,12 +24,13 @@ namespace Presentation.Test.DataStructures.Queries.GetDataStructureList
                 Version = "1.1",
                 Group = "Data structure group",
                 VersionDate = DateTime.Now,
+                Type = DataSetType.UNIT,
             };
 
             await AddAsync(dataStructure);
 
             // Act
-            var query = new GetDataStructuresQuery();
+            var query = new GetDataStructuresQuery() { Type = DataSetType.UNIT };
             DataStructuresVm result = await SendAsync(query);
 
             // Assert

@@ -18,6 +18,7 @@ namespace Presentation.Application.DataStructures.Commands.CreateCommand
         public DateTime VersionDate { get; set; } = DateTime.Now;
         public string VersionRationale { get; set; } = "First Version";
         public string Group { get; set; }
+        public DataSetType Type { get; set; }
 
         public class Handler : IRequestHandler<CreateDataStructureCommand, long>
         {
@@ -38,7 +39,8 @@ namespace Presentation.Application.DataStructures.Commands.CreateCommand
                     Version = request.Version,
                     VersionDate = request.VersionDate,
                     VersionRationale = MultilanguageString.Init(language, request.VersionRationale),
-                    Group = request.Group
+                    Group = request.Group,
+                    Type = request.Type
                 };
 
                 _context.DataStructures.Add(dataStructure);

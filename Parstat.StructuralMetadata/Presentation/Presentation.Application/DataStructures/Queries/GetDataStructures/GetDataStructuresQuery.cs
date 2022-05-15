@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
+using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
 namespace Presentation.Application.DataStructures.Queries.GetDataStructures
@@ -15,6 +16,7 @@ namespace Presentation.Application.DataStructures.Queries.GetDataStructures
     public class GetDataStructuresQuery : AbstractRequest, IRequest<DataStructuresVm>
     {
         public string Name { get; set; }
+        public DataSetType Type { get; set; }
 
         public class GetDataStructuresQueryHandler : IRequestHandler<GetDataStructuresQuery, DataStructuresVm>
         {
@@ -31,6 +33,7 @@ namespace Presentation.Application.DataStructures.Queries.GetDataStructures
             {
                 var dataStructuresQuery = CreateQuery(request.Name, request.Language);
                 var dataStructures = await dataStructuresQuery
+                    .Where(ds => ds.Type == request.Type)
                     .AsNoTracking()
                     .ProjectTo<DataStructureTinyDto>(_mapper.ConfigurationProvider, new Dictionary<string, object> { ["language"] = request.Language })
                     .OrderBy(v => v.LocalId)
