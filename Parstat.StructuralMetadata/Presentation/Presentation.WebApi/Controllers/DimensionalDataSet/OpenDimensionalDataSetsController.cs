@@ -7,7 +7,7 @@ using Presentation.Application.DataSets.DimensionalDataSet.Queries.GetDimensiona
 
 namespace Presentation.WebApi.Controllers.DimensionalDataSet
 {
-    public class OpenDimensionalDataSetController : BaseController
+    public class OpenDimensionalDataSetsController : BaseController
     {
         [HttpGet]
         [ProducesResponseType(typeof(DimensionalDataSetsVm), StatusCodes.Status200OK)]
