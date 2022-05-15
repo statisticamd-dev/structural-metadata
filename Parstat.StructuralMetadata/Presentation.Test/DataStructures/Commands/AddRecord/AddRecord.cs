@@ -3,6 +3,7 @@ using NUnit.Framework;
 using Presentation.Application.DataStructures.Commands.AddRecord;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
+using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System;
 using System.Diagnostics;
@@ -26,7 +27,16 @@ namespace Presentation.Test.DataStructures.Commands.AddRecord
                 Group = "Data structure group",
                 VersionDate = DateTime.Now
             };
+            var unitType = new UnitType
+            {
+                LocalId = Guid.NewGuid().ToString(),
+                Name = MultilanguageString.Init(Language.EN, "Person"),
+                Description = MultilanguageString.Init(Language.EN, "Description of person"),
+                Version = "1.0",
+                VersionDate = DateTime.Now
+            };
             DataStructure dataStructureResponse = await AddAsync(dataStructure);
+            UnitType unitTypeResponse = await AddAsync(unitType);
             Debug.WriteLine($"Data structure id {dataStructureResponse.Id}");
 
             // Act
@@ -37,7 +47,8 @@ namespace Presentation.Test.DataStructures.Commands.AddRecord
                 Description = "Logical record description",
                 Version = "1.0",
                 VersionDate = DateTime.Now,
-                DataStructureId = dataStructureResponse.Id
+                DataStructureId = dataStructureResponse.Id,
+                UnitTypeId = unitTypeResponse.Id
             };
 
             long result = await SendAsync(addRecordCommand);

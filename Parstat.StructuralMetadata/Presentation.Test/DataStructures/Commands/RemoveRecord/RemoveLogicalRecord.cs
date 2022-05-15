@@ -5,6 +5,7 @@ using Presentation.Application.DataStructures.Commands.RemoveRecord;
 using Presentation.Application.DataStructures.Queries.GetDataStructureDetails;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
+using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Presentation.Test.DataStructures.Commands.RemoveRecord
     public class RemoveLogicalRecord
     {
         [Test]
-        public async Task GetDataStructuresQuery_Read_All_Logical_Records()
+        public async Task RemoveRecordCommand()
         {
             // Arrange
 
@@ -32,24 +33,35 @@ namespace Presentation.Test.DataStructures.Commands.RemoveRecord
             };
             DataStructure dataStructureResponse = await AddAsync(dataStructure);
 
-            // add logical record and assign datastructure id
-            var recordCommand = new AddRecordCommand
+             var unitType = new UnitType
             {
                 LocalId = Guid.NewGuid().ToString(),
-                Name = "Logical record name",
-                Description = "Logical record description",
+                Name = MultilanguageString.Init(Language.EN, "Person"),
+                Description = MultilanguageString.Init(Language.EN, "Description of person"),
+                Version = "1.0",
+                VersionDate = DateTime.Now
+            };
+            UnitType unitTypeResponse = await AddAsync(unitType);
+            
+            // add logical record and assign datastructure id
+            var newRecord = new LogicalRecord
+            {
+                LocalId = Guid.NewGuid().ToString(),
+                Name = MultilanguageString.Init(Language.EN, "Record Name"),
+                Description = MultilanguageString.Init(Language.EN, "Record desc"),
                 Version = "1.0",
                 VersionDate = DateTime.Now,
-                DataStructureId = dataStructureResponse.Id
+                DataStructureId = dataStructureResponse.Id,
+                UnitTypeId = unitTypeResponse.Id
             };
 
-            long logicalRecord = await SendAsync(recordCommand);
+            LogicalRecord logicalRecordResponse = await AddAsync(newRecord);
 
             // Act
             var removeRecordCommand = new RemoveRecordCommand
             {
                 DataStructureId = dataStructureResponse.Id,
-                RecordId = logicalRecord
+                RecordId = logicalRecordResponse.Id
             };
 
             await SendAsync(removeRecordCommand);
@@ -64,7 +76,7 @@ namespace Presentation.Test.DataStructures.Commands.RemoveRecord
 
             // Assert
             result.DataStructure.Id.Should().Be(dataStructureResponse.Id); //ensure id is the same 
-            result.DataStructure.Records.Where((x) => x.Id == logicalRecord).Should().HaveCount(0); // ensure that the added logical record is not part of the list
+            result.DataStructure.Records.Where((x) => x.Id == logicalRecordResponse.Id).Should().HaveCount(0); // ensure that the added logical record is not part of the list
         }
     }
 }

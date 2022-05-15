@@ -4,6 +4,7 @@ using Presentation.Application.DataStructures.Commands.AddRecord;
 using Presentation.Application.DataStructures.Queries.GetDataStructureDetails;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
+using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System;
 using System.Linq;
@@ -31,18 +32,30 @@ namespace Presentation.Test.DataStructures.Query.ReadLogicalRecords
             };
             DataStructure dataStructureResponse = await AddAsync(dataStructure);
 
-            // add logical record and assign datastructure id
-            var recordCommand = new AddRecordCommand
+            var unitType = new UnitType
             {
                 LocalId = Guid.NewGuid().ToString(),
-                Name = "Logical record name",
-                Description = "Logical record description",
+                Name = MultilanguageString.Init(Language.EN, "Person"),
+                Description = MultilanguageString.Init(Language.EN, "Description of person"),
+                Version = "1.0",
+                VersionDate = DateTime.Now
+            };
+            UnitType unitTypeResponse = await AddAsync(unitType);
+
+            // add logical record and assign datastructure id
+            var newRecord = new LogicalRecord
+            {
+                LocalId = Guid.NewGuid().ToString(),
+                Name = MultilanguageString.Init(Language.EN, "Record name"),
+                Description = MultilanguageString.Init(Language.EN, "Record desc"),
                 Version = "1.0",
                 VersionDate = DateTime.Now,
+                UnitTypeId = unitTypeResponse.Id,
                 DataStructureId = dataStructureResponse.Id
             };
-
-            long logicalRecord = await SendAsync(recordCommand);
+            
+            
+            LogicalRecord logicalRecordResponse = await AddAsync(newRecord);
 
             // Act
             var getDataStructureQuery = new GetDataStructureQuery
@@ -51,11 +64,11 @@ namespace Presentation.Test.DataStructures.Query.ReadLogicalRecords
             };
 
             var dataStructureQueryResult = await SendAsync(getDataStructureQuery);
-            var result = dataStructureQueryResult.DataStructure.Records.Where((x) => x.Id == logicalRecord).FirstOrDefault();
+            var result = dataStructureQueryResult.DataStructure.Records.Where((x) => x.Id == logicalRecordResponse.Id).FirstOrDefault();
 
             // Assert
             result.Should().NotBeNull(); //ensure id is the same 
-            result.Should().Be(recordCommand);
+            result.Id.Should().Be(logicalRecordResponse.Id);
         }
     }
 }

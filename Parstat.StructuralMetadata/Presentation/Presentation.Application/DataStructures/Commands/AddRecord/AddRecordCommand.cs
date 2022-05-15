@@ -22,6 +22,7 @@ namespace Presentation.Application.DataStructures.Commands.AddRecord
         public DateTime VersionDate { get; set; } = DateTime.Now;
         public string VersionRationale { get; set; } = "First Version";
         public long DataStructureId { get; set; }
+        public long UnitTypeId { get; set; }
         public long? ParentId { get; set; }
 
         public class Handler : IRequestHandler<AddRecordCommand, long>
@@ -62,7 +63,8 @@ namespace Presentation.Application.DataStructures.Commands.AddRecord
                         Description = MultilanguageString.Init(language, request.Description),
                         Version = request.Version,
                         VersionDate = request.VersionDate,
-                        VersionRationale = MultilanguageString.Init(language, request.VersionRationale)                        
+                        VersionRationale = MultilanguageString.Init(language, request.VersionRationale),    
+                        UnitTypeId = request.UnitTypeId                    
                     };
 
                     _context.LogicalRecords.Add(logicalRecord);
