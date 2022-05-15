@@ -18,6 +18,12 @@ namespace Presentation.Application.DataStructures.Commands.UpdateComponent
         public long ComponentId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public ComponentType Type { get; set; }
+        public Boolean? IsIdentifierComposite { get; set; }
+        public Boolean? IsIdentifierUnique { get; set; }
+        public IdentifierRole? IdentifierRole { get; set; }
+        public Boolean? IsAttributeMandatory { get; set; }
+        public AttributeAttachmentLevel? AttributeAttachmentLevel { get; set; }
         public long DataStructureId { get; set; }
         public List<long> Records { get; set; }
 
@@ -49,6 +55,12 @@ namespace Presentation.Application.DataStructures.Commands.UpdateComponent
                 entity.Name.AddText(language, request.Name);
                 entity.Description.AddText(language, request.Description);
                 entity.Records = records;
+                entity.Type = request.Type;
+                entity.AttributeAttachmentLevel = request.AttributeAttachmentLevel;
+                entity.IsAttributeMandatory = request.IsAttributeMandatory;
+                entity.IsIdentifierComposite = request.IsIdentifierComposite;
+                entity.IsIdentifierUnique = request.IsIdentifierUnique;
+                entity.IdentifierRole = request.IdentifierRole;
 
                 await _context.SaveChangesAsync(cancellationToken);
 
