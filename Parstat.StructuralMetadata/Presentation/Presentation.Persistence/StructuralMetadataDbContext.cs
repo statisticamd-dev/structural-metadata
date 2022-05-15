@@ -128,6 +128,14 @@ namespace Presentation.Persistence
                 .Property(c => c.Type)
                 .HasConversion<string>();
             modelBuilder
+                .Entity<Component>()
+                .Property(c => c.IdentifierRole)
+                .HasConversion<string>();
+            modelBuilder
+                .Entity<Component>()
+                .Property(c => c.AttributeAttachmentLevel)
+                .HasConversion<string>();
+            modelBuilder
                 .ApplyConfigurationsFromAssembly(typeof(StructuralMetadataDbContext).Assembly);
         }
 

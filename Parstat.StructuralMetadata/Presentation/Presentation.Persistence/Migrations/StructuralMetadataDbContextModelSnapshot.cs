@@ -681,6 +681,9 @@ namespace Presentation.Persistence.Migrations
                         .HasColumnType("bigint")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<string>("AttributeAttachmentLevel")
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("Created")
                         .HasColumnType("timestamp without time zone");
 
@@ -689,6 +692,18 @@ namespace Presentation.Persistence.Migrations
 
                     b.Property<long>("DataStructureId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("IdentifierRole")
+                        .HasColumnType("text");
+
+                    b.Property<bool?>("IsAttributeMandatory")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("IsIdentifierComposite")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool?>("IsIdentifierUnique")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp without time zone");
