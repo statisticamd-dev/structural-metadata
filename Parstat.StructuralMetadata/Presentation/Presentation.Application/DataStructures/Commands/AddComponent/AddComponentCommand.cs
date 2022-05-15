@@ -19,6 +19,12 @@ namespace Presentation.Application.DataStructures.Commands.AddComponent
         public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public ComponentType Type { get; set; }
+        public Boolean? IsIdentifierComposite { get; set; }
+        public Boolean? IsIdentifierUnique { get; set; }
+        public IdentifierRole? IdentifierRole { get; set; }
+        public Boolean? IsAttributeMandatory { get; set; }
+        public AttributeAttachmentLevel? AttributeAttachmentLevel { get; set; }
         public long DataStructureId { get; set; }
         public List<long> Records { get; set; }
 
@@ -52,6 +58,12 @@ namespace Presentation.Application.DataStructures.Commands.AddComponent
                     Name = MultilanguageString.Init(language, request.Name),
                     Description = MultilanguageString.Init(language, request.Description),
                     DataStructureId = request.DataStructureId,
+                    Type = request.Type,
+                    IsIdentifierComposite = request.IsIdentifierComposite,
+                    IsIdentifierUnique = request.IsIdentifierUnique,
+                    IsAttributeMandatory = request.IsAttributeMandatory,
+                    IdentifierRole = request.IdentifierRole,
+                    AttributeAttachmentLevel = request.AttributeAttachmentLevel,
                     Records = records,
                 };
 
