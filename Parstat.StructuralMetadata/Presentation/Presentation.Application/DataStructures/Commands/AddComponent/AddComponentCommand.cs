@@ -49,9 +49,7 @@ namespace Presentation.Application.DataStructures.Commands.AddComponent
                 {
                     throw new NotFoundException(nameof(DataStructure), request.DataStructureId);
                 }
-                var records = dataStructure.LogicalRecords
-                        .Where(lr =>request.Records.Contains(lr.Id) ).ToList();
-
+                
                 var component = new Component 
                 {
                     LocalId = request.LocalId,
@@ -64,7 +62,8 @@ namespace Presentation.Application.DataStructures.Commands.AddComponent
                     IsAttributeMandatory = request.IsAttributeMandatory,
                     IdentifierRole = request.IdentifierRole,
                     AttributeAttachmentLevel = request.AttributeAttachmentLevel,
-                    Records = records,
+                    Records = dataStructure.Type == DataSetType.UNIT ? dataStructure.LogicalRecords
+                        .Where(lr => request.Records.Contains(lr.Id) ).ToList() : null
                 };
 
                   _context.Components.Add(component);
