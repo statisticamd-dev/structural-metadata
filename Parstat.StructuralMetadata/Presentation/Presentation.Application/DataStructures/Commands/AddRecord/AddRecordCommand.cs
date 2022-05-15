@@ -40,8 +40,8 @@ namespace Presentation.Application.DataStructures.Commands.AddRecord
                                 .Where(ds => ds.Id == request.DataStructureId)
                                 .Include(ds => ds.LogicalRecords)
                                 .FirstOrDefaultAsync();
-                
-                if(dataStructure == null)
+
+                if (dataStructure == null)
                 {
                     throw new NotFoundException(nameof(DataStructure), request.DataStructureId);
                 }
@@ -50,8 +50,8 @@ namespace Presentation.Application.DataStructures.Commands.AddRecord
                 var logicalRecord = dataStructure.LogicalRecords
                             .Where(lr => lr.LocalId == request.LocalId && lr.Version == request.Version)
                             .FirstOrDefault();
-
-                if(logicalRecord == null)
+                
+                if (logicalRecord == null)
                 {
                     logicalRecord = new LogicalRecord
                     {
@@ -62,7 +62,7 @@ namespace Presentation.Application.DataStructures.Commands.AddRecord
                         Description = MultilanguageString.Init(language, request.Description),
                         Version = request.Version,
                         VersionDate = request.VersionDate,
-                        VersionRationale = MultilanguageString.Init(language, request.VersionRationale)
+                        VersionRationale = MultilanguageString.Init(language, request.VersionRationale)                        
                     };
 
                     _context.LogicalRecords.Add(logicalRecord);

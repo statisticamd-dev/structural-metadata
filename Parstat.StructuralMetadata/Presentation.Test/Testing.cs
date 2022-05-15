@@ -9,6 +9,7 @@ using Moq;
 using NUnit.Framework;
 using Presentation.Persistence;
 using Presentation.WebApi;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -46,6 +47,7 @@ namespace Presentation.Test
             startup.ConfigureServices(services);
 
             _scopeFactory = services.BuildServiceProvider().GetService<IServiceScopeFactory>();
+            Trace.Listeners.Add(new ConsoleTraceListener());
         }
 
         public static async Task<TEntity> AddAsync<TEntity>(TEntity entity)
