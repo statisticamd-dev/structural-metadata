@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Application.DataStructures.Queries.GetDataStructureDetails;
+using Presentation.Application.DataStructures.UnitDataStructure.Queries.GetDataStructureDetails;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
@@ -28,14 +28,14 @@ namespace Presentation.Test.DataStructures.Queries.GetDataStructureDetails
             DataStructure returnedVariable = await AddAsync(dataStructure);
 
             // Act
-            var query = new GetDataStructureQuery
+            var query = new GetUnitDataStructureQuery
             {
                 Id = returnedVariable.Id
             };
-            DataStructureVm result = await SendAsync(query);
+            UnitDataStructureVm result = await SendAsync(query);
 
             // Assert
-            result.DataStructure.Id.Should().Be(returnedVariable.Id);
+            result.UnitDataStructure.Id.Should().Be(returnedVariable.Id);
             result.Should().NotBeNull();
         }
     }

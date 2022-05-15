@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Application.DataStructures.Commands.AddRecord;
-using Presentation.Application.DataStructures.Queries.GetDataStructureDetails;
+using Presentation.Application.DataStructures.UnitDataStructure.Commands.AddRecord;
+using Presentation.Application.DataStructures.UnitDataStructure.Queries.GetDataStructureDetails;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
@@ -57,7 +57,7 @@ namespace Presentation.Test.DataStructures.Query.ReadLogicalRecords
 
             LogicalRecord logicalRecord = await AddAsync(newRecord);
             // Act
-            var getDataStructureQuery = new GetDataStructureQuery
+            var getDataStructureQuery = new GetUnitDataStructureQuery
             {
                 Id = dataStructureResponse.Id
             };
@@ -65,9 +65,9 @@ namespace Presentation.Test.DataStructures.Query.ReadLogicalRecords
             var result = await SendAsync(getDataStructureQuery);
 
             // Assert
-            result.DataStructure.Id.Should().Be(dataStructureResponse.Id); //ensure id is the same 
-            result.DataStructure.Records.Should().HaveCountGreaterThan(0); // ensure that is at last one logical record
-            result.DataStructure.Records.Where((x) => x.Id == logicalRecord.Id).Should().HaveCount(1); // ensure that the added logical record is part of the list
+            result.UnitDataStructure.Id.Should().Be(dataStructureResponse.Id); //ensure id is the same 
+            result.UnitDataStructure.Records.Should().HaveCountGreaterThan(0); // ensure that is at last one logical record
+            result.UnitDataStructure.Records.Where((x) => x.Id == logicalRecord.Id).Should().HaveCount(1); // ensure that the added logical record is part of the list
         }
     }
 }

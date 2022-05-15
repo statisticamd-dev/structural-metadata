@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Application.DataStructures.Commands.AddRecord;
-using Presentation.Application.DataStructures.Queries.GetDataStructureDetails;
+using Presentation.Application.DataStructures.UnitDataStructure.Commands.AddRecord;
+using Presentation.Application.DataStructures.UnitDataStructure.Queries.GetDataStructureDetails;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
@@ -58,13 +58,13 @@ namespace Presentation.Test.DataStructures.Query.ReadLogicalRecords
             LogicalRecord logicalRecordResponse = await AddAsync(newRecord);
 
             // Act
-            var getDataStructureQuery = new GetDataStructureQuery
+            var getDataStructureQuery = new GetUnitDataStructureQuery
             {
                 Id = dataStructureResponse.Id
             };
 
             var dataStructureQueryResult = await SendAsync(getDataStructureQuery);
-            var result = dataStructureQueryResult.DataStructure.Records.Where((x) => x.Id == logicalRecordResponse.Id).FirstOrDefault();
+            var result = dataStructureQueryResult.UnitDataStructure.Records.Where((x) => x.Id == logicalRecordResponse.Id).FirstOrDefault();
 
             // Assert
             result.Should().NotBeNull(); //ensure id is the same 

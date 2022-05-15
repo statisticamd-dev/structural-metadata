@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Application.DataStructures.Queries.GetDataStructures;
+using Presentation.Application.DataStructures.UnitDataStructure.Queries.GetDataStructures;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
@@ -30,12 +30,12 @@ namespace Presentation.Test.DataStructures.Queries.GetDataStructureList
             await AddAsync(dataStructure);
 
             // Act
-            var query = new GetDataStructuresQuery() { Type = DataSetType.UNIT };
-            DataStructuresVm result = await SendAsync(query);
+            var query = new GetUnitDataStructuresQuery();
+            UnitDataStructuresVm result = await SendAsync(query);
 
             // Assert
             result.Should().NotBeNull();
-            result.DataStructures.Should().HaveCountGreaterThan(0);
+            result.UnitDataStructures.Should().HaveCountGreaterThan(0);
         }
     }
 }

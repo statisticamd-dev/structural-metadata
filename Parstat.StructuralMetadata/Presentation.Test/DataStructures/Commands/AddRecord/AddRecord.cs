@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Application.DataStructures.Commands.AddRecord;
+using Presentation.Application.DataStructures.UnitDataStructure.Commands.AddRecord;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;

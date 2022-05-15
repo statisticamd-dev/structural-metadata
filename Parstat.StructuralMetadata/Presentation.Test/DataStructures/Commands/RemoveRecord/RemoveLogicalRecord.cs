@@ -1,8 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using Presentation.Application.DataStructures.Commands.AddRecord;
-using Presentation.Application.DataStructures.Commands.RemoveRecord;
-using Presentation.Application.DataStructures.Queries.GetDataStructureDetails;
+using Presentation.Application.DataStructures.UnitDataStructure.Commands.RemoveRecord;
+using Presentation.Application.DataStructures.UnitDataStructure.Queries.GetDataStructureDetails;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
@@ -67,7 +66,7 @@ namespace Presentation.Test.DataStructures.Commands.RemoveRecord
             await SendAsync(removeRecordCommand);
 
             //retrieve data structure data
-            var getDataStructureQuery = new GetDataStructureQuery
+            var getDataStructureQuery = new GetUnitDataStructureQuery
             {
                 Id = dataStructureResponse.Id
             };
@@ -75,8 +74,8 @@ namespace Presentation.Test.DataStructures.Commands.RemoveRecord
             var result = await SendAsync(getDataStructureQuery);
 
             // Assert
-            result.DataStructure.Id.Should().Be(dataStructureResponse.Id); //ensure id is the same 
-            result.DataStructure.Records.Where((x) => x.Id == logicalRecordResponse.Id).Should().HaveCount(0); // ensure that the added logical record is not part of the list
+            result.UnitDataStructure.Id.Should().Be(dataStructureResponse.Id); //ensure id is the same 
+            result.UnitDataStructure.Records.Where((x) => x.Id == logicalRecordResponse.Id).Should().HaveCount(0); // ensure that the added logical record is not part of the list
         }
     }
 }

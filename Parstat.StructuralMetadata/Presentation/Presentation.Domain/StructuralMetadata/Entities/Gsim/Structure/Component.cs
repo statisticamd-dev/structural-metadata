@@ -22,7 +22,6 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure
 
         public Component() 
         {
-            this.Records = new List<LogicalRecord>();
         }
     }
 }
