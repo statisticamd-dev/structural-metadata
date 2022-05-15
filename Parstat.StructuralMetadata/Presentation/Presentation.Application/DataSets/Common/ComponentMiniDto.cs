@@ -12,7 +12,7 @@ namespace Presentation.Application.DataSets.Common
 
         public ComponentType Type { get; set; }
         public Boolean? IsIdentifierUnique { get; set; }
-        public Boolean IsIdentifierComposite { get; set; }
+        public Boolean? IsIdentifierComposite { get; set; }
         public IdentifierRole? IdentifierRole { get; set; }
         public Boolean? IsAttributeMandatory { get; set; }
         public AttributeAttachmentLevel? AttributeAttachmentLevel { get; set; }
