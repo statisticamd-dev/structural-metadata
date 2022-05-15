@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
+using Presentation.Application.DataSets.Common;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 
 namespace Presentation.Application.DataSets.UnitDataSet.Queries.GetUnitDataSetDetails
