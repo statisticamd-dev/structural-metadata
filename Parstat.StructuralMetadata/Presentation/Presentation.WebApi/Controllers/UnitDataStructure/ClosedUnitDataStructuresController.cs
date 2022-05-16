@@ -84,14 +84,14 @@ namespace Presentation.WebApi.Controllers
         [Route("components")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public async Task<IActionResult> PatchLogicalRecord([FromBody] UpdateUnitComponentCommand command, string language)
+        public async Task<IActionResult> PatchComponenet([FromBody] UpdateUnitComponentCommand command, string language)
         {
             command.Language = language;
             return Ok(await Mediator.Send(command));
         }
 
         [HttpDelete]
-        [Route("{dataStructureId}/records/{componentId}")]
+        [Route("{dataStructureId}/components/{componentId}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
         public async Task<IActionResult> DeleteComponent(long dataStructureId, long componentId)
