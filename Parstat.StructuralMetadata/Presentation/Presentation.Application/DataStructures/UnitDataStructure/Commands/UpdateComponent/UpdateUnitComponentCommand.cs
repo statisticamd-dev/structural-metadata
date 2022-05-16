@@ -7,7 +7,9 @@ using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -26,7 +28,6 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
         public AttributeAttachmentLevel? AttributeAttachmentLevel { get; set; }
         public long DataStructureId { get; set; }
         public List<long> Records { get; set; }
-
         public class Handler : IRequestHandler<UpdateUnitComponentCommand>
         {
             private readonly IStructuralMetadataDbContext _context;
@@ -46,6 +47,8 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
                 var records = await _context.LogicalRecords
                         .Where(lr => lr.DataStructureId == request.DataStructureId && request.Records.Contains(lr.Id))
                         .ToListAsync();
+                Debug.WriteLine("Recordsss");
+                Debug.WriteLine(JsonSerializer.Serialize(records));
 
                 if (entity == null)
                 {
@@ -61,6 +64,9 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
                 entity.IsIdentifierComposite = request.IsIdentifierComposite;
                 entity.IsIdentifierUnique = request.IsIdentifierUnique;
                 entity.IdentifierRole = request.IdentifierRole;
+
+                Debug.WriteLine("Entityyy");
+                Debug.WriteLine(JsonSerializer.Serialize(entity));
 
                 await _context.SaveChangesAsync(cancellationToken);
 

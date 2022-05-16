@@ -19,6 +19,7 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Add
         public string LocalId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Version { get; set; } = "1.0";
         public ComponentType Type { get; set; }
         public Boolean? IsIdentifierComposite { get; set; }
         public Boolean? IsIdentifierUnique { get; set; }
@@ -27,6 +28,7 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Add
         public AttributeAttachmentLevel? AttributeAttachmentLevel { get; set; }
         public long DataStructureId { get; set; }
         public List<long> Records { get; set; }
+        public long RepresentedVariableId { get; set; }
 
         public class Handler : IRequestHandler<AddUnitComponentCommand, long>
         {
@@ -53,6 +55,7 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Add
                 var component = new Component 
                 {
                     LocalId = request.LocalId,
+                    Version = request.Version,
                     Name = MultilanguageString.Init(language, request.Name),
                     Description = MultilanguageString.Init(language, request.Description),
                     DataStructureId = request.DataStructureId,
@@ -62,6 +65,7 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Add
                     IsAttributeMandatory = request.IsAttributeMandatory,
                     IdentifierRole = request.IdentifierRole,
                     AttributeAttachmentLevel = request.AttributeAttachmentLevel,
+                    RepresentedVariableId = request.RepresentedVariableId,
                     Records = dataStructure.Type == DataSetType.UNIT ? dataStructure.LogicalRecords
                         .Where(lr => request.Records.Contains(lr.Id) ).ToList() : null
                 };

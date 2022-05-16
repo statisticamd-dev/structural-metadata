@@ -13,7 +13,7 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
 {
     public class UpdateRecordCommand : AbstractRequest, IRequest<Unit>
     {
-        public int RecordId { get; set; }
+        public long RecordId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Version { get; set; }
