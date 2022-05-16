@@ -4,8 +4,10 @@ using Presentation.Application.Common.Exceptions;
 using Presentation.Application.Common.Interfaces;
 using Presentation.Application.Common.Requests;
 using Presentation.Common.Domain.StructuralMetadata.Enums;
+using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Structure;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,6 +22,7 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
         public DateTime? VersionDate { get; set; }
         public string VersionRationale { get; set; }
         public long DataStructureId { get; set; }
+        public long UnitTypeId { get; set; }
         public long? ParentId { get; set; }
 
         public class Handler : IRequestHandler<UpdateRecordCommand, Unit>
@@ -33,29 +36,45 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
             public async Task<Unit> Handle(UpdateRecordCommand request, CancellationToken cancellationToken)
             {
                 Enum.TryParse(request.Language, true, out Language language);
+                var dataStructure = await _context.DataStructures
+                                                        .Where(ds => ds.Id == request.DataStructureId)
+                                                        .Include(ds => ds.LogicalRecords)
+                                                        .SingleOrDefaultAsync();
 
-                var entity = await _context.LogicalRecords.SingleOrDefaultAsync(lr => lr.Id == request.RecordId && lr.DataStructureId == request.DataStructureId);
-
-                if (entity == null)
+                if(dataStructure == null) 
                 {
                     throw new NotFoundException(nameof(LogicalRecord), request.RecordId );
                 }
 
-                entity.Name.AddText(language, request.Name);
-                entity.Description.AddText(language, request.Description);
-                entity.VersionRationale.AddText(language, request.VersionRationale);
+                var unitType = await _context.UnitTypes.SingleAsync(ut => ut.Id == request.UnitTypeId);
 
+                if(unitType == null) 
+                {
+                    throw new NotFoundException(nameof(UnitType), request.UnitTypeId);
+                }
+
+                var record = dataStructure.LogicalRecords.Where(lr => lr.Id == request.RecordId).FirstOrDefault();
+
+                if (record == null)
+                {
+                    throw new NotFoundException(nameof(LogicalRecord), request.RecordId );
+                }
+            
+                var parentRecord = dataStructure.LogicalRecords.Where(lr => lr.Id == request.ParentId).FirstOrDefault();
+
+                record.Name.AddText(language, request.Name);
+                record.Description.AddText(language, request.Description);
+                record.VersionRationale.AddText(language, request.VersionRationale);
                 if (!string.IsNullOrWhiteSpace(request.Version))
                 {
-                    entity.Version = request.Version;
+                    record.Version = request.Version;
                 }
-
                 if (request.VersionDate.HasValue)
                 {
-                    entity.VersionDate = request.VersionDate.Value;
+                    record.VersionDate = request.VersionDate.Value;
                 }
-
-                entity.ParentId = request.ParentId;                
+                record.Parent = parentRecord;    
+                record.UnitType = unitType;            
 
                 await _context.SaveChangesAsync(cancellationToken);
 
