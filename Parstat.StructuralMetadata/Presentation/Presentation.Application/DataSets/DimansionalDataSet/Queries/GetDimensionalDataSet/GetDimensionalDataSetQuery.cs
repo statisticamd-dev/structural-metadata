@@ -16,12 +16,12 @@ namespace Presentation.Application.DataSets.DimensionalDataSet.Queries.GetDimens
     {
         public long Id { get; set; }
 
-        public class GetUnitDataSetQueryHandler : IRequestHandler<GetDimensionalDataSetQuery, DimensionalDataSetVm>
+        public class GetDimensionalDataSetQueryHandler : IRequestHandler<GetDimensionalDataSetQuery, DimensionalDataSetVm>
         {
             private readonly IStructuralMetadataDbContext _context;
             private readonly IMapper _mapper;
 
-            public GetUnitDataSetQueryHandler(IStructuralMetadataDbContext context, IMapper mapper) 
+            public GetDimensionalDataSetQueryHandler(IStructuralMetadataDbContext context, IMapper mapper) 
             {
                 _context = context;
                 _mapper = mapper;
