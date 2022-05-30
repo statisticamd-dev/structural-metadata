@@ -50,18 +50,21 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
                         .ToListAsync();
                 //Debug.WriteLine("Recordsss");
                 //Debug.WriteLine(JsonSerializer.Serialize(records));
-
                 if (entity == null)
                 {
                     throw new NotFoundException(nameof(DataStructure), request.ComponentId);
                 }
 
                 entity.Records.Clear();
-                _context.SaveChangesAsync(cancellationToken);
+                await _context.SaveChangesAsync(cancellationToken);
 
                 entity.Name.AddText(language, request.Name);
                 entity.Description.AddText(language, request.Description);
-                entity.Records = records;
+                foreach (LogicalRecord record in records)
+                {
+                    entity.Records.Add(record);
+                }
+                //entity.Records = records;
                 entity.Type = request.Type;
                 entity.AttributeAttachmentLevel = request.AttributeAttachmentLevel;
                 entity.IsAttributeMandatory = request.IsAttributeMandatory;
