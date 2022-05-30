@@ -42,18 +42,22 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
                 Enum.TryParse(request.Language, true, out Language language);
 
                 var entity = await _context.Components
+                        .Include(c => c.Records)
                         .SingleOrDefaultAsync(c => c.Id == request.ComponentId && c.DataStructureId == request.DataStructureId);
 
                 var records = await _context.LogicalRecords
                         .Where(lr => lr.DataStructureId == request.DataStructureId && request.Records.Contains(lr.Id))
                         .ToListAsync();
-                Debug.WriteLine("Recordsss");
-                Debug.WriteLine(JsonSerializer.Serialize(records));
+                //Debug.WriteLine("Recordsss");
+                //Debug.WriteLine(JsonSerializer.Serialize(records));
 
                 if (entity == null)
                 {
                     throw new NotFoundException(nameof(DataStructure), request.ComponentId);
                 }
+
+                entity.Records.Clear();
+                _context.SaveChangesAsync(cancellationToken);
 
                 entity.Name.AddText(language, request.Name);
                 entity.Description.AddText(language, request.Description);
@@ -65,8 +69,8 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
                 entity.IsIdentifierUnique = request.IsIdentifierUnique;
                 entity.IdentifierRole = request.IdentifierRole;
 
-                Debug.WriteLine("Entityyy");
-                Debug.WriteLine(JsonSerializer.Serialize(entity));
+                //Debug.WriteLine("Entityyy");
+                //Debug.WriteLine(JsonSerializer.Serialize(entity));
 
                 await _context.SaveChangesAsync(cancellationToken);
 

@@ -67,7 +67,7 @@ namespace Presentation.Test.DataStructures.Commands.UpdateComponent
                 Description = "Component description updated",
                 DataStructureId = dataStructureResponseId,
                 Type = ComponentType.MEASURE,
-                Records = new List<long> { logicalRecord.Id }
+                Records = new List<long> { logicalRecordResponseId }
             };
 
             await SendAsync(updateComponent);
