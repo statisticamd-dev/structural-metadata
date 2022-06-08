@@ -54,7 +54,6 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
                 {
                     throw new NotFoundException(nameof(DataStructure), request.ComponentId);
                 }
-
                 entity.Records.Clear();
                 await _context.SaveChangesAsync(cancellationToken);
 
@@ -71,7 +70,7 @@ namespace Presentation.Application.DataStructures.UnitDataStructure.Commands.Upd
                 entity.IsIdentifierComposite = request.IsIdentifierComposite;
                 entity.IsIdentifierUnique = request.IsIdentifierUnique;
                 entity.IdentifierRole = request.IdentifierRole;
-
+            
                 //Debug.WriteLine("Entityyy");
                 //Debug.WriteLine(JsonSerializer.Serialize(entity));
 

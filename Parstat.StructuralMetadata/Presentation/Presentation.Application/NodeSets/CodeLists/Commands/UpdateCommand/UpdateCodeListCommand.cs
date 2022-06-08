@@ -20,6 +20,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.UpdateCommand
         public string Version { get; set; }
         public DateTime? VersionDate { get; set; }
         public string VersionRationale { get; set; }
+        public bool IsSentinel { get; set; }
 
         public class Handler : IRequestHandler<UpdateCodeListCommand>
         {
@@ -42,6 +43,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.UpdateCommand
                 entity.Name.AddText(language, request.Name);
                 entity.Description.AddText(language, request.Description);
                 entity.VersionRationale.AddText(language, request.VersionRationale);
+                entity.NodeSetType = request.IsSentinel ? NodeSetType.SENTINEL_CODE_LIST : NodeSetType.CODE_LIST;
                 if(!String.IsNullOrWhiteSpace(request.Version)) 
                 {
                     entity.Version = request.Version;
@@ -50,6 +52,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Commands.UpdateCommand
                 {
                     entity.VersionDate = request.VersionDate.Value;
                 }
+
                 
                 await _context.SaveChangesAsync(cancellationToken);
 
