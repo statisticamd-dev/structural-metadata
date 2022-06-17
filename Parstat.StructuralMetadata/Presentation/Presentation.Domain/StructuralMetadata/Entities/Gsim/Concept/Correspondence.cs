@@ -9,7 +9,7 @@ namespace Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept
         public Correspondence() 
         {
             Mappings = new List<Mapping>();
-        }
+        }        
         public long SourceId { get; set; }
         public NodeSet Source { get; set; }
         public long TargetId { get; set; }
