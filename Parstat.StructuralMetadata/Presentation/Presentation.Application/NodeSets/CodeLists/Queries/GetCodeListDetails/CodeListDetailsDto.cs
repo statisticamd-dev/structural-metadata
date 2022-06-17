@@ -2,14 +2,15 @@ using System;
 using System.Collections.Generic;
 using AutoMapper;
 using Presentation.Application.Common.Mappings;
-using Presentation.Application.Common.Models;
 using Presentation.Application.Common.Models.StructuralMetadata.Abstracts;
+using Presentation.Common.Domain.StructuralMetadata.Enums;
 using Presentation.Domain.StructuralMetadata.Entities.Gsim.Concept;
 
 namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeListDetails
 {
     public class CodeListDetailsDto : AbstractConceptDto, IMapFrom<NodeSet>
     {
+        public NodeSetType NodeSetType { get; set; }
         public List<CodeItemDto> CodeItems { get; set; }
 
         public void Mapping(Profile profile)
@@ -23,6 +24,7 @@ namespace Presentation.Application.NodeSets.CodeLists.Queries.GetCodeListDetails
                 .ForMember(ns => ns.Definition, opt => opt.MapFrom(s => s.Definition != null ? s.Definition.Text(language) : String.Empty))
                 .ForMember(ns => ns.VersionRationale, opt => opt.MapFrom(s => s.VersionRationale != null ? s.VersionRationale.Text(language) : String.Empty))
                 .ForMember(ns => ns.Link, opt => opt.MapFrom(s => s.Link != null ? s.Link.Text(language) : String.Empty))
+                .ForMember(ns => ns.NodeSetType, opt => opt.MapFrom(s => s.NodeSetType))
                 .ForMember(ns => ns.CodeItems, opt => opt.MapFrom(s => s.Nodes));
         }
        
