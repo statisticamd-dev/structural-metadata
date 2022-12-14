@@ -9,7 +9,7 @@ RUN ls
 RUN dotnet restore "Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Presentation.WebApi.csproj"
 WORKDIR "/App/Parstat.StructuralMetadata/Presentation/Presentation.WebApi"
 # Build and publish a release
-RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o /App/out
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:5.0
 WORKDIR /App
