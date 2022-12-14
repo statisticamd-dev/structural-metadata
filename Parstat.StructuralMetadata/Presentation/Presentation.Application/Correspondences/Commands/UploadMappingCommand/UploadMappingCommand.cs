@@ -29,18 +29,18 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
             public async Task<long> Handle(UploadMappingCommand request, CancellationToken cancellationToken)
             {
                 var correspondence =  await _context.Correspondences.Where(c => c.Id == request.CorrespondenceId)
-                                                        /*.Include(c => c.Source)
-                                                        .Include(c => c.Target)
-                                                        .Include(c => c.Source.Nodes)
-                                                        .Include(c => c.Target.Nodes)
-                                                        .Include(c => c.Mappings)*/
+																				 
+                                                        .Include(c => c.Mappings)
+																					 
+																					 
+																				   
                                             .SingleOrDefaultAsync();
                 if (correspondence == null)
                 {
                     throw new NotFoundException(nameof(Correspondences), request.CorrespondenceId);
                 }
 
-                List<Mapping> mappings = GetMappings(request.MappingCsv, correspondence);
+																						 
                 
                 //on upload always delete previous mappings, if any
                 if(correspondence.Mappings.Count() > 0) 
@@ -50,6 +50,8 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
                 }
                 //_context.Correspondences.Update(correspondenceFound);
 
+                List<Mapping> mappings = GetMappings(request.MappingCsv, correspondence);
+                
                 _context.Mappings.AddRange(mappings);
 
                 await _context.SaveChangesAsync(cancellationToken);
@@ -58,21 +60,27 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
 
                 return correspondence.Id;
             }
-        }
+		 
 
-        private static List<Mapping> GetMappings(List<MappingItemDto> mappingDtos, Correspondence correspondence)
+        private List<Mapping> GetMappings(List<MappingItemDto> mappingDtos, Correspondence correspondence)
         {
             List<Mapping> mappings = new();
+            var sourceNodeSet = _context.NodeSets.Where(ns => ns.Id == correspondence.SourceId)
+                                        .Include(ns => ns.Nodes)
+                                        .FirstOrDefault();
+            var targetNodeSet = _context.NodeSets.Where(ns => ns.Id == correspondence.TargetId)
+                                        .Include(ns => ns.Nodes)
+                                        .FirstOrDefault();
             foreach (var mapDto in mappingDtos)
             {
-                var sourceNode = correspondence.Source.Nodes.FirstOrDefault((n) => n.Code == mapDto.SourceCode);
+                var sourceNode = sourceNodeSet.Nodes.FirstOrDefault(n => n.Code == mapDto.SourceCode);
                 
                 if (sourceNode == null)
                 {
                     throw new NotFoundException(nameof(Node), mapDto.SourceCode);
                 }
 
-                var targetNode = correspondence.Target.Nodes.FirstOrDefault((n) => n.Code == mapDto.TargetCode);
+                var targetNode = targetNodeSet.Nodes.FirstOrDefault((n) => n.Code == mapDto.TargetCode);
                 
                 if (targetNode == null)
                 {
@@ -93,5 +101,8 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
 
             return mappings;
         }
+        }
+
+       
     }
 }
