@@ -30,10 +30,10 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
             public async Task<long> Handle(AddMappingCommand request, CancellationToken cancellationToken)
             {
                  var correspondence =  await _context.Correspondences.Where(c => c.Id == request.CorrespondenceId)
-                                                                     .Include(c => c.Source)
+                                                                     /*.Include(c => c.Source)
                                                                      .Include(c => c.Target)
                                                                      .Include(c => c.Source.Nodes)
-                                                                     .Include(c => c.Target.Nodes)
+                                                                     .Include(c => c.Target.Nodes)*/
                                                                      .SingleOrDefaultAsync();
                 
                 if (correspondence == null) 
@@ -67,8 +67,8 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
 
             private Node getSourceNode( Correspondence correspondence, AddMappingCommand request)
             {
-                
-                var sourceNode = correspondence.Source.Nodes.FirstOrDefault((x) => x.Id == request.SourceId);
+                var sourceNode = _context.Nodes.FirstOrDefault(x => x.NodeSetId == correspondence.SourceId && x.Id == request.SourceId);
+                //var sourceNode = correspondence.Source.Nodes.FirstOrDefault((x) => x.Id == request.SourceId);
                
                 if (sourceNode == null) 
                 {
@@ -80,7 +80,8 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
 
             private Node getTargetNode(Correspondence correspondence, AddMappingCommand request) 
             {
-                var targetNode = correspondence.Target.Nodes.FirstOrDefault((x) => x.Id == request.TargetId);
+                var targetNode = _context.Nodes.FirstOrDefault(x => x.NodeSetId == correspondence.TargetId && x.Id == request.TargetId);
+                //var targetNode = correspondence.Target.Nodes.FirstOrDefault((x) => x.Id == request.TargetId);
                 
                 if (targetNode== null) 
                 {
