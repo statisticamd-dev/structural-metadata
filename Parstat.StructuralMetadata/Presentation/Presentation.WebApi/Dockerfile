@@ -7,9 +7,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Presentation/Presentation.WebApi/Presentation.WebApi.csproj", "Presentation/Presentation.WebApi/"]
-RUN dotnet restore "Presentation/Presentation.WebApi/Presentation.WebApi.csproj"
+#COPY ["Presentation/Presentation.WebApi/Presentation.WebApi.csproj", "Presentation/Presentation.WebApi/"]
+#RUN dotnet restore "Presentation/Presentation.WebApi/Presentation.WebApi.csproj"
 COPY . .
+
+RUN dotnet restore "Presentation/Presentation.WebApi/Presentation.WebApi.csproj"
+
 WORKDIR "/src/Presentation/Presentation.WebApi"
 RUN dotnet build "Presentation.WebApi.csproj" -c Release -o /app/build
 
