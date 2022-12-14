@@ -31,8 +31,6 @@ jobs:
       #run: docker build Parstat.StructuralMetadata/ --file Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Dockerfile  --tag ghcr.io/statisticamd-dev/${{ env.APP_NAME }}:latest
     #- name: Push Image to Docker
     #  run: docker push ghcr.io/statisticamd-dev/${{ env.APP_NAME }}:latest.GITHUB_TOKEN }}
-    - name: Echo TOKEN
-      run: echo ${{ secrets.GITHUB_TOKEN }}
     - name: Push to server
       uses: appleboy/ssh-action@master
       with:
