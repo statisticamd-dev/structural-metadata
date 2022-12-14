@@ -20,13 +20,15 @@ jobs:
     - name: Build and publish a Docker image for ghcr ${{ env.APP_NAME }}
       uses: macbre/push-to-ghcr@master
       with:
-        image_name: ${{ env.APP_NAME }}  # it will be lowercased internally
+        image_name: ghcr.io/statisticamd-dev/${{ env.APP_NAME }}  # it will be lowercased internally
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        dockerfile: Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Dockerfile
+        image_tag: latest
         #login-server: ghcr.io/statisticamd-dev/
         #username: developer
         #password: ${{ secrets.REGISTRY_PASSWORD }}
-    - name: Build the Docker image
-      run: docker build Parstat.StructuralMetadata/ --file Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Dockerfile  --tag ghcr.io/statisticamd-dev/${{ env.APP_NAME }}:latest
+    #- name: Build the Docker image
+      #run: docker build Parstat.StructuralMetadata/ --file Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Dockerfile  --tag ghcr.io/statisticamd-dev/${{ env.APP_NAME }}:latest
     - name: Push Image to Docker
       run: docker push ghcr.io/statisticamd-dev/${{ env.APP_NAME }}:latest
     - name: Push to server
