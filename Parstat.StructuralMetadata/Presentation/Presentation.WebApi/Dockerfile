@@ -4,6 +4,7 @@ WORKDIR /App
 
 # Copy everything
 COPY . ./
+RUN ls
 # Restore as distinct layers
 RUN dotnet restore "Presentation/Presentation.WebApi/Presentation.WebApi.csproj"
 WORKDIR "/src/Presentation/Presentation.WebApi"
