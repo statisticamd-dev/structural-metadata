@@ -29,11 +29,8 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
 
             public async Task<long> Handle(AddMappingCommand request, CancellationToken cancellationToken)
             {
-                 var correspondence =  await _context.Correspondences.Where(c => c.Id == request.CorrespondenceId)
-                                                                     /*.Include(c => c.Source)
-                                                                     .Include(c => c.Target)
-                                                                     .Include(c => c.Source.Nodes)
-                                                                     .Include(c => c.Target.Nodes)*/
+                var correspondence =  await _context.Correspondences.Where(c => c.Id == request.CorrespondenceId)
+                                                                     //.Include(c => c.Mappings)
                                                                      .SingleOrDefaultAsync();
                 
                 if (correspondence == null) 
@@ -44,8 +41,9 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
                 var sourceNode = getSourceNode(correspondence, request);
                 var targetNode = getTargetNode(correspondence, request);
 
-                Mapping mapping = correspondence.Mappings.Where(m => m.Source == sourceNode 
-                                                                     && m.Target == targetNode).FirstOrDefault();
+                Mapping mapping = await _context.Mappings.Where(m => m.Source == sourceNode 
+                                                                     && m.Target == targetNode
+                                                                     && m.Correspondence == correspondence).FirstOrDefaultAsync();
                 
                 if(mapping == null) 
                 {
@@ -67,8 +65,9 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
 
             private Node getSourceNode( Correspondence correspondence, AddMappingCommand request)
             {
-                var sourceNode = _context.Nodes.FirstOrDefault(x => x.NodeSetId == correspondence.SourceId && x.Id == request.SourceId);
-                //var sourceNode = correspondence.Source.Nodes.FirstOrDefault((x) => x.Id == request.SourceId);
+                
+                var sourceNode = _context.Nodes.FirstOrDefault((x) => x.Id == request.SourceId 
+                                                                && x.NodeSetId == correspondence.SourceId);
                
                 if (sourceNode == null) 
                 {
@@ -80,8 +79,8 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
 
             private Node getTargetNode(Correspondence correspondence, AddMappingCommand request) 
             {
-                var targetNode = _context.Nodes.FirstOrDefault(x => x.NodeSetId == correspondence.TargetId && x.Id == request.TargetId);
-                //var targetNode = correspondence.Target.Nodes.FirstOrDefault((x) => x.Id == request.TargetId);
+                var targetNode = _context.Nodes.FirstOrDefault((x) => x.Id == request.TargetId 
+                                                                    && x.NodeSetId == correspondence.SourceId);
                 
                 if (targetNode== null) 
                 {

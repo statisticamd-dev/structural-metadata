@@ -29,11 +29,11 @@ namespace Presentation.Application.Correspondences.Commands.UploadMappingCommand
             public async Task<long> Handle(UploadMappingCommand request, CancellationToken cancellationToken)
             {
                 var correspondence =  await _context.Correspondences.Where(c => c.Id == request.CorrespondenceId)
-                                                        .Include(c => c.Source)
+                                                        /*.Include(c => c.Source)
                                                         .Include(c => c.Target)
                                                         .Include(c => c.Source.Nodes)
                                                         .Include(c => c.Target.Nodes)
-                                                        .Include(c => c.Mappings)
+                                                        .Include(c => c.Mappings)*/
                                             .SingleOrDefaultAsync();
                 if (correspondence == null)
                 {
