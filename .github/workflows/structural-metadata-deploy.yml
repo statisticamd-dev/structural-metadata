@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ dev ]
 env:
-  REGISTRY_NAME: parstat
+  #REGISTRY_NAME: parstat
   APP_NAME: iais-structural-api
 
 jobs:
@@ -17,12 +17,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Login to Azure Container Registry test
-      uses: azure/docker-login@v1
+    - name: Build and publish a Docker image for ghcr ${{ env.APP_NAME }}
+      uses: macbre/push-to-ghcr@master
       with:
-        login-server: ${{ env.REGISTRY_NAME }}.azurecr.io
-        username: parstat
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+        image_name: ${{ env.APP_NAME }}  # it will be lowercased internally
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        #login-server: ghcr.io/statisticamd-dev/
+        #username: developer
+        #password: ${{ secrets.REGISTRY_PASSWORD }}
     - name: Build the Docker image
       run: docker build Parstat.StructuralMetadata/ --file Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Dockerfile  --tag ${{ env.REGISTRY_NAME }}.azurecr.io/${{ env.APP_NAME }}:latest
     - name: Push Image to Docker
