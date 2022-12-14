@@ -6,8 +6,8 @@ WORKDIR /App
 COPY . ./
 RUN ls
 # Restore as distinct layers
-RUN dotnet restore "Presentation/Presentation.WebApi/Presentation.WebApi.csproj"
-WORKDIR "/src/Presentation/Presentation.WebApi"
+RUN dotnet restore "Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Presentation.WebApi.csproj"
+WORKDIR "/App/Parstat.StructuralMetadata/Presentation/Presentation.WebApi"
 # Build and publish a release
 RUN dotnet publish -c Release -o out
 # Build runtime image
