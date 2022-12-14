@@ -80,7 +80,7 @@ namespace Presentation.Application.Correspondences.Commands.AddMappingCommand
             private Node getTargetNode(Correspondence correspondence, AddMappingCommand request) 
             {
                 var targetNode = _context.Nodes.FirstOrDefault((x) => x.Id == request.TargetId 
-                                                                    && x.NodeSetId == correspondence.SourceId);
+                                                                    && x.NodeSetId == correspondence.TargetId);
                 
                 if (targetNode== null) 
                 {
