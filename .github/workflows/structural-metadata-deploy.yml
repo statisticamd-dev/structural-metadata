@@ -24,6 +24,8 @@ jobs:
       uses: macbre/push-to-ghcr@master
       with:
         image_name: statisticamd-dev/${{ env.APP_NAME }}  # it will be lowercased internally
+        registry: ghcr.io
+        username: ${{ github.actor }}
         github_token: ${{ secrets.GITHUB_TOKEN }}
         dockerfile: Parstat.StructuralMetadata/Presentation/Presentation.WebApi/Dockerfile
         image_tag: latest
